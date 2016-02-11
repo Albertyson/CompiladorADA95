@@ -23,9 +23,20 @@ import java_cup.runtime.*;
 %}*/
 
 FinLinea = \r|\n|\r\n
+InputCaracter = [^\r\n]
 EspacioBlanco = {FinLinea} | [ \t\f]
 Identificador = [:jletter:] [:jletterdigit:]*
 NumeroDecimal = 0 | [1-9][0-9]*
+NumeroFloat = 0 | [0-9]+.[0-9]+
+Boolean = true|false
+
+/* comments */
+Comentario = {ComentarioTradicional} | {ComentarioFinLinea} | {ComentarioDocumentacion}
+ComentarioTradicional   = "/*" [^*] ~"*/" | "/*" "*"+ "/"
+ComentarioFinLinea     = "//" {InputCaracter}* {FinLinea}?
+ComentarioDocumentacion = "/**" {ContenidoComentario} "*"+ "/"
+ContenidoComentario       = ( [^*] | \*+ [^/*] )*
+
 
 
 %%
@@ -55,6 +66,8 @@ NumeroDecimal = 0 | [1-9][0-9]*
 <YYINITIAL> "integer" {System.out.println("<INTEGER>"); return 1;}
 <YYINITIAL> "boolean" {System.out.println("<BOOLEAN>"); return 1;}
 <YYINITIAL> "float" {System.out.println("<FLOAT>"); return 1;}
+<YYINITIAL> "put" {System.out.println("<PUT>"); return 1;}
+<YYINITIAL> "get" {System.out.println("<GET>"); return 1;}
 
 /* Operadores */
 <YYINITIAL> ":=" {System.out.println("<ASIG, \":=\">"); return 1;}
@@ -82,10 +95,13 @@ NumeroDecimal = 0 | [1-9][0-9]*
 <YYINITIAL> ";" {System.out.println("<PUNTOCOMA>"); return 1;}
 
 <YYINITIAL> {
-    {EspacioBlanco}     {}
+    
     {Identificador}     {System.out.println("<ID, \"" + yytext() + "\">"); return 1;}
     {NumeroDecimal}     {System.out.println("<NUM, \"" + yytext() + "\">"); return 1;}
+    {NumeroFloat}       {System.out.println("<FLOAT, \"" + yytext() + "\">"); return 1;}
+    {Boolean}           {System.out.println("<BOOL, \"" + yytext() + "\">"); return 1;}
 
-
+    {EspacioBlanco}     {}
+    {Comentario}     {}
     .                   {System.out.println("No se encuentra token: " + yytext()); return 0;}
 }

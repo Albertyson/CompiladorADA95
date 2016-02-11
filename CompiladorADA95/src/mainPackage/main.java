@@ -11,12 +11,12 @@ import java_cup.runtime.*;
 
 public class main {
     public static void main(String[] args) throws FileNotFoundException, IOException {
-//        String flexFilePath = "./src/mainPackage/lexer.flex";
-//        generarLexer(flexFilePath);
+        String flexFilePath = "./src/mainPackage/lexer.flex";
+        generarLexer(flexFilePath);
         
-        Reader r = new BufferedReader(new FileReader("./src/mainPackage/archivo.adb"));
-        lexer x = new lexer(r);
-        while (x.yylex() == 1) {}
+//        Reader r = new BufferedReader(new FileReader("./src/mainPackage/archivo.adb"));
+//        lexer x = new lexer(r);
+//        while (x.yylex() == 1) {}
     }
     
      public static void generarLexer(String path){
