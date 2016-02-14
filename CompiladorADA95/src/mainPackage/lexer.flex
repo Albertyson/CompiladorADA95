@@ -8,6 +8,7 @@ import java_cup.runtime.*;
 %unicode
 %line
 %column
+%caseless
 //%cup
 
 %{
@@ -26,9 +27,10 @@ FinLinea = \r|\n|\r\n
 InputCaracter = [^\r\n]
 EspacioBlanco = {FinLinea} | [ \t\f]
 Identificador = [:jletter:] [:jletterdigit:]*
-NumeroDecimal = 0 | [1-9][0-9]*
-NumeroFloat = 0 | [0-9]+.[0-9]+
+NumeroDecimal = 0 | [1-9](_?[0-9])*
+NumeroFloat = 0 | [0-9]+.[0-9](_?[0-9])*
 Boolean = true|false
+Caracter = \'.\'
 
 /* comments */
 Comentario = "--" {InputCaracter}* {FinLinea}?
@@ -69,23 +71,24 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
 <YYINITIAL> "use"       { System.out.println("<USE>"); return 1; }
 <YYINITIAL> "is"        { System.out.println("<IS>"); return 1; }
 <YYINITIAL> "begin"     { System.out.println("<BEGIN>"); return 1; }
+<YYINITIAL> "mod"       { System.out.println("<MOD>"); return 1; }
 
 /* Operadores */
 <YYINITIAL> ":="        { System.out.println("<ASIG, \":=\">"); return 1; }
-
+//comparacion
 <YYINITIAL> "<"         { System.out.println("<OPREL, \"<\">"); return 1; }
 <YYINITIAL> ">"         { System.out.println("<OPREL, \">\">"); return 1; }
 <YYINITIAL> "="         { System.out.println("<OPREL, \"=\">"); return 1; }
 <YYINITIAL> "/="        { System.out.println("<OPREL, \"/=\">"); return 1; }
 <YYINITIAL> ">="        { System.out.println("<OPREL, \">=\">"); return 1; }
 <YYINITIAL> "<="        { System.out.println("<OPREL, \"<=\">"); return 1; }
-
+//aritmeticos
 <YYINITIAL> "+"         { System.out.println("<OPSUMA, \"+\">"); return 1; }
 <YYINITIAL> "-"         { System.out.println("<OPRESTA, \"-\">"); return 1; }
 <YYINITIAL> "*"         { System.out.println("<OPMULT, \"*\">"); return 1; }
 <YYINITIAL> "/"         { System.out.println("<OPDIV, \"/\">"); return 1; }
 <YYINITIAL> "**"        { System.out.println("<OPEXP, \"**\">"); return 1; }
-
+//booleanos
 <YYINITIAL> "and"       { System.out.println("<OPBOOL, \"and\">"); return 1; }
 <YYINITIAL> "not"       { System.out.println("<OPBOOL, \"not\">"); return 1; }
 <YYINITIAL> "or"        { System.out.println("<OPBOOL, \"or\">"); return 1; }
@@ -94,15 +97,23 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
 <YYINITIAL> "("         { System.out.println("<ABRIRPARENTESIS>"); return 1; }
 <YYINITIAL> ")"         { System.out.println("<CERRARPARENTESIS>"); return 1; }
 <YYINITIAL> ";"         { System.out.println("<PUNTOCOMA>"); return 1; }
+<YYINITIAL> "."         { System.out.println("<PUNTO>"); return 1; }
+<YYINITIAL> ","         { System.out.println("<COMA>"); return 1; }
+<YYINITIAL> ":"         { System.out.println("<DOS PUNTOS>"); return 1; }
+<YYINITIAL> "#"         { System.out.println("<NUMERAL>"); return 1; }
+<YYINITIAL> "&"         { System.out.println("<OPCONCAT>"); return 1; }
+<YYINITIAL> "'"         { System.out.println("<APOSTROFE>"); return 1; }
+<YYINITIAL> ".."         { System.out.println("<RANGO>"); return 1; }
 
 <YYINITIAL> {
     {Identificador}     { System.out.println("<ID, \"" + yytext() + "\">"); return 1; }
-    \"                      { string.setLength(0); yybegin(STRING); }
+    \"                  { string.setLength(0); yybegin(STRING); }
     {NumeroDecimal}     { System.out.println("<NUM, \"" + yytext() + "\">"); return 1; }
     {NumeroFloat}       { System.out.println("<FLOAT, \"" + yytext() + "\">"); return 1; }
     {Boolean}           { System.out.println("<BOOL, \"" + yytext() + "\">"); return 1; }
     {EspacioBlanco}     {}
-    {Comentario}        {}
+    {Comentario}        { System.out.println("<COMENTARIO>");}
+    {Caracter}          { System.out.println("<CARACTER, \""+yytext()+"\">"); }
 }
 
 <STRING> {
