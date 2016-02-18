@@ -907,7 +907,7 @@ class lexer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { System.out.println("No se encuentra token: " + yytext()); return 0;
+            { System.out.println(yyline+":"+yycolumn+"\tNo se encuentra token: " + yytext()); return 1;
             }
           case 71: break;
           case 2: 
@@ -915,75 +915,75 @@ class lexer {
             }
           case 72: break;
           case 3: 
-            { System.out.println("<ID, \"" + yytext() + "\">"); return 1;
+            { System.out.println("<ID, \"" + yytext() + "\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 73: break;
           case 4: 
-            { System.out.println("<NUM, \"" + yytext() + "\">"); return 1;
+            { System.out.println("<NUM, \"" + yytext() + "\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 74: break;
           case 5: 
-            { System.out.println("<APOSTROFE>"); return 1;
+            { System.out.println("<APOSTROFE "+yyline+":"+yycolumn+">"); return 1;
             }
           case 75: break;
           case 6: 
-            { System.out.println("<OPRESTA, \"-\">"); return 1;
+            { System.out.println("<OPRESTA, \"-\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 76: break;
           case 7: 
-            { System.out.println("<DOS PUNTOS>"); return 1;
+            { System.out.println("<DOS PUNTOS "+yyline+":"+yycolumn+">"); return 1;
             }
           case 77: break;
           case 8: 
-            { System.out.println("<OPREL, \"=\">"); return 1;
+            { System.out.println("<OPREL, \"=\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 78: break;
           case 9: 
-            { System.out.println("<OPREL, \"<\">"); return 1;
+            { System.out.println("<OPREL, \"<\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 79: break;
           case 10: 
-            { System.out.println("<OPREL, \">\">"); return 1;
+            { System.out.println("<OPREL, \">\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 80: break;
           case 11: 
-            { System.out.println("<OPDIV, \"/\">"); return 1;
+            { System.out.println("<OPDIV, \"/\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 81: break;
           case 12: 
-            { System.out.println("<OPSUMA, \"+\">"); return 1;
+            { System.out.println("<OPSUMA, \"+\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 82: break;
           case 13: 
-            { System.out.println("<OPMULT, \"*\">"); return 1;
+            { System.out.println("<OPMULT, \"*\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 83: break;
           case 14: 
-            { System.out.println("<ABRIRPARENTESIS>"); return 1;
+            { System.out.println("<ABRIRPARENTESIS "+yyline+":"+yycolumn+">"); return 1;
             }
           case 84: break;
           case 15: 
-            { System.out.println("<CERRARPARENTESIS>"); return 1;
+            { System.out.println("<CERRARPARENTESIS "+yyline+":"+yycolumn+">"); return 1;
             }
           case 85: break;
           case 16: 
-            { System.out.println("<PUNTOCOMA>"); return 1;
+            { System.out.println("<PUNTOCOMA "+yyline+":"+yycolumn+">"); return 1;
             }
           case 86: break;
           case 17: 
-            { System.out.println("<PUNTO>"); return 1;
+            { System.out.println("<PUNTO "+yyline+":"+yycolumn+">"); return 1;
             }
           case 87: break;
           case 18: 
-            { System.out.println("<COMA>"); return 1;
+            { System.out.println("<COMA "+yyline+":"+yycolumn+">"); return 1;
             }
           case 88: break;
           case 19: 
-            { System.out.println("<NUMERAL>"); return 1;
+            { System.out.println("<NUMERAL "+yyline+":"+yycolumn+">"); return 1;
             }
           case 89: break;
           case 20: 
-            { System.out.println("<OPCONCAT>"); return 1;
+            { System.out.println("<OPCONCAT "+yyline+":"+yycolumn+">"); return 1;
             }
           case 90: break;
           case 21: 
@@ -995,7 +995,7 @@ class lexer {
             }
           case 92: break;
           case 23: 
-            { yybegin(YYINITIAL); System.out.println("<STRING, \"" + string.toString() + "\">"); return 1;
+            { yybegin(YYINITIAL); System.out.println("<STRING, \"" + string.toString() + "\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 93: break;
           case 24: 
@@ -1003,51 +1003,51 @@ class lexer {
             }
           case 94: break;
           case 25: 
-            { System.out.println("<COMENTARIO>");
+            { System.out.println("<COMENTARIO "+yyline+":"+yycolumn+">");
             }
           case 95: break;
           case 26: 
-            { System.out.println("<DO>"); return 1;
+            { System.out.println("<DO "+yyline+":"+yycolumn+">"); return 1;
             }
           case 96: break;
           case 27: 
-            { System.out.println("<OPBOOL, \"or\">"); return 1;
+            { System.out.println("<OPBOOL, \"or\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 97: break;
           case 28: 
-            { System.out.println("<IF>"); return 1;
+            { System.out.println("<IF "+yyline+":"+yycolumn+">"); return 1;
             }
           case 98: break;
           case 29: 
-            { System.out.println("<IS>"); return 1;
+            { System.out.println("<IS "+yyline+":"+yycolumn+">"); return 1;
             }
           case 99: break;
           case 30: 
-            { System.out.println("<IN>"); return 1;
+            { System.out.println("<IN "+yyline+":"+yycolumn+">"); return 1;
             }
           case 100: break;
           case 31: 
-            { System.out.println("<ASIG, \":=\">"); return 1;
+            { System.out.println("<ASIG, \":=\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 101: break;
           case 32: 
-            { System.out.println("<OPREL, \"<=\">"); return 1;
+            { System.out.println("<OPREL, \"<=\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 102: break;
           case 33: 
-            { System.out.println("<OPREL, \">=\">"); return 1;
+            { System.out.println("<OPREL, \">=\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 103: break;
           case 34: 
-            { System.out.println("<OPREL, \"/=\">"); return 1;
+            { System.out.println("<OPREL, \"/=\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 104: break;
           case 35: 
-            { System.out.println("<OPEXP, \"**\">"); return 1;
+            { System.out.println("<OPEXP, \"**\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 105: break;
           case 36: 
-            { System.out.println("<RANGO>"); return 1;
+            { System.out.println("<RANGO "+yyline+":"+yycolumn+">"); return 1;
             }
           case 106: break;
           case 37: 
@@ -1067,123 +1067,123 @@ class lexer {
             }
           case 110: break;
           case 41: 
-            { System.out.println("<FLOAT, \"" + yytext() + "\">"); return 1;
+            { System.out.println("<FLOAT, \"" + yytext() + "\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 111: break;
           case 42: 
-            { System.out.println("<USE>"); return 1;
+            { System.out.println("<USE "+yyline+":"+yycolumn+">"); return 1;
             }
           case 112: break;
           case 43: 
-            { System.out.println("<END>"); return 1;
+            { System.out.println("<END "+yyline+":"+yycolumn+">"); return 1;
             }
           case 113: break;
           case 44: 
-            { System.out.println("<FOR>"); return 1;
+            { System.out.println("<FOR "+yyline+":"+yycolumn+">"); return 1;
             }
           case 114: break;
           case 45: 
-            { System.out.println("<OPBOOL, \"and\">"); return 1;
+            { System.out.println("<OPBOOL, \"and\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 115: break;
           case 46: 
-            { System.out.println("<CARACTER, \""+yytext()+"\">");
+            { System.out.println("<CARACTER, \""+yytext()+"\" "+yyline+":"+yycolumn+">");
             }
           case 116: break;
           case 47: 
-            { System.out.println("<OUT>"); return 1;
+            { System.out.println("<OUT "+yyline+":"+yycolumn+">"); return 1;
             }
           case 117: break;
           case 48: 
-            { System.out.println("<NEW>"); return 1;
+            { System.out.println("<NEW "+yyline+":"+yycolumn+">"); return 1;
             }
           case 118: break;
           case 49: 
-            { System.out.println("<OPBOOL, \"not\">"); return 1;
+            { System.out.println("<OPBOOL, \"not\" "+yyline+":"+yycolumn+">"); return 1;
             }
           case 119: break;
           case 50: 
-            { System.out.println("<GET>"); return 1;
+            { System.out.println("<GET "+yyline+":"+yycolumn+">"); return 1;
             }
           case 120: break;
           case 51: 
-            { System.out.println("<PUT>"); return 1;
+            { System.out.println("<PUT "+yyline+":"+yycolumn+">"); return 1;
             }
           case 121: break;
           case 52: 
-            { System.out.println("<MOD>"); return 1;
+            { System.out.println("<MOD "+yyline+":"+yycolumn+">"); return 1;
             }
           case 122: break;
           case 53: 
-            { System.out.println("<THEN>"); return 1;
+            { System.out.println("<THEN "+yyline+":"+yycolumn+">"); return 1;
             }
           case 123: break;
           case 54: 
-            { System.out.println("<ELSE>"); return 1;
+            { System.out.println("<ELSE "+yyline+":"+yycolumn+">"); return 1;
             }
           case 124: break;
           case 55: 
-            { System.out.println("<EXIT>"); return 1;
+            { System.out.println("<EXIT "+yyline+":"+yycolumn+">"); return 1;
             }
           case 125: break;
           case 56: 
-            { System.out.println("<LOOP>"); return 1;
+            { System.out.println("<LOOP "+yyline+":"+yycolumn+">"); return 1;
             }
           case 126: break;
           case 57: 
-            { System.out.println("<NULL>"); return 1;
+            { System.out.println("<NULL "+yyline+":"+yycolumn+">"); return 1;
             }
           case 127: break;
           case 58: 
-            { System.out.println("<GOTO>"); return 1;
+            { System.out.println("<GOTO "+yyline+":"+yycolumn+">"); return 1;
             }
           case 128: break;
           case 59: 
-            { System.out.println("<WITH>"); return 1;
+            { System.out.println("<WITH "+yyline+":"+yycolumn+">"); return 1;
             }
           case 129: break;
           case 60: 
-            { System.out.println("<WHEN>"); return 1;
+            { System.out.println("<WHEN "+yyline+":"+yycolumn+">"); return 1;
             }
           case 130: break;
           case 61: 
-            { System.out.println("<FLOAT>"); return 1;
+            { System.out.println("<FLOAT "+yyline+":"+yycolumn+">"); return 1;
             }
           case 131: break;
           case 62: 
-            { System.out.println("<WHILE>"); return 1;
+            { System.out.println("<WHILE "+yyline+":"+yycolumn+">"); return 1;
             }
           case 132: break;
           case 63: 
-            { System.out.println("<BEGIN>"); return 1;
+            { System.out.println("<BEGIN "+yyline+":"+yycolumn+">"); return 1;
             }
           case 133: break;
           case 64: 
-            { System.out.println("<RETURN>"); return 1;
+            { System.out.println("<RETURN "+yyline+":"+yycolumn+">"); return 1;
             }
           case 134: break;
           case 65: 
-            { System.out.println("<IN_OUT>"); return 1;
+            { System.out.println("<IN_OUT "+yyline+":"+yycolumn+">"); return 1;
             }
           case 135: break;
           case 66: 
-            { System.out.println("<DECLARE>"); return 1;
+            { System.out.println("<DECLARE "+yyline+":"+yycolumn+">"); return 1;
             }
           case 136: break;
           case 67: 
-            { System.out.println("<INTEGER>"); return 1;
+            { System.out.println("<INTEGER "+yyline+":"+yycolumn+">"); return 1;
             }
           case 137: break;
           case 68: 
-            { System.out.println("<BOOLEAN>"); return 1;
+            { System.out.println("<BOOLEAN "+yyline+":"+yycolumn+">"); return 1;
             }
           case 138: break;
           case 69: 
-            { System.out.println("<FUNCTION>"); return 1;
+            { System.out.println("<FUNCTION "+yyline+":"+yycolumn+">"); return 1;
             }
           case 139: break;
           case 70: 
-            { System.out.println("<PROCEDURE>"); return 1;
+            { System.out.println("<PROCEDURE "+yyline+":"+yycolumn+">"); return 1;
             }
           case 140: break;
           default:
