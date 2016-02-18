@@ -126,4 +126,4 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
     \\                  { string.append('\\'); }
 }
 
-[^]                     { System.out.println(yyline+":"+yycolumn+"\tNo se encuentra token: " + yytext()); return 1; }
+[^]                     { System.out.println(yyline+":"+yycolumn+"\tNo se encuentra token: " + yytext()); return 0; }
