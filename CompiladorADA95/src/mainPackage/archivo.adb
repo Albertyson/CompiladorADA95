@@ -1,50 +1,49 @@
 --
--- Integer calculator program.  Takes lines of input consisting of
--- <operator> <number>, and applies each one to a display value.  The
--- display value is printed at each step.  The operator is one of =,
--- +, -, *, /, or ^, which correspond to assign, add, subtract, multiply
--- divide, and raise, respectively.  The display value is initially zero.
--- The program terminates on a input of q.
+-- Functions and procedures may be overloaded in Ada as in C++ and Java.
+-- The rules for figuring out which method you are calling differ.
 --
 with Text_IO;
 with Gnat.Io; use Gnat.Io;
-procedure Calc is
-   Op: Character;               -- Operation to perform.
-   Disp: Integer := 0;          -- Contents of the display.
-   In_Val: Integer;             -- Input value used to update the display.
-begin
-   loop
-      -- Print the display.
-      Put(Disp);
-      New_Line;
+procedure f4 is
+   -- Output booleans.
+   package Boolean_IO is new Text_Io.Enumeration_IO(Boolean);
+   use Boolean_IO;
 
-      -- Promt the user.
-      Put("> ");
-
-      -- Skip leading blanks and read the operation.
-      loop
-         Get(Op);
-         exit when Op /= ' ';
+   -- Two versions of MM, which differ in their arguments.
+   procedure MM(Width: Integer; Ch: Character := 'X') is
+   begin
+      for I in 1..Width loop
+         Put(Ch);
       end loop;
+      New_Line;
+   end MM;
+   procedure MM(Height: Integer) is
+   begin
+      for I in 1..Height loop
+         Put_Line("X");
+      end loop;
+   end MM;
 
-      -- Stop when we're s'posed to.
-      exit when Op = 'Q' or Op = 'q';
+   -- Two versions of QQ which differ only in return type.
+   function QQ(Str: String) return Boolean is
+   begin
+      return Str(1) = 'T';
+   end QQ;
+   function QQ(Str: String) return Integer is
+   begin
+      return Str'Length;
+   end QQ;
 
-      -- Read the integer value (skips leading blanks) and discard the
-      -- remainder of the line.
-      Get(In_Val);
-      Text_IO.Skip_Line;
+   M: Integer;
+   B: Boolean;
+begin
+   MM(5, '@');              -- Can distinquish from the two arguments.
+   MM(Height => 4);         -- Can distinquish from the parameter name.
 
-      -- Apply the correct operation.
-      case Op is
-         when '='      => Disp := In_Val;
-         when '+'      => Disp := Disp + In_Val;
-         when '-'      => Disp := Disp - In_Val;
-         when '*'      => Disp := Disp * In_Val;
-         when '/'      => Disp := Disp / In_Val;
-         when '^'      => Disp := Disp ** In_Val;
-         when '0'..'9' => Put_Line("Please specify an operation.");
-         when others   => Put_Line("What is " & Op & "?");
-      end case;
-   end loop;
-end Calc;
+   M := QQ("Left Turn");    -- M is an integer.
+   Put(M);
+   New_Line;
+   B := QQ("Blip");         -- B is boolean.
+   Put(B);
+   New_Line;
+end f4;

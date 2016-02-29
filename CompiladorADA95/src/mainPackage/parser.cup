@@ -1,0 +1,187 @@
+/*
+  Para regenerar el Parser.java y sym.java, ejecutar el comando:
+    java -jar ../../lib/java-cup-11a.jar -interface -parser Parser parser.cup
+*/
+   
+/* ----------------------Sección de declaraciones--------------------*/
+   
+/* Importar cup */
+import java_cup.runtime.*;
+   
+/* Como el parser reporta los errores */
+parser code {:
+    
+    /* Cambiar el método report_error para que muestre la linea y columna
+       de donde ocurrió el error en la entrada así como la razón por la 
+       que el error es pasado dentro del método en el string 'message'*/
+    public void report_error(String message, Object info) {
+   
+        /* Crear un StringBuilder llamado 'm' con el string 'Error' en él. */
+        StringBuilder m = new StringBuilder("Error");
+   
+        /* Chequear si la información pasada al método es del
+           tipo java_cup.runtime.Symbol */
+        if (info instanceof java_cup.runtime.Symbol) {
+            /* Declarar un objeto 's' del tipo java_cup.runtime.Symbol con la
+               información en el object info que está siendo casteado como
+               java_cup.runtime.Symbol */
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+   
+            /* Chequear si el número de linea en la entrada es >= 0. */
+            if (s.left >= 0) {                
+                /* Agregar al final del StringBuilder el número de
+                   linea del error. */
+                m.append(" in line "+(s.left+1));   
+                /* Chequear si el número de columna es >= 0 */
+                if (s.right >= 0)                    
+                    /* Agregar al final del StringBuider el número de columna
+                       del error. */
+                    m.append(", column "+(s.right+1));
+            }
+        }
+   
+        /* Agregar al final del StringBuilder el mensaje de error. */
+        m.append(" : "+message);
+   
+        /* Imprimir el StringBuilder de error */
+        System.err.println(m);
+    }
+   
+    /* Cambiar el método report_fatal_error cuando este reporte un 
+       error fatal este va a mostrar la linea y columna de donde ocurrió
+       el error fatal así como la razón por la que sucedió el error fatal
+       y luego llamar a exit().*/
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+:};
+   
+
+   
+/* ----------Sección de declaraciones de terminales y no terminales--------- */
+   
+/* Terminales (tokens returned by the scanner).  
+   Primero los terminales que no tienen valor y luego los terminales
+   que tienen un valor */
+terminal           DECLARE, DO, ELSE, END, EXIT, FOR, FUNCTION, GOTO, IF, NEW, NULL, OUT, PROCEDURE, RETURN, THEN, WHEN, IN, WHILE, LOOP, INOUT, INTEGER, BOOLEAN, FLOAT, PUT, GET, WITH, USE, IS, BEGIN, MOD, OPERASIG, OPERPUNTERO, OPERMENOR, OPERMAYOR, OPERIGUAL, OPERDISTINTO, OPERMAYORIGUAL, OPERMENORIGUAL, OPERSUMA, OPERRESTA, OPERMULTIPLICACION, OPERDIVISION, OPERPOTENCIA, AND, NOT, OR, PARIZQ, PARDER, PUNTOCOMA, PUNTO, COMA, DOSPUNTOS, NUMERAL, AMPERSAND, APOSTROFE, DOBLEPUNTO, CADENA;
+terminal Integer   NUMERO, ID;
+   
+/* Los no terminales usados en la gramática 
+
+   Primero los No terminales que tienen un valor de tipo object(cualquier tipo),
+   luego los No termnales que tienen un valor de tipo integer.*/
+non terminal Object     expr_list, expr_part;
+non terminal Integer    expr, factor, term;
+   
+
+/* -----------Sección de precedencia y asociatividad de terminales----------- */
+   
+/*
+  Definición de precendencia de operadores como multiplicación es mayor que suma
+  ejemplo:   
+  precedence left OPERSUMA, OPERRESTA; 
+  precedence left OPERMULTIPLICACION, OPERDIVISION; 
+*/
+
+
+/* ------------------------Sección de Gramática----------------------------- */
+   
+/* ejemplo de como hacer la gramática
+   
+   expr_list ::=   expr_list expr_part
+                 | expr_part
+   expr_part ::=   expr PUNTOCOMA
+   expr      ::=   expr OPERSUMA factor
+                 | expr OPERRESTA factor
+                 | factor
+   factor    ::=   factor OPERMULTIPLICACION term
+                 | factor OPERDIVISION term
+                 | term
+   term     ::=    PARIZQ expr PARDER
+                 | NUMERO
+                 | ID     
+*/
+   
+/* donde 'expr_list' es el inicio de la gramática. */
+   
+   expr_list ::= expr_list expr_part
+                 |
+                 expr_part;
+   
+/* 'expr_part' es un 'expr' seguido por el terminal 'SEMI'.  La ':e'
+   después del no terminal 'expr' es un label para accesar al
+   valor de 'expr' que va a ser un integer. La acción de la producción
+   debe ir entre {: y :}.  esta acción va a imprimir " = + e" 
+   donde e es el valor de 'expr'. */
+   
+   expr_part ::= expr:e
+                 {: System.out.println(" = " + e); :}
+                 PUNTOCOMA
+                 ;
+   
+/* 'expr' can lead to 'expr PLUS factor', 'expr MINUS factor', or
+   'factor'.  The 'TIMES' and 'DIVIDE' productions are not at this
+   level.  They are at a lower level in the grammar which in affect
+   makes them have higher precedence.  Actions for the rhs of the non
+   terminal 'expr' return a value to 'expr'.  This value that is
+   created is an integer and gets stored in 'RESULT' in the action.
+   RESULT is the label that is assigned automatically to the rhs, in
+   this case 'expr'.  If the rhs is just 'factor' then 'f' refers to
+   the non terminal 'factor'.  The value of 'f' is retrieved with the
+   function 'intValue()' and will be stored in 'RESULT'.  In the other
+   two cases 'f' and 'e' refers to the non terminals 'factor' and
+   'expr' respectively with a terminal between them, either 'PLUS' or
+   'MINUS'.  The value of each is retrieved with the same function
+   'intValue'.  The values will be added or subtracted and then the
+   new integer will be stored in 'RESULT'.*/
+   
+   expr      ::= expr:e OPERSUMA factor:f
+                 {: RESULT = new Integer(e.intValue() + f.intValue()); :}
+                 |
+                 expr:e OPERRESTA factor:f
+                 {: RESULT = new Integer(e.intValue() - f.intValue()); :}
+                 |
+                 factor:f
+                 {: RESULT = new Integer(f.intValue()); :}
+                 ;
+   
+/* 'factor' can lead to 'factor TIMES term', 'factor DIVIDE term', or
+   'term'.  Since the productions for TIMES and DIVIDE are lower in
+   the grammar than 'PLUS' and 'MINUS' they will have higher
+   precedence.  The same sort of actions take place in the rhs of
+   'factor' as in 'expr'.  The only difference is the operations that
+   takes place on the values retrieved with 'intValue()', 'TIMES' and
+   'DIVIDE' here instead of 'PLUS' and 'MINUS'.  */
+   
+   factor    ::= factor:f OPERMULTIPLICACION term:t
+                 {: RESULT = new Integer(f.intValue() * t.intValue()); :}
+                 |
+                 factor:f OPERDIVISION term:t
+                 {: RESULT = new Integer(f.intValue() / t.intValue()); :}
+                 |
+                 term:t
+                 {: RESULT = new Integer(t.intValue()); :}
+                 ;
+   
+/* 'term' can lead to 'LPAREN expr RPAREN', 'NUMBER', or 'ID'.  The
+   first production has the non terminal 'expr' in it so the
+   production with its lhs side needs to be found and followed.  The
+   next rhs has no non terminals.  So the grammar ends here and can go
+   back up.  When it goes back up it will bring the value that was
+   retrieved when the scanner encounter the token 'NUMBER'.  'RESULT'
+   is assigned 'n', which refers to 'NUMBER', as the action for this
+   production.  The same action occurs for 'ID', except the 'i' is
+   used to refer to 'ID'.  'ID' is also the only thing on the rhs of
+   the production.  And since 'ID' is a terminal the grammar will end
+   here and go back up. */
+   
+   term      ::= PARIZQ expr:e PARDER
+                 {: RESULT = e; :}
+                 |
+                 NUMERO:n
+                 {: RESULT = n; :}
+                 |
+                 ID:i
+                 {: RESULT = i; :}
+                 ;

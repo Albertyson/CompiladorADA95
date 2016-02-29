@@ -9,7 +9,7 @@ import java_cup.runtime.*;
  * <a href="http://www.jflex.de/">JFlex</a> 1.6.1
  * from the specification file <tt>./src/mainPackage/lexer.flex</tt>
  */
-class lexer {
+class lexer implements java_cup.runtime.Scanner {
 
   /** This character denotes the end of file */
   public static final int YYEOF = -1;
@@ -37,8 +37,8 @@ class lexer {
   private static final String ZZ_CMAP_PACKED = 
     "\11\5\1\3\1\2\1\11\1\12\1\1\16\5\4\0\1\40\1\0"+
     "\1\61\1\57\1\4\1\0\1\60\1\24\1\52\1\53\1\51\1\50"+
-    "\1\56\1\25\1\55\1\47\1\6\11\7\1\43\1\54\1\45\1\44"+
-    "\1\46\2\0\1\21\1\41\1\27\1\26\1\17\1\20\1\34\1\37"+
+    "\1\56\1\25\1\55\1\47\1\6\11\7\1\43\1\54\1\46\1\44"+
+    "\1\45\2\0\1\21\1\41\1\27\1\26\1\17\1\20\1\34\1\37"+
     "\1\33\2\4\1\22\1\42\1\31\1\30\1\36\1\4\1\15\1\23"+
     "\1\14\1\16\1\4\1\35\1\32\2\4\1\0\1\62\2\0\1\10"+
     "\1\0\1\21\1\41\1\27\1\26\1\17\1\20\1\34\1\37\1\33"+
@@ -198,17 +198,17 @@ class lexer {
     "\1\26\1\27\1\30\3\0\13\3\1\0\1\31\1\3"+
     "\1\32\1\33\4\3\1\34\1\35\1\36\11\3\1\37"+
     "\1\40\1\41\1\42\1\43\1\44\1\45\1\46\1\47"+
-    "\1\50\2\51\1\4\2\3\1\52\1\3\1\53\3\3"+
-    "\1\54\1\55\1\3\1\56\2\31\1\3\1\57\1\3"+
-    "\1\60\1\61\1\3\1\0\1\62\5\3\1\63\2\3"+
-    "\1\64\1\65\1\3\1\66\1\67\2\3\1\70\1\3"+
-    "\1\71\1\3\1\0\1\72\1\73\1\74\6\3\1\75"+
-    "\2\3\1\0\1\76\1\3\1\77\1\3\1\100\3\3"+
-    "\1\101\3\3\1\102\1\103\1\3\1\104\1\105\1\3"+
-    "\1\106";
+    "\1\50\1\51\2\52\1\4\2\3\1\53\1\3\1\54"+
+    "\3\3\1\55\1\56\1\3\1\57\2\31\1\3\1\60"+
+    "\1\3\1\61\1\62\1\3\1\0\1\63\5\3\1\64"+
+    "\2\3\1\65\1\66\1\3\1\67\1\70\2\3\1\71"+
+    "\1\3\1\72\1\3\1\0\1\73\1\74\1\75\6\3"+
+    "\1\76\2\3\1\0\1\77\1\3\1\100\1\3\1\101"+
+    "\3\3\1\102\3\3\1\103\1\104\1\3\1\105\1\106"+
+    "\1\3\1\107";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[166];
+    int [] result = new int[167];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -236,27 +236,27 @@ class lexer {
     "\0\0\0\63\0\146\0\231\0\146\0\314\0\377\0\u0132"+
     "\0\u0165\0\u0198\0\u01cb\0\u01fe\0\u0231\0\u0264\0\u0297\0\u02ca"+
     "\0\u02fd\0\u0330\0\u0363\0\u0396\0\u03c9\0\u03fc\0\u042f\0\u0462"+
-    "\0\u0495\0\u04c8\0\u04fb\0\146\0\u052e\0\u0561\0\u0594\0\146"+
-    "\0\u05c7\0\146\0\146\0\146\0\u05fa\0\146\0\146\0\146"+
-    "\0\146\0\u062d\0\146\0\u0660\0\u0693\0\u06c6\0\u06f9\0\u072c"+
-    "\0\u075f\0\u0792\0\u07c5\0\u07f8\0\u082b\0\u085e\0\u0891\0\u08c4"+
-    "\0\u08f7\0\u092a\0\u095d\0\u0990\0\u09c3\0\314\0\314\0\u09f6"+
-    "\0\u0a29\0\u0a5c\0\u0a8f\0\314\0\314\0\u0ac2\0\u0af5\0\u0b28"+
-    "\0\u0b5b\0\u0b8e\0\u0bc1\0\u0bf4\0\u0c27\0\u0c5a\0\u0c8d\0\146"+
+    "\0\u0495\0\u04c8\0\u04fb\0\u052e\0\u0561\0\u0594\0\u05c7\0\146"+
+    "\0\u05fa\0\146\0\146\0\146\0\u062d\0\146\0\146\0\146"+
+    "\0\146\0\u0660\0\146\0\u0693\0\u06c6\0\u06f9\0\u072c\0\u075f"+
+    "\0\u0792\0\u07c5\0\u07f8\0\u082b\0\u085e\0\u0891\0\u08c4\0\u08f7"+
+    "\0\u092a\0\u095d\0\u0990\0\u09c3\0\u09f6\0\314\0\314\0\u0a29"+
+    "\0\u0a5c\0\u0a8f\0\u0ac2\0\314\0\314\0\u0af5\0\u0b28\0\u0b5b"+
+    "\0\u0b8e\0\u0bc1\0\u0bf4\0\u0c27\0\u0c5a\0\u0c8d\0\u0cc0\0\146"+
     "\0\146\0\146\0\146\0\146\0\146\0\146\0\146\0\146"+
-    "\0\146\0\u0cc0\0\u06c6\0\u0cf3\0\u0d26\0\u0d59\0\314\0\u0d8c"+
-    "\0\314\0\u0dbf\0\u0df2\0\u0e25\0\314\0\314\0\u0e58\0\146"+
-    "\0\u0e8b\0\146\0\u0ebe\0\314\0\u0ef1\0\314\0\314\0\u0f24"+
-    "\0\u0f57\0\314\0\u0f8a\0\u0fbd\0\u0ff0\0\u1023\0\u1056\0\314"+
-    "\0\u1089\0\u10bc\0\314\0\314\0\u10ef\0\314\0\314\0\u1122"+
-    "\0\u1155\0\314\0\u1188\0\314\0\u11bb\0\u11ee\0\314\0\314"+
-    "\0\314\0\u1221\0\u1254\0\u1287\0\u12ba\0\u12ed\0\u1320\0\314"+
-    "\0\u1353\0\u1386\0\u13b9\0\314\0\u13ec\0\314\0\u141f\0\314"+
-    "\0\u1452\0\u1485\0\u14b8\0\146\0\u14eb\0\u151e\0\u1551\0\314"+
-    "\0\314\0\u1584\0\314\0\314\0\u15b7\0\314";
+    "\0\146\0\146\0\u0cf3\0\u06f9\0\u0d26\0\u0d59\0\u0d8c\0\314"+
+    "\0\u0dbf\0\314\0\u0df2\0\u0e25\0\u0e58\0\314\0\314\0\u0e8b"+
+    "\0\146\0\u0ebe\0\146\0\u0ef1\0\314\0\u0f24\0\314\0\314"+
+    "\0\u0f57\0\u0f8a\0\314\0\u0fbd\0\u0ff0\0\u1023\0\u1056\0\u1089"+
+    "\0\314\0\u10bc\0\u10ef\0\314\0\314\0\u1122\0\314\0\314"+
+    "\0\u1155\0\u1188\0\314\0\u11bb\0\314\0\u11ee\0\u1221\0\314"+
+    "\0\314\0\314\0\u1254\0\u1287\0\u12ba\0\u12ed\0\u1320\0\u1353"+
+    "\0\314\0\u1386\0\u13b9\0\u13ec\0\314\0\u141f\0\314\0\u1452"+
+    "\0\314\0\u1485\0\u14b8\0\u14eb\0\146\0\u151e\0\u1551\0\u1584"+
+    "\0\314\0\314\0\u15b7\0\314\0\314\0\u15ea\0\314";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[166];
+    int [] result = new int[167];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -312,99 +312,99 @@ class lexer {
     "\5\6\2\0\12\6\1\0\2\6\24\0\5\6\2\0"+
     "\4\6\1\115\4\6\2\0\2\6\1\116\7\6\1\0"+
     "\2\6\24\0\5\6\2\0\11\6\2\0\2\6\1\117"+
-    "\7\6\1\0\2\6\64\0\1\120\62\0\1\121\62\0"+
-    "\1\122\62\0\1\123\67\0\1\124\66\0\1\125\5\0"+
-    "\1\52\2\0\56\52\16\0\1\126\1\127\13\0\1\130"+
-    "\27\0\1\131\7\0\2\132\53\0\1\55\2\0\3\55"+
-    "\2\133\1\55\3\0\47\55\6\0\2\134\57\0\5\6"+
-    "\2\0\4\6\1\135\4\6\2\0\12\6\1\0\2\6"+
-    "\24\0\5\6\2\0\1\6\1\136\7\6\2\0\12\6"+
-    "\1\0\2\6\24\0\5\6\2\0\4\6\1\137\4\6"+
-    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\10\6"+
-    "\1\140\2\0\12\6\1\0\2\6\24\0\5\6\2\0"+
-    "\11\6\2\0\1\141\11\6\1\0\2\6\24\0\5\6"+
-    "\2\0\11\6\2\0\5\6\1\142\4\6\1\0\2\6"+
-    "\24\0\5\6\2\0\11\6\2\0\3\6\1\143\6\6"+
-    "\1\0\2\6\24\0\5\6\2\0\11\6\2\0\2\6"+
-    "\1\144\7\6\1\0\2\6\24\0\5\6\2\0\2\6"+
-    "\1\145\6\6\2\0\12\6\1\0\2\6\24\0\5\6"+
-    "\2\0\11\6\2\0\1\146\11\6\1\0\2\6\24\0"+
-    "\5\6\2\0\11\6\2\0\2\6\1\147\7\6\1\0"+
-    "\2\6\44\0\1\150\36\0\1\74\1\151\1\152\60\74"+
-    "\4\0\5\6\2\0\11\6\2\0\1\6\1\153\10\6"+
-    "\1\0\2\6\24\0\5\6\2\0\1\6\1\154\7\6"+
-    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\7\6"+
-    "\1\155\1\6\2\0\12\6\1\0\2\6\24\0\5\6"+
-    "\2\0\11\6\2\0\7\6\1\156\2\6\1\0\2\6"+
-    "\24\0\5\6\2\0\1\6\1\157\7\6\2\0\12\6"+
+    "\7\6\1\0\2\6\64\0\1\120\63\0\1\121\61\0"+
+    "\1\122\62\0\1\123\62\0\1\124\67\0\1\125\66\0"+
+    "\1\126\5\0\1\52\2\0\56\52\16\0\1\127\1\130"+
+    "\13\0\1\131\27\0\1\132\7\0\2\133\53\0\1\55"+
+    "\2\0\3\55\2\134\1\55\3\0\47\55\6\0\2\135"+
+    "\57\0\5\6\2\0\4\6\1\136\4\6\2\0\12\6"+
+    "\1\0\2\6\24\0\5\6\2\0\1\6\1\137\7\6"+
+    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\4\6"+
+    "\1\140\4\6\2\0\12\6\1\0\2\6\24\0\5\6"+
+    "\2\0\10\6\1\141\2\0\12\6\1\0\2\6\24\0"+
+    "\5\6\2\0\11\6\2\0\1\142\11\6\1\0\2\6"+
+    "\24\0\5\6\2\0\11\6\2\0\5\6\1\143\4\6"+
+    "\1\0\2\6\24\0\5\6\2\0\11\6\2\0\3\6"+
+    "\1\144\6\6\1\0\2\6\24\0\5\6\2\0\11\6"+
+    "\2\0\2\6\1\145\7\6\1\0\2\6\24\0\5\6"+
+    "\2\0\2\6\1\146\6\6\2\0\12\6\1\0\2\6"+
+    "\24\0\5\6\2\0\11\6\2\0\1\147\11\6\1\0"+
+    "\2\6\24\0\5\6\2\0\11\6\2\0\2\6\1\150"+
+    "\7\6\1\0\2\6\44\0\1\151\36\0\1\74\1\152"+
+    "\1\153\60\74\4\0\5\6\2\0\11\6\2\0\1\6"+
+    "\1\154\10\6\1\0\2\6\24\0\5\6\2\0\1\6"+
+    "\1\155\7\6\2\0\12\6\1\0\2\6\24\0\5\6"+
+    "\2\0\7\6\1\156\1\6\2\0\12\6\1\0\2\6"+
+    "\24\0\5\6\2\0\11\6\2\0\7\6\1\157\2\6"+
     "\1\0\2\6\24\0\5\6\2\0\1\6\1\160\7\6"+
-    "\2\0\12\6\1\161\2\6\24\0\5\6\2\0\1\6"+
-    "\1\162\7\6\2\0\12\6\1\0\2\6\24\0\5\6"+
+    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\1\6"+
+    "\1\161\7\6\2\0\12\6\1\162\2\6\24\0\5\6"+
     "\2\0\1\6\1\163\7\6\2\0\12\6\1\0\2\6"+
     "\24\0\5\6\2\0\1\6\1\164\7\6\2\0\12\6"+
-    "\1\0\2\6\24\0\5\6\2\0\4\6\1\165\4\6"+
-    "\2\0\5\6\1\166\4\6\1\0\2\6\24\0\5\6"+
-    "\2\0\11\6\2\0\2\6\1\167\7\6\1\0\2\6"+
-    "\24\0\5\6\2\0\1\6\1\170\7\6\2\0\12\6"+
-    "\1\0\2\6\24\0\5\6\2\0\11\6\2\0\6\6"+
-    "\1\171\3\6\1\0\2\6\24\0\5\6\2\0\11\6"+
-    "\2\0\2\6\1\172\7\6\1\0\2\6\24\0\5\6"+
-    "\2\0\11\6\2\0\1\173\11\6\1\0\2\6\26\0"+
-    "\2\132\1\55\60\0\2\134\1\57\56\0\5\6\2\0"+
-    "\11\6\2\0\3\6\1\174\6\6\1\0\2\6\24\0"+
-    "\5\6\2\0\3\6\1\175\5\6\2\0\12\6\1\0"+
-    "\2\6\24\0\5\6\2\0\4\6\1\176\4\6\2\0"+
-    "\12\6\1\0\2\6\24\0\5\6\2\0\1\6\1\177"+
-    "\7\6\2\0\12\6\1\0\2\6\24\0\5\6\2\0"+
-    "\11\6\2\0\1\6\1\200\10\6\1\0\2\6\24\0"+
-    "\5\6\2\0\6\6\1\201\2\6\2\0\12\6\1\0"+
-    "\2\6\24\0\5\6\2\0\11\6\2\0\10\6\1\202"+
-    "\1\6\1\0\2\6\22\0\1\152\64\0\5\6\2\0"+
-    "\7\6\1\203\1\6\2\0\12\6\1\0\2\6\24\0"+
-    "\5\6\2\0\7\6\1\204\1\6\2\0\12\6\1\0"+
-    "\2\6\24\0\5\6\2\0\4\6\1\205\4\6\2\0"+
-    "\12\6\1\0\2\6\50\0\1\206\36\0\5\6\2\0"+
-    "\11\6\2\0\2\6\1\207\7\6\1\0\2\6\24\0"+
-    "\5\6\2\0\11\6\2\0\11\6\1\210\1\0\2\6"+
-    "\24\0\5\6\2\0\11\6\2\0\3\6\1\211\6\6"+
-    "\1\0\2\6\24\0\5\6\2\0\7\6\1\212\1\6"+
-    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\11\6"+
-    "\2\0\1\6\1\213\10\6\1\0\2\6\24\0\5\6"+
-    "\2\0\11\6\2\0\5\6\1\214\4\6\1\0\2\6"+
-    "\24\0\5\6\2\0\7\6\1\215\1\6\2\0\12\6"+
-    "\1\0\2\6\24\0\5\6\2\0\2\6\1\216\6\6"+
-    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\1\6"+
-    "\1\217\7\6\2\0\12\6\1\0\2\6\24\0\5\6"+
-    "\2\0\1\6\1\220\7\6\2\0\12\6\1\0\2\6"+
-    "\24\0\5\6\2\0\6\6\1\221\2\6\2\0\12\6"+
-    "\1\0\2\6\24\0\5\6\2\0\11\6\2\0\6\6"+
-    "\1\222\3\6\1\0\2\6\36\0\1\223\50\0\5\6"+
-    "\2\0\4\6\1\224\4\6\2\0\12\6\1\0\2\6"+
-    "\24\0\5\6\2\0\4\6\1\225\4\6\2\0\12\6"+
-    "\1\0\2\6\24\0\5\6\2\0\11\6\2\0\3\6"+
-    "\1\226\6\6\1\0\2\6\24\0\5\6\2\0\4\6"+
-    "\1\227\4\6\2\0\12\6\1\0\2\6\24\0\5\6"+
-    "\2\0\11\6\2\0\3\6\1\230\6\6\1\0\2\6"+
-    "\24\0\5\6\2\0\11\6\2\0\5\6\1\231\4\6"+
-    "\1\0\2\6\24\0\5\6\2\0\2\6\1\232\6\6"+
+    "\1\0\2\6\24\0\5\6\2\0\1\6\1\165\7\6"+
     "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\4\6"+
-    "\1\233\4\6\2\0\12\6\1\0\2\6\34\0\1\234"+
-    "\52\0\5\6\2\0\11\6\2\0\1\235\11\6\1\0"+
-    "\2\6\24\0\5\6\2\0\6\6\1\236\2\6\2\0"+
+    "\1\166\4\6\2\0\5\6\1\167\4\6\1\0\2\6"+
+    "\24\0\5\6\2\0\11\6\2\0\2\6\1\170\7\6"+
+    "\1\0\2\6\24\0\5\6\2\0\1\6\1\171\7\6"+
+    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\11\6"+
+    "\2\0\6\6\1\172\3\6\1\0\2\6\24\0\5\6"+
+    "\2\0\11\6\2\0\2\6\1\173\7\6\1\0\2\6"+
+    "\24\0\5\6\2\0\11\6\2\0\1\174\11\6\1\0"+
+    "\2\6\26\0\2\133\1\55\60\0\2\135\1\57\56\0"+
+    "\5\6\2\0\11\6\2\0\3\6\1\175\6\6\1\0"+
+    "\2\6\24\0\5\6\2\0\3\6\1\176\5\6\2\0"+
+    "\12\6\1\0\2\6\24\0\5\6\2\0\4\6\1\177"+
+    "\4\6\2\0\12\6\1\0\2\6\24\0\5\6\2\0"+
+    "\1\6\1\200\7\6\2\0\12\6\1\0\2\6\24\0"+
+    "\5\6\2\0\11\6\2\0\1\6\1\201\10\6\1\0"+
+    "\2\6\24\0\5\6\2\0\6\6\1\202\2\6\2\0"+
     "\12\6\1\0\2\6\24\0\5\6\2\0\11\6\2\0"+
-    "\2\6\1\237\7\6\1\0\2\6\24\0\5\6\2\0"+
-    "\4\6\1\240\4\6\2\0\12\6\1\0\2\6\24\0"+
-    "\5\6\2\0\2\6\1\241\6\6\2\0\12\6\1\0"+
-    "\2\6\24\0\5\6\2\0\3\6\1\242\5\6\2\0"+
-    "\12\6\1\0\2\6\24\0\5\6\2\0\11\6\2\0"+
-    "\3\6\1\243\6\6\1\0\2\6\24\0\5\6\2\0"+
+    "\10\6\1\203\1\6\1\0\2\6\22\0\1\153\64\0"+
+    "\5\6\2\0\7\6\1\204\1\6\2\0\12\6\1\0"+
+    "\2\6\24\0\5\6\2\0\7\6\1\205\1\6\2\0"+
+    "\12\6\1\0\2\6\24\0\5\6\2\0\4\6\1\206"+
+    "\4\6\2\0\12\6\1\0\2\6\50\0\1\207\36\0"+
+    "\5\6\2\0\11\6\2\0\2\6\1\210\7\6\1\0"+
+    "\2\6\24\0\5\6\2\0\11\6\2\0\11\6\1\211"+
+    "\1\0\2\6\24\0\5\6\2\0\11\6\2\0\3\6"+
+    "\1\212\6\6\1\0\2\6\24\0\5\6\2\0\7\6"+
+    "\1\213\1\6\2\0\12\6\1\0\2\6\24\0\5\6"+
+    "\2\0\11\6\2\0\1\6\1\214\10\6\1\0\2\6"+
+    "\24\0\5\6\2\0\11\6\2\0\5\6\1\215\4\6"+
+    "\1\0\2\6\24\0\5\6\2\0\7\6\1\216\1\6"+
+    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\2\6"+
+    "\1\217\6\6\2\0\12\6\1\0\2\6\24\0\5\6"+
+    "\2\0\1\6\1\220\7\6\2\0\12\6\1\0\2\6"+
+    "\24\0\5\6\2\0\1\6\1\221\7\6\2\0\12\6"+
+    "\1\0\2\6\24\0\5\6\2\0\6\6\1\222\2\6"+
+    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\11\6"+
+    "\2\0\6\6\1\223\3\6\1\0\2\6\36\0\1\224"+
+    "\50\0\5\6\2\0\4\6\1\225\4\6\2\0\12\6"+
+    "\1\0\2\6\24\0\5\6\2\0\4\6\1\226\4\6"+
+    "\2\0\12\6\1\0\2\6\24\0\5\6\2\0\11\6"+
+    "\2\0\3\6\1\227\6\6\1\0\2\6\24\0\5\6"+
+    "\2\0\4\6\1\230\4\6\2\0\12\6\1\0\2\6"+
+    "\24\0\5\6\2\0\11\6\2\0\3\6\1\231\6\6"+
+    "\1\0\2\6\24\0\5\6\2\0\11\6\2\0\5\6"+
+    "\1\232\4\6\1\0\2\6\24\0\5\6\2\0\2\6"+
+    "\1\233\6\6\2\0\12\6\1\0\2\6\24\0\5\6"+
+    "\2\0\4\6\1\234\4\6\2\0\12\6\1\0\2\6"+
+    "\34\0\1\235\52\0\5\6\2\0\11\6\2\0\1\236"+
+    "\11\6\1\0\2\6\24\0\5\6\2\0\6\6\1\237"+
+    "\2\6\2\0\12\6\1\0\2\6\24\0\5\6\2\0"+
+    "\11\6\2\0\2\6\1\240\7\6\1\0\2\6\24\0"+
+    "\5\6\2\0\4\6\1\241\4\6\2\0\12\6\1\0"+
+    "\2\6\24\0\5\6\2\0\2\6\1\242\6\6\2\0"+
+    "\12\6\1\0\2\6\24\0\5\6\2\0\3\6\1\243"+
+    "\5\6\2\0\12\6\1\0\2\6\24\0\5\6\2\0"+
     "\11\6\2\0\3\6\1\244\6\6\1\0\2\6\24\0"+
-    "\5\6\2\0\2\6\1\245\6\6\2\0\12\6\1\0"+
-    "\2\6\24\0\5\6\2\0\4\6\1\246\4\6\2\0"+
-    "\12\6\1\0\2\6\20\0";
+    "\5\6\2\0\11\6\2\0\3\6\1\245\6\6\1\0"+
+    "\2\6\24\0\5\6\2\0\2\6\1\246\6\6\2\0"+
+    "\12\6\1\0\2\6\24\0\5\6\2\0\4\6\1\247"+
+    "\4\6\2\0\12\6\1\0\2\6\20\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[5610];
+    int [] result = new int[5661];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -442,14 +442,13 @@ class lexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\1\11\1\1\1\11\26\1\1\11\3\1\1\11"+
-    "\1\1\3\11\1\1\4\11\1\1\1\11\1\1\3\0"+
-    "\13\1\1\0\24\1\12\11\16\1\1\11\1\1\1\11"+
-    "\6\1\1\0\24\1\1\0\14\1\1\0\10\1\1\11"+
-    "\12\1";
+    "\2\0\1\11\1\1\1\11\32\1\1\11\1\1\3\11"+
+    "\1\1\4\11\1\1\1\11\1\1\3\0\13\1\1\0"+
+    "\24\1\13\11\16\1\1\11\1\1\1\11\6\1\1\0"+
+    "\24\1\1\0\14\1\1\0\10\1\1\11\12\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[166];
+    int [] result = new int[167];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -760,13 +759,25 @@ class lexer {
 
 
   /**
+   * Contains user EOF-code, which will be executed exactly once,
+   * when the end of file is reached
+   */
+  private void zzDoEOF() throws java.io.IOException {
+    if (!zzEOFDone) {
+      zzEOFDone = true;
+      yyclose();
+    }
+  }
+
+
+  /**
    * Resumes scanning until the next regular expression is matched,
    * the end of input is encountered or an I/O-Error occurs.
    *
    * @return      the next token
    * @exception   java.io.IOException  if any I/O-Error occurs
    */
-  public int yylex() throws java.io.IOException {
+  public java_cup.runtime.Symbol next_token() throws java.io.IOException {
     int zzInput;
     int zzAction;
 
@@ -902,290 +913,295 @@ class lexer {
 
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
-        return YYEOF;
+            zzDoEOF();
+          { return new java_cup.runtime.Symbol(sym.EOF); }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { System.out.println(yyline+":"+yycolumn+"\tNo se encuentra token: " + yytext()); return 1;
+            { throw new Error("Illegal character <"+yytext()+">");
             }
-          case 71: break;
+          case 72: break;
           case 2: 
             { 
             }
-          case 72: break;
-          case 3: 
-            { System.out.println("<ID, \"" + yytext() + "\" "+yyline+":"+yycolumn+">"); return 1;
-            }
           case 73: break;
-          case 4: 
-            { System.out.println("<NUM, \"" + yytext() + "\" "+yyline+":"+yycolumn+">"); return 1;
+          case 3: 
+            { System.out.println("<ID, \"" + yytext() + "\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.ID,yytext());
             }
           case 74: break;
-          case 5: 
-            { System.out.println("<APOSTROFE "+yyline+":"+yycolumn+">"); return 1;
+          case 4: 
+            { System.out.println("<NUM, \"" + yytext() + "\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NUMERO);
             }
           case 75: break;
-          case 6: 
-            { System.out.println("<OPRESTA, \"-\" "+yyline+":"+yycolumn+">"); return 1;
+          case 5: 
+            { System.out.println("<APOSTROFE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.APOSTROFE);
             }
           case 76: break;
-          case 7: 
-            { System.out.println("<DOS PUNTOS "+yyline+":"+yycolumn+">"); return 1;
+          case 6: 
+            { System.out.println("<OPRESTA, \"-\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERRESTA);
             }
           case 77: break;
-          case 8: 
-            { System.out.println("<OPREL, \"=\" "+yyline+":"+yycolumn+">"); return 1;
+          case 7: 
+            { System.out.println("<DOS PUNTOS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DOSPUNTOS);
             }
           case 78: break;
-          case 9: 
-            { System.out.println("<OPREL, \"<\" "+yyline+":"+yycolumn+">"); return 1;
+          case 8: 
+            { System.out.println("<OPREL, \"=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERIGUAL);
             }
           case 79: break;
-          case 10: 
-            { System.out.println("<OPREL, \">\" "+yyline+":"+yycolumn+">"); return 1;
+          case 9: 
+            { System.out.println("<OPREL, \">\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMAYOR);
             }
           case 80: break;
-          case 11: 
-            { System.out.println("<OPDIV, \"/\" "+yyline+":"+yycolumn+">"); return 1;
+          case 10: 
+            { System.out.println("<OPREL, \"<\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMENOR);
             }
           case 81: break;
-          case 12: 
-            { System.out.println("<OPSUMA, \"+\" "+yyline+":"+yycolumn+">"); return 1;
+          case 11: 
+            { System.out.println("<OPDIV, \"/\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERDIVISION);
             }
           case 82: break;
-          case 13: 
-            { System.out.println("<OPMULT, \"*\" "+yyline+":"+yycolumn+">"); return 1;
+          case 12: 
+            { System.out.println("<OPSUMA, \"+\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERSUMA);
             }
           case 83: break;
-          case 14: 
-            { System.out.println("<ABRIRPARENTESIS "+yyline+":"+yycolumn+">"); return 1;
+          case 13: 
+            { System.out.println("<OPMULT, \"*\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMUTIPLICACION);
             }
           case 84: break;
-          case 15: 
-            { System.out.println("<CERRARPARENTESIS "+yyline+":"+yycolumn+">"); return 1;
+          case 14: 
+            { System.out.println("<ABRIRPARENTESIS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PARIZQ);
             }
           case 85: break;
-          case 16: 
-            { System.out.println("<PUNTOCOMA "+yyline+":"+yycolumn+">"); return 1;
+          case 15: 
+            { System.out.println("<CERRARPARENTESIS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PARDER);
             }
           case 86: break;
-          case 17: 
-            { System.out.println("<PUNTO "+yyline+":"+yycolumn+">"); return 1;
+          case 16: 
+            { System.out.println("<PUNTOCOMA "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PUNTOCOMA);
             }
           case 87: break;
-          case 18: 
-            { System.out.println("<COMA "+yyline+":"+yycolumn+">"); return 1;
+          case 17: 
+            { System.out.println("<PUNTO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PUNTO);
             }
           case 88: break;
-          case 19: 
-            { System.out.println("<NUMERAL "+yyline+":"+yycolumn+">"); return 1;
+          case 18: 
+            { System.out.println("<COMA "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.COMA);
             }
           case 89: break;
-          case 20: 
-            { System.out.println("<OPCONCAT "+yyline+":"+yycolumn+">"); return 1;
+          case 19: 
+            { System.out.println("<NUMERAL "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NUMERAL);
             }
           case 90: break;
+          case 20: 
+            { System.out.println("<OPCONCAT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.AMPERSAND);
+            }
+          case 91: break;
           case 21: 
             { string.setLength(0); yybegin(STRING);
             }
-          case 91: break;
+          case 92: break;
           case 22: 
             { string.append( yytext() );
             }
-          case 92: break;
-          case 23: 
-            { yybegin(YYINITIAL); System.out.println("<STRING, \"" + string.toString() + "\" "+yyline+":"+yycolumn+">"); return 1;
-            }
           case 93: break;
+          case 23: 
+            { yybegin(YYINITIAL); System.out.println("<STRING, \"" + string.toString() + "\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.CADENA);
+            }
+          case 94: break;
           case 24: 
             { string.append('\\');
             }
-          case 94: break;
-          case 25: 
-            { System.out.println("<COMENTARIO "+yyline+":"+yycolumn+">");
-            }
           case 95: break;
-          case 26: 
-            { System.out.println("<DO "+yyline+":"+yycolumn+">"); return 1;
+          case 25: 
+            { System.out.println("<COMENTARIO "+(yyline+1)+":"+yycolumn+">");
             }
           case 96: break;
-          case 27: 
-            { System.out.println("<OPBOOL, \"or\" "+yyline+":"+yycolumn+">"); return 1;
+          case 26: 
+            { System.out.println("<DO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DO);
             }
           case 97: break;
-          case 28: 
-            { System.out.println("<IF "+yyline+":"+yycolumn+">"); return 1;
+          case 27: 
+            { System.out.println("<OPBOOL, \"or\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NOT);
             }
           case 98: break;
-          case 29: 
-            { System.out.println("<IS "+yyline+":"+yycolumn+">"); return 1;
+          case 28: 
+            { System.out.println("<IF "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.IF);
             }
           case 99: break;
-          case 30: 
-            { System.out.println("<IN "+yyline+":"+yycolumn+">"); return 1;
+          case 29: 
+            { System.out.println("<IS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.IS);
             }
           case 100: break;
-          case 31: 
-            { System.out.println("<ASIG, \":=\" "+yyline+":"+yycolumn+">"); return 1;
+          case 30: 
+            { System.out.println("<IN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.IN);
             }
           case 101: break;
-          case 32: 
-            { System.out.println("<OPREL, \"<=\" "+yyline+":"+yycolumn+">"); return 1;
+          case 31: 
+            { System.out.println("<ASIG, \":=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERASIG);
             }
           case 102: break;
-          case 33: 
-            { System.out.println("<OPREL, \">=\" "+yyline+":"+yycolumn+">"); return 1;
+          case 32: 
+            { System.out.println("<DELIMITADOR, \"=>\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERPUNTERO);
             }
           case 103: break;
-          case 34: 
-            { System.out.println("<OPREL, \"/=\" "+yyline+":"+yycolumn+">"); return 1;
+          case 33: 
+            { System.out.println("<OPREL, \">=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMAYORIGUAL);
             }
           case 104: break;
-          case 35: 
-            { System.out.println("<OPEXP, \"**\" "+yyline+":"+yycolumn+">"); return 1;
+          case 34: 
+            { System.out.println("<OPREL, \"<=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMENORIGUAL);
             }
           case 105: break;
-          case 36: 
-            { System.out.println("<RANGO "+yyline+":"+yycolumn+">"); return 1;
+          case 35: 
+            { System.out.println("<OPREL, \"/=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERDISTINTO);
             }
           case 106: break;
-          case 37: 
-            { string.append('\t');
+          case 36: 
+            { System.out.println("<OPEXP, \"**\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERPOTENCIA);
             }
           case 107: break;
-          case 38: 
-            { string.append('\r');
+          case 37: 
+            { System.out.println("<RANGO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DOBLEPUNTO);
             }
           case 108: break;
-          case 39: 
-            { string.append('\n');
+          case 38: 
+            { string.append('\t');
             }
           case 109: break;
-          case 40: 
-            { string.append('\"');
+          case 39: 
+            { string.append('\r');
             }
           case 110: break;
-          case 41: 
-            { System.out.println("<FLOAT, \"" + yytext() + "\" "+yyline+":"+yycolumn+">"); return 1;
+          case 40: 
+            { string.append('\n');
             }
           case 111: break;
-          case 42: 
-            { System.out.println("<USE "+yyline+":"+yycolumn+">"); return 1;
+          case 41: 
+            { string.append('\"');
             }
           case 112: break;
-          case 43: 
-            { System.out.println("<END "+yyline+":"+yycolumn+">"); return 1;
+          case 42: 
+            { System.out.println("<FLOAT, \"" + yytext() + "\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NUMERO);
             }
           case 113: break;
-          case 44: 
-            { System.out.println("<FOR "+yyline+":"+yycolumn+">"); return 1;
+          case 43: 
+            { System.out.println("<USE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.USE);
             }
           case 114: break;
-          case 45: 
-            { System.out.println("<OPBOOL, \"and\" "+yyline+":"+yycolumn+">"); return 1;
+          case 44: 
+            { System.out.println("<END "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.END);
             }
           case 115: break;
-          case 46: 
-            { System.out.println("<CARACTER, \""+yytext()+"\" "+yyline+":"+yycolumn+">");
+          case 45: 
+            { System.out.println("<FOR "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FOR);
             }
           case 116: break;
-          case 47: 
-            { System.out.println("<OUT "+yyline+":"+yycolumn+">"); return 1;
+          case 46: 
+            { System.out.println("<OPBOOL, \"and\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.AND);
             }
           case 117: break;
-          case 48: 
-            { System.out.println("<NEW "+yyline+":"+yycolumn+">"); return 1;
+          case 47: 
+            { System.out.println("<CARACTER, \""+yytext()+"\" "+(yyline+1)+":"+yycolumn+">");
             }
           case 118: break;
-          case 49: 
-            { System.out.println("<OPBOOL, \"not\" "+yyline+":"+yycolumn+">"); return 1;
+          case 48: 
+            { System.out.println("<OUT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OUT);
             }
           case 119: break;
-          case 50: 
-            { System.out.println("<GET "+yyline+":"+yycolumn+">"); return 1;
+          case 49: 
+            { System.out.println("<NEW "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NEW);
             }
           case 120: break;
-          case 51: 
-            { System.out.println("<PUT "+yyline+":"+yycolumn+">"); return 1;
+          case 50: 
+            { System.out.println("<OPBOOL, \"not\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OR);
             }
           case 121: break;
-          case 52: 
-            { System.out.println("<MOD "+yyline+":"+yycolumn+">"); return 1;
+          case 51: 
+            { System.out.println("<GET "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.GET);
             }
           case 122: break;
-          case 53: 
-            { System.out.println("<THEN "+yyline+":"+yycolumn+">"); return 1;
+          case 52: 
+            { System.out.println("<PUT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PUT);
             }
           case 123: break;
-          case 54: 
-            { System.out.println("<ELSE "+yyline+":"+yycolumn+">"); return 1;
+          case 53: 
+            { System.out.println("<MOD "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.MOD);
             }
           case 124: break;
-          case 55: 
-            { System.out.println("<EXIT "+yyline+":"+yycolumn+">"); return 1;
+          case 54: 
+            { System.out.println("<THEN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.THEN);
             }
           case 125: break;
-          case 56: 
-            { System.out.println("<LOOP "+yyline+":"+yycolumn+">"); return 1;
+          case 55: 
+            { System.out.println("<ELSE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.ELSE);
             }
           case 126: break;
-          case 57: 
-            { System.out.println("<NULL "+yyline+":"+yycolumn+">"); return 1;
+          case 56: 
+            { System.out.println("<EXIT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.EXIT);
             }
           case 127: break;
-          case 58: 
-            { System.out.println("<GOTO "+yyline+":"+yycolumn+">"); return 1;
+          case 57: 
+            { System.out.println("<LOOP "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.LOOP);
             }
           case 128: break;
-          case 59: 
-            { System.out.println("<WITH "+yyline+":"+yycolumn+">"); return 1;
+          case 58: 
+            { System.out.println("<NULL "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NULL);
             }
           case 129: break;
-          case 60: 
-            { System.out.println("<WHEN "+yyline+":"+yycolumn+">"); return 1;
+          case 59: 
+            { System.out.println("<GOTO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.GOTO);
             }
           case 130: break;
-          case 61: 
-            { System.out.println("<FLOAT "+yyline+":"+yycolumn+">"); return 1;
+          case 60: 
+            { System.out.println("<WITH "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.WITH);
             }
           case 131: break;
-          case 62: 
-            { System.out.println("<WHILE "+yyline+":"+yycolumn+">"); return 1;
+          case 61: 
+            { System.out.println("<WHEN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.WHEN);
             }
           case 132: break;
-          case 63: 
-            { System.out.println("<BEGIN "+yyline+":"+yycolumn+">"); return 1;
+          case 62: 
+            { System.out.println("<FLOAT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FLOAT);
             }
           case 133: break;
-          case 64: 
-            { System.out.println("<RETURN "+yyline+":"+yycolumn+">"); return 1;
+          case 63: 
+            { System.out.println("<WHILE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.WHILE);
             }
           case 134: break;
-          case 65: 
-            { System.out.println("<IN_OUT "+yyline+":"+yycolumn+">"); return 1;
+          case 64: 
+            { System.out.println("<BEGIN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.BEGIN);
             }
           case 135: break;
-          case 66: 
-            { System.out.println("<DECLARE "+yyline+":"+yycolumn+">"); return 1;
+          case 65: 
+            { System.out.println("<RETURN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.RETURN);
             }
           case 136: break;
-          case 67: 
-            { System.out.println("<INTEGER "+yyline+":"+yycolumn+">"); return 1;
+          case 66: 
+            { System.out.println("<IN_OUT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.INOUT);
             }
           case 137: break;
-          case 68: 
-            { System.out.println("<BOOLEAN "+yyline+":"+yycolumn+">"); return 1;
+          case 67: 
+            { System.out.println("<DECLARE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DECLARE);
             }
           case 138: break;
-          case 69: 
-            { System.out.println("<FUNCTION "+yyline+":"+yycolumn+">"); return 1;
+          case 68: 
+            { System.out.println("<INTEGER "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.INTEGER);
             }
           case 139: break;
-          case 70: 
-            { System.out.println("<PROCEDURE "+yyline+":"+yycolumn+">"); return 1;
+          case 69: 
+            { System.out.println("<BOOLEAN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.BOOLEAN);
             }
           case 140: break;
+          case 70: 
+            { System.out.println("<FUNCTION "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FUNCTION);
+            }
+          case 141: break;
+          case 71: 
+            { System.out.println("<PROCEDURE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PROCEDURE);
+            }
+          case 142: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
