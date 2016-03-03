@@ -86,7 +86,7 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
 //aritmeticos
 <YYINITIAL> "+"         { System.out.println("<OPSUMA, \"+\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERSUMA); }
 <YYINITIAL> "-"         { System.out.println("<OPRESTA, \"-\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERRESTA); }
-<YYINITIAL> "*"         { System.out.println("<OPMULT, \"*\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMUTIPLICACION); }
+<YYINITIAL> "*"         { System.out.println("<OPMULT, \"*\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMULTIPLICACION); }
 <YYINITIAL> "/"         { System.out.println("<OPDIV, \"/\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERDIVISION); }
 <YYINITIAL> "**"        { System.out.println("<OPEXP, \"**\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERPOTENCIA); }
 //booleanos
