@@ -68,5 +68,9 @@ public interface sym {
   public static final int DO = 3;
   public static final int OPERMENORIGUAL = 39;
   public static final int OPERMENOR = 34;
+  public static final int NUMEROFLOAT = 0;
+  public static final int TRUE = 0;
+  public static final int FALSE = 0;
+                  
 }
 
