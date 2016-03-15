@@ -78,6 +78,8 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
 <YYINITIAL> "mod"       { System.out.println("<MOD "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.MOD); }
 <YYINITIAL> "true"      { System.out.println("<TRUE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.TRUE); }
 <YYINITIAL> "false"     { System.out.println("<FALSE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FALSE); }
+<YYINITIAL> "|"         { System.out.println("<PIPE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PIPE); }
+<YYINITIAL> "others"    { System.out.println("<OTHERS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OTHERS); }
 
 /* Operadores */
 <YYINITIAL> ":="        { System.out.println("<ASIG, \":=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERASIG); }
