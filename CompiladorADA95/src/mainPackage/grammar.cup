@@ -143,13 +143,14 @@ decBloque     				::= ID DOSPUNTOS BEGIN secDec END ID PUNTOCOMA
 listaDeclaraciones 			::= itemDeclarativo listaDeclaraciones
 							|	/*vacío*/
 
-itemDeclarativo  			::= decBasica
-							|	declaracionVariable
+itemDeclarativo  			::= declaracionVariable
 							|	clausulaUse
 							|	body
 
-decBasica					::=	type_declaration | subtype_declaration | object_declaration | number_declaration | subprogram_declaration | abstract_subprogram_declaration | package_declaration | renaming_declaration | exception_declaration | generic_declaration | generic_instantiation
+expr 						::=exprAritmetica
+							| exprBooleana
 
+/*expresión aritmética*/
 exprAritmetica				::=	exprAritmetica OPERSUMA operando
 							|
 							exprAritmetica OPERRESTA operando
@@ -164,7 +165,9 @@ factor 						::= factor OPERMULTIPLICACION operando
 
 operando 					::= PARIZQ exprAritmetica PARDER
 							| NUMERO
+							| ID
 
+/*expresión booleana*/
 exprBooleana 				::= operandoBooleano AND exprBooleana
 							|
 							operandoBooleano OR exprBooleana
