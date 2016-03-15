@@ -1,0 +1,202 @@
+/*
+	Para regenerar el Parser.java y sym.java, ejecutar el comando:
+		java -jar ../../lib/java-cup-11a.jar -interface -parser Parser parser.cup
+*/
+
+import java_cup.runtime.*;
+
+parser code {:
+		public void report_error(String message, Object info) {
+				StringBuilder m = new StringBuilder("Error");
+				if (info instanceof java_cup.runtime.Symbol) {
+						java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+						if (s.left >= 0) {
+								m.append(" in line " + (s.left + 1));   
+								if (s.right >= 0) 
+										m.append(", column " + (s.right + 1));
+						}
+				}
+				m.append(" : " + message);
+				System.err.println(m);
+		}
+						 
+		public void report_fatal_error(String message, Object info) {
+				report_error(message, info);
+				//System.exit(1);
+		}
+:};
+
+/* ----------Sección de declaraciones de terminales y no terminales--------- */
+/* Tipos */
+terminal INTEGER, BOOLEAN, FLOAT;
+/* Valores */
+terminal TRUE, FALSE;
+
+/* Estructuras de Control*/
+terminal IF, ELSE, FOR;
+
+/* ME FALTA, en la tarde sigo */
+
+terminal           DECLARE, DO, END, EXIT, FUNCTION, GOTO, NEW, NULL, OUT, PROCEDURE;
+terminal           RETURN, THEN, WHEN, IN, WHILE, LOOP, INOUT, PUT, GET, WITH, USE, IS, BEGIN;
+terminal           MOD, PIPE, OTHERS, OPERASIG, OPERPUNTERO, OPERMENOR, OPERMAYOR, OPERIGUAL, OPERDISTINTO, OPERMAYORIGUAL, OPERMENORIGUAL;
+terminal           OPERSUMA, OPERRESTA, OPERMULTIPLICACION, OPERDIVISION, OPERPOTENCIA, AND, OR, NOT, PARIZQ, PARDER;
+terminal           PUNTOCOMA, DOBLEPUNTO, PUNTO, COMA, DOSPUNTOS, NUMERAL, AMPERSAND, CASE;
+terminal Object    ID, CADENA;
+terminal Integer   NUMERO;
+	 
+/* Los no terminales usados en la gramática */
+non terminal Object     decIf, decElseIf, decElse, secDec, decl, decSimple, decNull, decAsig, decExit, decGoto, decProcCall, decReturn, params;
+non terminal Object     decCompuesta, decCase, decWhen, opcionesWhen, opcWhen, range, decLoop, esqIteracion, parametroFor;
+non terminal Object     expr, exprBooleana, exprSimple;
+
+
+/* ------------------------Sección de Gramática----------------------------- */
+
+listaLibraryName			::=	ID PUNTO ID | ID PUNTO ID COMA listaLibraryName
+
+encabezadoWith				::=	WITH listaLibraryName PUNTOCOMA
+
+clausulaUse					::=	USE params PUNTOCOMA
+
+body              			::= specSubprograma IS listaDeclaraciones BEGIN secDec END nombrePrograma PUNTOCOMA
+
+specSubprograma   			::= PROCEDURE nombrePrograma
+							|	PROCEDURE nombrePrograma PARIZQ listaSpecParam PARDER
+							|	FUNCTION nombrePrograma PARIZQ listaSpecParam PARDER RETURN ID PUNTOCOMA
+
+nombrePrograma  			::= ID PUNTO ID
+							| 	ID
+
+listaSpecParam            	::= specParam
+							|	specParam PUNTOCOMA listaSpecParam
+
+specParam         			::= params DOSPUNTOS mode
+							| 	params DOSPUNTOS mode OPERASIG expr
+
+mode              			::= IN
+							|	INOUT 
+							|	OUT
+	
+/*declaración*/
+decl      					::= NULL PUNTOCOMA
+							|	ID OPERASIG expr PUNTOCOMA/*declaración asignación*/
+							|	EXIT ID WHEN exprBooleana PUNTOCOMA
+							|	GOTO ID PUNTOCOMA
+							|	ID PARIZQ params PARDER PUNTOCOMA/*llamado a procedimiento*/
+							|	RETURN expr PUNTOCOMA/*return de una función*/
+							|	decIf
+							|	decCase
+							|	decLoop
+							|	decBloque
+							
+/*secuencia de declaraciones*/
+secDec    					::= decl secDec
+							|	/*vacío*/
+
+/*lista de ids*/
+params      				::= ID
+							|	ID COMA params
+
+/*declaracion if*/
+decIf     					::= IF exprBooleana THEN secDec decElseIf decElse ENDIF
+
+/*declaración else if*/
+decElseIf 					::= ELSEIF exprBooleana THEN secDec decElseIf
+							|	/*vacío*/
+
+/*declaración else*/
+decElse   					::= ELSE secDec
+	
+
+/*declaración case*/						
+decCase       				::= CASE expr IS decWhen 
+
+/*declaración when*/
+/*DELIMITADOR es =>*/
+decWhen       				::= WHEN opcionesWhen DELIMITADOR secDec
+
+/*Opciones when*/
+opcionesWhen  				::= opcWhen
+							|	opcWhen	PIPE opcionesWhen
+
+/*opción when*/
+opcWhen       				::= expr
+							| rango
+							| OTHERS
+
+/*rango 5..8*/
+rango         				::= NUMERO DOBLEPUNTO NUMERO
+
+decLoop       				::= ID DOSPUNTOS LOOP secDec END LOOP ID PUNTOCOMA
+							| esqIteracion DOSPUNTOS LOOP secDec END LOOP ID PUNTOCOMA
+	
+esqIteracion  				::= WHILE exprBooleana 
+							| FOR parametroFor
+	
+parametroFor  				::= ID IN rango
+							| ID IN REVERSE rango
+	
+decBloque     				::= ID DOSPUNTOS BEGIN secDec END ID PUNTOCOMA
+							| DECLARE listaDeclaraciones BEGIN secDec END ID PUNTOCOMA
+
+listaDeclaraciones 			::= itemDeclarativo listaDeclaraciones
+							|	/*vacío*/
+
+itemDeclarativo  			::= decBasica
+							|	declaracionVariable
+							|	clausulaUse
+							|	body
+
+decBasica					::=	type_declaration | subtype_declaration | object_declaration | number_declaration | subprogram_declaration | abstract_subprogram_declaration | package_declaration | renaming_declaration | exception_declaration | generic_declaration | generic_instantiation
+
+exprAritmetica				::=	exprAritmetica OPERSUMA operando
+							|
+							exprAritmetica OPERRESTA operando
+							|
+							factor
+ 							
+factor 						::= factor OPERMULTIPLICACION operando
+							|
+							factor OPERDIVISION operando
+							|
+							operando
+
+operando 					::= PARIZQ exprAritmetica PARDER
+							| NUMERO
+
+exprBooleana 				::= operandoBooleano AND exprBooleana
+							|
+							operandoBooleano OR exprBooleana
+							|
+							operandoBooleano
+
+operandoBooleano			::=	PARIZQ exprBooleana PARDER
+							|
+							NOT exprBooleana
+							|
+							ID
+							|
+							comparacion
+
+/*A AND (B OR C) AND NOT D
+
+operandoBooleano AND exprBooleana
+A AND exprBooleana
+A AND operandoBooleano AND exprBooleana
+A AND (exprBooleana) AND operandoBooleano
+A AND (operandoBooleano OR operandoBooleano) AND NOT exprBooleana
+A AND (B OR C) AND NOT operandoBooleano
+A AND (B OR C) AND NOT D*/
+
+comparacion					::=	exprAritmetica OPERMAYOR exprAritmetica
+							|
+							exprAritmetica OPERMENOR exprAritmetica
+							|
+							exprAritmetica OPERMAYORIGUAL exprAritmetica
+							|
+							exprAritmetica OPERMENORIGUAL exprAritmetica
+							|
+							exprAritmetica OPERIGUAL exprAritmetica
+							|
+							exprAritmetica OPERDISTINTO exprAritmetica
