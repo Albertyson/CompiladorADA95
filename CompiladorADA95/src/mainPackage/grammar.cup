@@ -1,205 +1,310 @@
 /*
 	Para regenerar el Parser.java y sym.java, ejecutar el comando:
-		java -jar ../../lib/java-cup-11a.jar -interface -parser Parser parser.cup
+		java -jar ../../lib/java-cup-11a.jar grammar.cup
 */
+package mainPackage;
 
 import java_cup.runtime.*;
 
+
 parser code {:
-		public void report_error(String message, Object info) {
-				StringBuilder m = new StringBuilder("Error");
-				if (info instanceof java_cup.runtime.Symbol) {
-						java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
-						if (s.left >= 0) {
-								m.append(" in line " + (s.left + 1));   
-								if (s.right >= 0) 
-										m.append(", column " + (s.right + 1));
-						}
+	public void report_error(String message, Object info) {
+		StringBuilder m = new StringBuilder("Error");
+		if (info instanceof java_cup.runtime.Symbol) {
+			java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+			if (s.left >= 0) {
+				m.append(" in line " + (s.left + 1));   
+				if (s.right >= 0){
+					m.append(", column " + (s.right + 1));
 				}
-				m.append(" : " + message);
-				System.err.println(m);
+			}
 		}
-						 
-		public void report_fatal_error(String message, Object info) {
-				report_error(message, info);
-				//System.exit(1);
-		}
+		m.append(" : " + message);
+		System.err.println(m);
+	}
+
+	public void report_fatal_error(String message, Object info) {
+		report_error(message, info);
+		//System.exit(1);
+	}
 :};
 
 /* ----------Sección de declaraciones de terminales y no terminales--------- */
 /* Tipos */
 terminal INTEGER, BOOLEAN, FLOAT;
+
 /* Valores */
 terminal TRUE, FALSE;
 
 /* Estructuras de Control*/
-terminal IF, ELSE, FOR;
+terminal IF, ELSE, ELSIF, FOR;
 
-/* ME FALTA, en la tarde sigo */
-
-terminal           DECLARE, DO, END, EXIT, FUNCTION, GOTO, NEW, NULL, OUT, PROCEDURE;
-terminal           RETURN, THEN, WHEN, IN, WHILE, LOOP, INOUT, PUT, GET, WITH, USE, IS, BEGIN;
-terminal           MOD, PIPE, OTHERS, OPERASIG, OPERPUNTERO, OPERMENOR, OPERMAYOR, OPERIGUAL, OPERDISTINTO, OPERMAYORIGUAL, OPERMENORIGUAL;
-terminal           OPERSUMA, OPERRESTA, OPERMULTIPLICACION, OPERDIVISION, OPERPOTENCIA, AND, OR, NOT, PARIZQ, PARDER;
-terminal           PUNTOCOMA, DOBLEPUNTO, PUNTO, COMA, DOSPUNTOS, NUMERAL, AMPERSAND, CASE;
-terminal Object    ID, CADENA;
-terminal Integer   NUMERO;
+terminal			DECLARE, END, EXIT, FUNCTION, NEW, NULL, OUT, PROCEDURE;
+terminal			RETURN, THEN, WHEN, IN, WHILE, LOOP, INOUT, PUT, GET, IS, BEGIN;
+terminal			OPERASIG, OPERMENOR, OPERMAYOR, OPERIGUAL, OPERDISTINTO, OPERMAYORIGUAL, OPERMENORIGUAL;
+terminal			OPERSUMA, OPERRESTA, OPERMULTIPLICACION, OPERDIVISION, OPERPOTENCIA, AND, OR, NOT, PARIZQ, PARDER;
+terminal			PUNTOCOMA, DOBLEPUNTO, COMA, DOSPUNTOS, NEGATIVO;
+terminal String		ID;
+terminal String		CADENA;
+terminal Integer	NUMEROENTERO;
+terminal Double		NUMEROFLOAT;
 	 
 /* Los no terminales usados en la gramática */
-non terminal Object     decIf, decElseIf, decElse, secDec, decl, decSimple, decNull, decAsig, decExit, decGoto, decProcCall, decReturn, params;
-non terminal Object     decCompuesta, decCase, decWhen, opcionesWhen, opcWhen, range, decLoop, esqIteracion, parametroFor;
-non terminal Object     expr, exprBooleana, exprSimple;
+non terminal		expression;
+non terminal		literal_expression;
+non terminal		arithmetic_expression;
+non terminal		boolean_expression;
+non terminal		logical_expression;
+non terminal		function_parameters;
+non terminal		function_call;
+non terminal		statements;
+non terminal		statement;
+non terminal		range;
+non terminal		variable_ids;
+non terminal		variable_type;
+non terminal		assign_variable;
+non terminal		variable_declaration;
+non terminal		get_value;
+non terminal		put_value;
+non terminal		elsif_statements;
+non terminal		elsif_statement;
+non terminal		if_statement;
+non terminal		while_statemet;
+non terminal		for_statement;
+non terminal		exit_statement;
+non terminal		loop_statement;
+non terminal 		declaration_part;
 
 
-/* ------------------------Sección de Gramática----------------------------- */
+/*      Precedencias        */
+precedence right	OPERASIG;
+precedence left		OR;
+precedence left		AND;
+precedence left		OPERMENOR, OPERMENORIGUAL, OPERMAYOR, OPERMAYORIGUAL, OPERIGUAL, OPERDISTINTO;
+precedence left		OPERSUMA, OPERRESTA;
+precedence left		OPERMULTIPLICACION, OPERDIVISION;
+precedence right	NEGATIVO, NOT, OPERPOTENCIA;
+precedence nonassoc	ELSE;
 
-listaLibraryName			::=	ID PUNTO ID | ID PUNTO ID COMA listaLibraryName
 
-encabezadoWith				::=	WITH listaLibraryName PUNTOCOMA
 
-clausulaUse					::=	USE params PUNTOCOMA
+/* ------------------------			Sección de gramática		----------------------------- */
 
-body              			::= specSubprograma IS listaDeclaraciones BEGIN secDec END nombrePrograma PUNTOCOMA
+							/*      >> Expresiones <<    */
 
-specSubprograma   			::= PROCEDURE nombrePrograma
-							|	PROCEDURE nombrePrograma PARIZQ listaSpecParam PARDER
-							|	FUNCTION nombrePrograma PARIZQ listaSpecParam PARDER RETURN ID PUNTOCOMA
+expression					::=		literal_expression
+										{: System.out.println("Expresion literal"); :}
+									| ID:id
+										{: System.out.println(id); :}
+									| arithmetic_expression
+										{: System.out.println("Expresion aritmetica"); :}
+									| PARIZQ expression PARDER
+										{: System.out.println("Expresion con parentesis"); :}
+									| boolean_expression
+										{: System.out.println("Expresion Booleana"); :}
+									| logical_expression
+										{: System.out.println("Expresion Logica"); :}
+									| function_call
+										{: System.out.println("Expresion Llamado a Funcion"); :}
+									;
 
-nombrePrograma  			::= ID PUNTO ID
-							| 	ID
 
-listaSpecParam            	::= specParam
-							|	specParam PUNTOCOMA listaSpecParam
+literal_expression			::=		NUMEROENTERO:num
+										{: System.out.println(num); :}
+									| NUMEROFLOAT:num
+										{: System.out.println(num); :}
+									| CADENA:cad
+										{: System.out.println(cad); :}
+									| NULL
+										{: System.out.println("null"); :}
+									;
 
-specParam         			::= params DOSPUNTOS mode
-							| 	params DOSPUNTOS mode OPERASIG expr
 
-mode              			::= IN
-							|	INOUT 
-							|	OUT
-	
-/*declaración*/
-decl      					::= NULL PUNTOCOMA
-							|	ID OPERASIG expr PUNTOCOMA/*declaración asignación*/
-							|	EXIT ID WHEN exprBooleana PUNTOCOMA
-							|	GOTO ID PUNTOCOMA
-							|	ID PARIZQ params PARDER PUNTOCOMA/*llamado a procedimiento*/
-							|	RETURN expr PUNTOCOMA/*return de una función*/
-							|	decIf
-							|	decCase
-							|	decLoop
-							|	decBloque
-							
-/*secuencia de declaraciones*/
-secDec    					::= decl secDec
-							|	/*vacío*/
+arithmetic_expression		::=		expression OPERSUMA expression
+										{: System.out.println("Suma"); :}
+									| expression OPERRESTA expression
+										{: System.out.println("Resta"); :}
+									| expression OPERDIVISION expression
+										{: System.out.println("Division"); :}
+									| expression OPERMULTIPLICACION expression
+										{: System.out.println("Multiplicacion"); :}
+									| expression OPERPOTENCIA expression
+										{: System.out.println("Potencia"); :}
+									| OPERRESTA expression
+										{: System.out.println("Negativo"); :}
+										%prec NEGATIVO
+									;
 
-/*lista de ids*/
-params      				::= ID
-							|	ID COMA params
 
-/*declaracion if*/
-decIf     					::= IF exprBooleana THEN secDec decElseIf decElse ENDIF
+boolean_expression			::=		expression OPERIGUAL expression
+										{: System.out.println("Igual"); :}
+									| expression OPERDISTINTO expression
+										{: System.out.println("Distinto"); :}
+									| expression OPERMAYOR expression
+										{: System.out.println("Mayor"); :}
+									| expression OPERMENOR expression
+										{: System.out.println("Menor"); :}
+									| expression OPERMAYORIGUAL expression
+										{: System.out.println("Mayor o Igual"); :}
+									| expression OPERMENORIGUAL expression
+										{: System.out.println("Menor o Igual"); :}
+									;
 
-/*declaración else if*/
-decElseIf 					::= ELSEIF exprBooleana THEN secDec decElseIf
-							|	/*vacío*/
 
-/*declaración else*/
-decElse   					::= ELSE secDec
-	
+logical_expression			::=		expression AND expression
+										{: System.out.println("and"); :}
+									| expression OR expression
+										{: System.out.println("or"); :}
+									| NOT expression
+										{: System.out.println("not"); :}
+									;
 
-/*declaración case*/						
-decCase       				::= CASE expr IS decWhen 
 
-/*declaración when*/
-/*DELIMITADOR es =>*/
-decWhen       				::= WHEN opcionesWhen DELIMITADOR secDec
+function_parameters			::=		expression
+										{: System.out.println("parametro"); :}
+									| expression COMA function_parameters
+										{: System.out.println("parametros"); :}
+									;
 
-/*Opciones when*/
-opcionesWhen  				::= opcWhen
-							|	opcWhen	PIPE opcionesWhen
 
-/*opción when*/
-opcWhen       				::= expr
-							| rango
-							| OTHERS
+function_call				::=		ID PARIZQ function_parameters PARDER
+										{: System.out.println("llamado a funcion o procedimiento"); :}
+									| ID PARIZQ PARDER
+										{: System.out.println("llamado a funcion o procedimiento sin parametros"); :}
+									;
 
-/*rango 5..8*/
-rango         				::= NUMERO DOBLEPUNTO NUMERO
 
-decLoop       				::= ID DOSPUNTOS LOOP secDec END LOOP ID PUNTOCOMA
-							| esqIteracion DOSPUNTOS LOOP secDec END LOOP ID PUNTOCOMA
-	
-esqIteracion  				::= WHILE exprBooleana 
-							| FOR parametroFor
-	
-parametroFor  				::= ID IN rango
-							| ID IN REVERSE rango
-	
-decBloque     				::= ID DOSPUNTOS BEGIN secDec END ID PUNTOCOMA
-							| DECLARE listaDeclaraciones BEGIN secDec END ID PUNTOCOMA
 
-listaDeclaraciones 			::= itemDeclarativo listaDeclaraciones
-							|	/*vacío*/
+							/*      >> Statements <<    */
 
-itemDeclarativo  			::= declaracionVariable
-							|	clausulaUse
-							|	body
+statements					::=		statement statements
+										{: System.out.println("statements"); :}
+									| /* Vacio */
+									;
 
-expr 						::=exprAritmetica
-							| exprBooleana
 
-/*expresión aritmética*/
-exprAritmetica				::=	exprAritmetica OPERSUMA operando
-							|
-							exprAritmetica OPERRESTA operando
-							|
-							factor
- 							
-factor 						::= factor OPERMULTIPLICACION operando
-							|
-							factor OPERDIVISION operando
-							|
-							operando
+statement					::=		assign_variable
+										{: System.out.println("statement asignacion de variables"); :}
+									| variable_declaration PUNTOCOMA
+										{: System.out.println("statement Declaracion Variable"); :}
+									| expression PUNTOCOMA
+										{: System.out.println("statement expression"); :}
+									| get_value
+										{: System.out.println("statement get value"); :}
+									| put_value
+										{: System.out.println("statement put value"); :}
+									| if_statement
+										{: System.out.println("statement if"); :}
+									| while_statemet
+										{: System.out.println("statement while"); :}
+									| for_statement
+										{: System.out.println("statement for"); :}
+									| exit_statement
+										{: System.out.println("statement exit when"); :}
+									| loop_statement
+										{: System.out.println("statement loop"); :}
+									;
 
-operando 					::= PARIZQ exprAritmetica PARDER
-							| NUMERO
-							| ID
 
-/*expresión booleana*/
-exprBooleana 				::= operandoBooleano AND exprBooleana
-							|
-							operandoBooleano OR exprBooleana
-							|
-							operandoBooleano
+range						::=		expression DOBLEPUNTO expression
+										{: System.out.println("rango"); :}
+									;
 
-operandoBooleano			::=	PARIZQ exprBooleana PARDER
-							|
-							NOT exprBooleana
-							|
-							ID
-							|
-							comparacion
 
-/*A AND (B OR C) AND NOT D
+variable_ids				::=		ID
+										{: System.out.println("Id"); :}
+									| ID COMA variable_ids
+										{: System.out.println("Ids"); :}
+									;
 
-operandoBooleano AND exprBooleana
-A AND exprBooleana
-A AND operandoBooleano AND exprBooleana
-A AND (exprBooleana) AND operandoBooleano
-A AND (operandoBooleano OR operandoBooleano) AND NOT exprBooleana
-A AND (B OR C) AND NOT operandoBooleano
-A AND (B OR C) AND NOT D*/
 
-comparacion					::=	exprAritmetica OPERMAYOR exprAritmetica
-							|
-							exprAritmetica OPERMENOR exprAritmetica
-							|
-							exprAritmetica OPERMAYORIGUAL exprAritmetica
-							|
-							exprAritmetica OPERMENORIGUAL exprAritmetica
-							|
-							exprAritmetica OPERIGUAL exprAritmetica
-							|
-							exprAritmetica OPERDISTINTO exprAritmetica
+variable_type				::=		INTEGER
+										{: System.out.println("Tipo Integer"); :}
+									| BOOLEAN
+										{: System.out.println("Tipo Boolean"); :}
+									| FLOAT
+										{: System.out.println("Tipo Float"); :}
+									;
+
+
+assign_variable				::=		ID OPERASIG expression PUNTOCOMA
+										{: System.out.println("Asignacion a Variable"); :}
+									| variable_declaration OPERASIG expression PUNTOCOMA
+										{: System.out.println("declaracion y Asignacion de variable"); :}
+									;
+
+
+variable_declaration		::=		variable_ids DOSPUNTOS variable_type
+										{: System.out.println("Declaracion de variables"); :}
+									;
+
+
+get_value					::=		GET PARIZQ ID PARDER PUNTOCOMA
+										{: System.out.println("Get"); :}
+									;
+
+
+put_value					::=		PUT PARIZQ expression PARDER PUNTOCOMA
+										{: System.out.println("Put"); :}
+									;
+
+
+elsif_statements			::=		elsif_statement elsif_statements
+										{: System.out.println("elsif statements"); :}
+									| elsif_statement
+										{: System.out.println("elsif statement"); :}
+									;
+
+
+elsif_statement				::=		ELSIF expression THEN statements
+										{: System.out.println("elsif"); :}
+									;
+
+
+if_statement				::=		IF expression THEN statements END IF PUNTOCOMA
+										{: System.out.println("If Sencillo"); :}
+									| IF expression THEN statements ELSE statements END IF PUNTOCOMA
+										{: System.out.println("If Sencillo con else"); :}
+									| IF expression THEN statements elsif_statements END IF PUNTOCOMA
+										{: System.out.println("If con elsif sin else"); :}
+									| IF expression THEN statements elsif_statements ELSE statements END IF PUNTOCOMA
+										{: System.out.println("If con elsif con else"); :}
+									;
+
+
+while_statemet				::=		WHILE expression LOOP statements END LOOP PUNTOCOMA
+										{: System.out.println("while"); :}
+									;
+
+
+for_statement				::=		FOR ID IN range LOOP statements END LOOP PUNTOCOMA
+										{: System.out.println("for"); :}
+									;
+
+
+exit_statement				::=		EXIT WHEN expression PUNTOCOMA
+										{: System.out.println("exit when"); :}
+									;
+
+
+
+loop_statement				::=		LOOP statements END LOOP PUNTOCOMA
+										{: System.out.println("loop"); :}
+									;
+/*case_statement				::=		CASE expression IS WHEN when_options DELIMITADOR statements
+									| CASE expression IS WHEN when_options OTHERS DELIMITADOR statements
+									;
+
+when_options  				::= 	option_when
+									| option_when PIPE when_options
+									;
+
+option_when					::=		expression 
+									| range
+									;*/
+program						::=		PROCEDURE ID IS declaration_part BEGIN statements END ID PUNTOCOMA 
+										{: System.out.println("Programa principal");:}
+									;
+declaration_part 			::=		variable_declaration
+										{:System.out.println("variable_declaration");:}
+									;
