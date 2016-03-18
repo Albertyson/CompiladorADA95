@@ -43,13 +43,14 @@ terminal			DECLARE, END, EXIT, FUNCTION, NEW, NULL, OUT, PROCEDURE;
 terminal			RETURN, THEN, WHEN, IN, WHILE, LOOP, INOUT, PUT, GET, IS, BEGIN;
 terminal			OPERASIG, OPERMENOR, OPERMAYOR, OPERIGUAL, OPERDISTINTO, OPERMAYORIGUAL, OPERMENORIGUAL;
 terminal			OPERSUMA, OPERRESTA, OPERMULTIPLICACION, OPERDIVISION, OPERPOTENCIA, AND, OR, NOT, PARIZQ, PARDER;
-terminal			PUNTOCOMA, DOBLEPUNTO, COMA, DOSPUNTOS, NEGATIVO;
+terminal			PUNTOCOMA, DOBLEPUNTO, COMA, DOSPUNTOS, NEGATIVO,PIPE, PUNTO, NUMERAL, AMPERSAND, DO, OPERPUNTERO, MOD, GOTO, OTHERS;
 terminal String		ID;
 terminal String		CADENA;
 terminal Integer	NUMEROENTERO;
 terminal Double		NUMEROFLOAT;
 	 
 /* Los no terminales usados en la gramática */
+non terminal		program;
 non terminal		expression;
 non terminal		literal_expression;
 non terminal		arithmetic_expression;
@@ -90,8 +91,16 @@ precedence nonassoc	ELSE;
 
 /* ------------------------			Sección de gramática		----------------------------- */
 
-							/*      >> Expresiones <<    */
+/*programa principal*/
+program						::=		PROCEDURE ID IS declaration_part BEGIN statements END ID PUNTOCOMA 
+										{: System.out.println("Programa principal");:}
+									;
 
+declaration_part 			::=		variable_declaration
+										{:System.out.println("variable_declaration");:}
+									;
+
+							/*      >> Expresiones <<    */
 expression					::=		literal_expression
 										{: System.out.println("Expresion literal"); :}
 									| ID:id
@@ -302,9 +311,3 @@ when_options  				::= 	option_when
 option_when					::=		expression 
 									| range
 									;*/
-program						::=		PROCEDURE ID IS declaration_part BEGIN statements END ID PUNTOCOMA 
-										{: System.out.println("Programa principal");:}
-									;
-declaration_part 			::=		variable_declaration
-										{:System.out.println("variable_declaration");:}
-									;

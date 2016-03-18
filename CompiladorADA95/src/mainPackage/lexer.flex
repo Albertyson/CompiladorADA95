@@ -3,7 +3,7 @@ import java_cup.runtime.*;
 
 %%
 
-%class Lexer
+%class Lexer2
 %unicode
 %line
 %column
