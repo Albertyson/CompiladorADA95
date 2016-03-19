@@ -280,7 +280,7 @@ statement					::=		assign_variable
 									| case_statement
 										{: System.out.println("case statement");:}
 									| return_statement
-										{: System.out.println("return de función"):}
+										{: System.out.println("return de función");:}
 									;
 
 
