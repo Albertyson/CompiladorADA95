@@ -31,7 +31,7 @@ parser code {:
 
 /* ----------Sección de declaraciones de terminales y no terminales--------- */
 /* Tipos */
-terminal INTEGER, BOOLEAN, FLOAT;
+terminal INTEGER, BOOLEAN, FLOAT, CHARACTER, STRING;
 
 /* Valores */
 terminal TRUE, FALSE;
@@ -39,13 +39,14 @@ terminal TRUE, FALSE;
 /* Estructuras de Control*/
 terminal IF, ELSE, ELSIF, FOR;
 
-terminal			DECLARE, END, EXIT, FUNCTION, NEW, NULL, OUT, PROCEDURE;
+terminal			DECLARE, END, EXIT, FUNCTION, NULL, OUT, PROCEDURE;
 terminal			RETURN, THEN, WHEN, IN, WHILE, LOOP, INOUT, PUT, GET, IS, BEGIN;
 terminal			OPERASIG, OPERMENOR, OPERMAYOR, OPERIGUAL, OPERDISTINTO, OPERMAYORIGUAL, OPERMENORIGUAL;
 terminal			OPERSUMA, OPERRESTA, OPERMULTIPLICACION, OPERDIVISION, OPERPOTENCIA, AND, OR, NOT, PARIZQ, PARDER;
 terminal			PUNTOCOMA, DOBLEPUNTO, COMA, DOSPUNTOS, NEGATIVO,PIPE, PUNTO, NUMERAL, AMPERSAND, DO, OPERPUNTERO, MOD, GOTO, OTHERS;
+terminal 			CASE;
 terminal String		ID;
-terminal String		CADENA;
+terminal String		CADENA,CARACTER;
 terminal Integer	NUMEROENTERO;
 terminal Double		NUMEROFLOAT;
 	 
@@ -74,7 +75,18 @@ non terminal		while_statemet;
 non terminal		for_statement;
 non terminal		exit_statement;
 non terminal		loop_statement;
+non terminal		case_statement;
+non terminal		when_options;
+non terminal		option_when;
 non terminal 		declaration_part;
+non terminal 		function_declaration;
+non terminal 		procedure_declaration;
+non terminal 		parameter_declarations;
+non terminal 		parameter;
+non terminal 		mode;
+non terminal 		string_expression;
+non terminal 		return_statement;
+
 
 
 /*      Precedencias        */
@@ -84,6 +96,7 @@ precedence left		AND;
 precedence left		OPERMENOR, OPERMENORIGUAL, OPERMAYOR, OPERMAYORIGUAL, OPERIGUAL, OPERDISTINTO;
 precedence left		OPERSUMA, OPERRESTA;
 precedence left		OPERMULTIPLICACION, OPERDIVISION;
+precedence left 	MOD;
 precedence right	NEGATIVO, NOT, OPERPOTENCIA;
 precedence nonassoc	ELSE;
 
@@ -96,9 +109,47 @@ program						::=		PROCEDURE ID IS declaration_part BEGIN statements END ID PUNTO
 										{: System.out.println("Programa principal");:}
 									;
 
-declaration_part 			::=		variable_declaration
+declaration_part 			::=		variable_declaration PUNTOCOMA declaration_part
 										{:System.out.println("variable_declaration");:}
+									| function_declaration declaration_part
+										{:System.out.println("function_declaration");:}
+									| procedure_declaration declaration_part
+										{:System.out.println("procedure_declaration");:}
+									|
 									;
+
+function_declaration		::=		FUNCTION ID PARIZQ parameter_declarations PARDER RETURN variable_type IS declaration_part BEGIN statements END ID PUNTOCOMA
+										{:System.out.println("inside function_declaration");:}
+									;
+
+procedure_declaration 		::=		PROCEDURE ID PARIZQ parameter_declarations PARDER IS declaration_part BEGIN statements END ID PUNTOCOMA
+										{:System.out.println("inside procedure_declaration");:}
+ 									;
+
+parameter_declarations 		::=		parameter
+										{:System.out.println("parameter");:}
+ 									| parameter_declarations PUNTOCOMA parameter
+										{:System.out.println("parameter_declarations");:}
+									|
+ 									;
+
+parameter 					::=	 	variable_ids DOSPUNTOS mode variable_type OPERASIG expression
+										{:System.out.println("parameter with type and mode and assign");:}
+									| variable_ids DOSPUNTOS mode variable_type
+										{:System.out.println("parameter with type and mode");:}
+									| variable_ids DOSPUNTOS variable_type 
+										{:System.out.println("parameter with type");:}
+									| variable_ids DOSPUNTOS variable_type OPERASIG expression
+										{:System.out.println("parameter with type and assignation");:}
+ 									;
+
+mode              			::= 	IN
+										{:System.out.println("IN");:}
+		 							| INOUT 
+										{:System.out.println("INOUT");:}
+		 							| OUT
+										{:System.out.println("OUT");:}
+		 							;
 
 							/*      >> Expresiones <<    */
 expression					::=		literal_expression
@@ -122,12 +173,23 @@ literal_expression			::=		NUMEROENTERO:num
 										{: System.out.println(num); :}
 									| NUMEROFLOAT:num
 										{: System.out.println(num); :}
-									| CADENA:cad
-										{: System.out.println(cad); :}
 									| NULL
 										{: System.out.println("null"); :}
+									| TRUE
+										{: System.out.println("true"); :}
+									| FALSE
+										{: System.out.println("false"); :}
+									| string_expression
+										{: System.out.println("Cadena"); :}
+									| CARACTER:car
+										{: System.out.println(car); :}
 									;
 
+string_expression			::=		CADENA:cad
+										{: System.out.println(cad); :}
+									|
+									CADENA AMPERSAND string_expression
+									;
 
 arithmetic_expression		::=		expression OPERSUMA expression
 										{: System.out.println("Suma"); :}
@@ -142,6 +204,9 @@ arithmetic_expression		::=		expression OPERSUMA expression
 									| OPERRESTA expression
 										{: System.out.println("Negativo"); :}
 										%prec NEGATIVO
+									//agregando MOD
+									| expression MOD expression
+										{: System.out.println("Residuo"); :}										
 									;
 
 
@@ -212,6 +277,10 @@ statement					::=		assign_variable
 										{: System.out.println("statement exit when"); :}
 									| loop_statement
 										{: System.out.println("statement loop"); :}
+									| case_statement
+										{: System.out.println("case statement");:}
+									| return_statement
+										{: System.out.println("return de función"):}
 									;
 
 
@@ -233,6 +302,10 @@ variable_type				::=		INTEGER
 										{: System.out.println("Tipo Boolean"); :}
 									| FLOAT
 										{: System.out.println("Tipo Float"); :}
+									| CHARACTER
+										{: System.out.println("Tipo Character"); :}
+									| STRING
+										{: System.out.println("Tipo String"); :}
 									;
 
 
@@ -300,14 +373,24 @@ exit_statement				::=		EXIT WHEN expression PUNTOCOMA
 loop_statement				::=		LOOP statements END LOOP PUNTOCOMA
 										{: System.out.println("loop"); :}
 									;
-/*case_statement				::=		CASE expression IS WHEN when_options DELIMITADOR statements
-									| CASE expression IS WHEN when_options OTHERS DELIMITADOR statements
+case_statement				::=		CASE expression IS WHEN when_options OPERPUNTERO statements END CASE PUNTOCOMA
+										{: System.out.println("case_statement"); :}
+									| CASE expression IS WHEN when_options OTHERS OPERPUNTERO statements END CASE PUNTOCOMA
+										{: System.out.println("case_statement and Others"); :}
 									;
 
 when_options  				::= 	option_when
+										{: System.out.println("option_when"); :}
 									| option_when PIPE when_options
+										{: System.out.println("when_options"); :}
 									;
 
 option_when					::=		expression 
+										{: System.out.println("expression"); :}
 									| range
-									;*/
+										{: System.out.println("range"); :}
+									;
+
+return_statement			::=		RETURN expression PUNTOCOMA
+										{: System.out.println("return_statement"); :}
+									;

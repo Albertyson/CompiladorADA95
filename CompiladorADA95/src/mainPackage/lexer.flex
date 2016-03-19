@@ -33,6 +33,7 @@ EspacioBlanco = {FinLinea} | [ \t\f]
 Identificador = [:jletter:] [:jletterdigit:]*
 NumeroEntero = 0 | [1-9](_?[0-9])*
 NumeroFloat = 0 | [0-9]+.[0-9](_?[0-9])*
+Caracter    = '\w'
 
 /* comments */
 Comentario = "--" {InputCaracter}* {FinLinea}?
@@ -52,7 +53,6 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
 <YYINITIAL> "for"       { System.out.println("<FOR " + (yyline + 1) + ":" + yycolumn + ">"); return symbol(sym.FOR); }
 <YYINITIAL> "function"  { System.out.println("<FUNCTION "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FUNCTION); }
 <YYINITIAL> "if"        { System.out.println("<IF "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.IF); }
-<YYINITIAL> "new"       { System.out.println("<NEW "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NEW); }
 <YYINITIAL> "null"      { System.out.println("<NULL "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NULL); }
 <YYINITIAL> "out"       { System.out.println("<OUT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OUT); }
 <YYINITIAL> "procedure" { System.out.println("<PROCEDURE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PROCEDURE); }
@@ -72,6 +72,8 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
 <YYINITIAL> "begin"     { System.out.println("<BEGIN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.BEGIN); }
 <YYINITIAL> "true"      { System.out.println("<TRUE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.TRUE); }
 <YYINITIAL> "false"     { System.out.println("<FALSE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FALSE); }
+<YYINITIAL> "character" { System.out.println("<CHARACTER "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.CHARACTER); }
+<YYINITIAL> "string"    { System.out.println("<STRING "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.STRING); }
 
 /* Operadores */
 <YYINITIAL> ":="        { System.out.println("<ASIG, \":=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERASIG); }
@@ -103,6 +105,8 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
 <YYINITIAL> ".."        { System.out.println("<RANGO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DOBLEPUNTO); }
 <YYINITIAL> ","         { System.out.println("<COMA "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.COMA); }
 <YYINITIAL> ":"         { System.out.println("<DOS PUNTOS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DOSPUNTOS); }
+<YYINITIAL> "&"         { System.out.println("<AMPERSAND "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.AMPERSAND); }
+<YYINITIAL> "=>"        { System.out.println("<OPERPUNTERO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERPUNTERO); }
 
 <YYINITIAL> {
     {Identificador}     { System.out.println("<ID, \"" + yytext() + "\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.ID, yytext()); }
@@ -111,6 +115,7 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
     {NumeroFloat}       { System.out.println("<FLOAT, \"" + yytext() + "\" " + (yyline + 1) + ":" + yycolumn + ">"); return symbol(sym.NUMEROFLOAT, new Double(Double.parseDouble(yytext()))); }
     {EspacioBlanco}     { /* ignore */ }
     {Comentario}        { /* ignore */ }
+    {Caracter}          { System.out.println("<CARACTER," + yytext() + (yyline + 1) + ":" + yycolumn + ">");return symbol(sym.CARACTER, yytext());}
 }
 
 <STRING> {

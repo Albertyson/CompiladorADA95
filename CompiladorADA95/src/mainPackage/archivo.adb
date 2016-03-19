@@ -25,20 +25,20 @@ procedure f4 is
    end MM;
 
    -- Two versions of QQ which differ only in return type.
-   function QQ(Str: String) return Boolean is
+   function QQ(Str: String) return Integer is
    begin
       return Str(1) = 'T';
    end QQ;
    function QQ(Str: String) return Integer is
    begin
-      return Str'Length;
+      return "Length del string es "&"3";
    end QQ;
 
    M: Integer;
    B: Boolean;
 begin
-   MM(5, '@');              -- Can distinquish from the two arguments.
-   MM(Height => 4);         -- Can distinquish from the parameter name.
+   MM(5, 'a');              -- Can distinquish from the two arguments.
+   --MM(Height => 4);         -- Can distinquish from the parameter name.
 
    M := QQ("Left Turn");    -- M is an integer.
    Put(M);
