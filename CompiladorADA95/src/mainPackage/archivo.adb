@@ -1,19 +1,9 @@
---
--- Functions and procedures may be overloaded in Ada as in C++ and Java.
--- The rules for figuring out which method you are calling differ.
---
---with Text_IO;
---with Gnat.Io; use Gnat.Io;
 procedure f4 is
-   -- Output booleans.
-   --package Boolean_IO is new Text_Io.Enumeration_IO(Boolean);
-   --use Boolean_IO;
 
-   -- Two versions of MM, which differ in their arguments.
-   procedure MM(Width: Integer; Ch: Character := 'X') is
+   procedure MM(Width: Integer) is
    begin
       for I in 1..Width loop
-         Put(Ch);
+         Put(Width);
       end loop;
       New_Line;
    end MM;
@@ -24,7 +14,6 @@ procedure f4 is
       end loop;
    end MM;
 
-   -- Two versions of QQ which differ only in return type.
    function QQ(Str: String) return Integer is
    begin
       return Str(1) = 'T';
@@ -37,13 +26,13 @@ procedure f4 is
    M: Integer;
    B: Boolean;
 begin
-   MM(5, 'a');              -- Can distinquish from the two arguments.
-   --MM(Height => 4);         -- Can distinquish from the parameter name.
+   MM(5, 'a');
+   --MM(Height => 4);
 
-   M := QQ("Left Turn");    -- M is an integer.
+   M := QQ("Left Turn");
    Put(M);
    New_Line;
-   B := QQ("Blip");         -- B is boolean.
+   B := QQ("Blip");
    Put(B);
    New_Line;
 end f4;
