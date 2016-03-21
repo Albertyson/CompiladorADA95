@@ -14,6 +14,7 @@ import java.io.PrintStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import jdk.nashorn.internal.parser.Scanner;
 
@@ -27,6 +28,7 @@ public class formPrincipal extends javax.swing.JFrame {
      * Creates new form fomrPrincipal
      */
     public formPrincipal() {
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         initComponents();
     }
 
@@ -81,6 +83,8 @@ public class formPrincipal extends javax.swing.JFrame {
 
         txtFile.setColumns(20);
         txtFile.setRows(5);
+        txtFile.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtFile.setEnabled(false);
         jScrollPane1.setViewportView(txtFile);
 
         jMenu2.setText("Opciones");
@@ -116,9 +120,9 @@ public class formPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtFileName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -139,9 +143,9 @@ public class formPrincipal extends javax.swing.JFrame {
                     .addComponent(btnShowTree)
                     .addComponent(btnClean))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
 
@@ -152,7 +156,7 @@ public class formPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             JFileChooser fc = new JFileChooser();
-            fc.setCurrentDirectory(new File("./"));
+            fc.setCurrentDirectory(new File("./src/mainPackage/"));
             int returnVal = fc.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 currentFile = fc.getSelectedFile();
