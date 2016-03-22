@@ -247,10 +247,10 @@ literal_expression			::=		NUMEROENTERO:num
 
 							/*      >> Statements <<    */
 
-statements					::=		statement statements
+/*statements					::=		statement statements
 										{: System.out.println("statements"); :}
-									|	/* Vacio */
-									;
+									|	// Vacio 
+									;*/
 
 
 statement					::=		assign_variable
@@ -317,14 +317,14 @@ variable_declaration		::=		variable_ids DOSPUNTOS variable_type
 									;
 
 
-get_value					::=		GET PARIZQ ID PARDER PUNTOCOMA
+/*get_value					::=		GET PARIZQ ID PARDER PUNTOCOMA
 										{: System.out.println("Get"); :}
-									;
+									;*/
 
 
-put_value					::=		PUT PARIZQ expression PARDER PUNTOCOMA
+/*put_value					::=		PUT PARIZQ expression PARDER PUNTOCOMA
 										{: System.out.println("Put"); :}
-									;
+									;*/
 
 
 elsif_statements			::=		elsif_statement elsif_statements
@@ -350,9 +350,9 @@ if_statement				::=		IF expression THEN statements END IF PUNTOCOMA
 									;
 
 
-while_statemet				::=		WHILE expression LOOP statements END LOOP PUNTOCOMA
+/*while_statemet				::=		WHILE expression LOOP statements END LOOP PUNTOCOMA
 										{: System.out.println("while"); :}
-									;
+									;*/
 
 
 for_statement				::=		FOR ID IN range LOOP statements END LOOP PUNTOCOMA

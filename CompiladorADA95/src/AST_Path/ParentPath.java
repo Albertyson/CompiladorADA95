@@ -13,6 +13,7 @@ import abstractSyntaxTree.Division;
 import abstractSyntaxTree.Equal;
 import abstractSyntaxTree.FunctionCall;
 import abstractSyntaxTree.FunctionParameters;
+import abstractSyntaxTree.GetValue;
 import abstractSyntaxTree.Greater;
 import abstractSyntaxTree.GreaterOrEqual;
 import abstractSyntaxTree.Less;
@@ -24,11 +25,14 @@ import abstractSyntaxTree.Not;
 import abstractSyntaxTree.NotEqual;
 import abstractSyntaxTree.Or;
 import abstractSyntaxTree.Pow;
+import abstractSyntaxTree.PutValue;
+import abstractSyntaxTree.Statements;
 import abstractSyntaxTree.TypeBoolean;
 import abstractSyntaxTree.TypeFloat;
 import abstractSyntaxTree.TypeInteger;
 import abstractSyntaxTree.TypeString;
 import abstractSyntaxTree.VariableIDs;
+import abstractSyntaxTree.While;
 
 
 public interface ParentPath {
@@ -61,9 +65,17 @@ public interface ParentPath {
     public void path(FunctionCall h);
     public void path(FunctionParameters h);
     public void path(VariableIDs h);
-    public void path(TypeInteger h);
+    public void path(TypeInteger h); 
     public void path(TypeBoolean h);
     public void path(TypeFloat h);
     public void path(TypeString h);
+
+    public void path(GetValue aThis);
+
+    public void path(PutValue aThis);
+
+    public void path(While aThis);
+
+    public void path(Statements aThis);
     
 }
