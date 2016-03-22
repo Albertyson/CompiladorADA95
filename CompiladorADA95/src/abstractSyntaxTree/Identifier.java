@@ -15,5 +15,13 @@ public class Identifier extends Expression {
     public void callPath(ParentPath PP) {
         PP.path(this);
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     
 }

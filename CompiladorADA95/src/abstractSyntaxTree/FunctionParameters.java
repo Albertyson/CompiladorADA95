@@ -27,5 +27,13 @@ public class FunctionParameters {
     public void callPath(ParentPath PP) {
         PP.path(this);
     }
+
+    public ArrayList<Expression> getExps() {
+        return exps;
+    }
+
+    public void setExps(ArrayList<Expression> exps) {
+        this.exps = exps;
+    }
     
 }

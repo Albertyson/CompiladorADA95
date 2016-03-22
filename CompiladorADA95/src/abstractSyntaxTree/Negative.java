@@ -15,5 +15,13 @@ public class Negative extends ArithmeticExpression {
     public void callPath(ParentPath PP) {
         PP.path(this);
     }
+
+    public Expression getExp() {
+        return exp;
+    }
+
+    public void setExp(Expression exp) {
+        this.exp = exp;
+    }
     
 }

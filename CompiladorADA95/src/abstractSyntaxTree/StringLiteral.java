@@ -15,5 +15,13 @@ public class StringLiteral extends LiteralExpression {
     public void callPath(ParentPath PP) {
         PP.path(this);
     }
+
+    public String getString() {
+        return string;
+    }
+
+    public void setString(String string) {
+        this.string = string;
+    }
     
 }
