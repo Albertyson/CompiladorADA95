@@ -24,6 +24,11 @@ import abstractSyntaxTree.Not;
 import abstractSyntaxTree.NotEqual;
 import abstractSyntaxTree.Or;
 import abstractSyntaxTree.Pow;
+import abstractSyntaxTree.TypeBoolean;
+import abstractSyntaxTree.TypeFloat;
+import abstractSyntaxTree.TypeInteger;
+import abstractSyntaxTree.TypeString;
+import abstractSyntaxTree.VariableIDs;
 
 
 public interface ParentPath {
@@ -55,5 +60,10 @@ public interface ParentPath {
     public void path(Not h);
     public void path(FunctionCall h);
     public void path(FunctionParameters h);
+    public void path(VariableIDs h);
+    public void path(TypeInteger h);
+    public void path(TypeBoolean h);
+    public void path(TypeFloat h);
+    public void path(TypeString h);
     
 }

@@ -226,8 +226,8 @@ literal_expression			::=		NUMEROENTERO:num
 									| expression OR expression
 										{: System.out.println("or"); :}
 									| NOT expression
-										{: System.out.println("not"); :}*/
-									;
+										{: System.out.println("not"); :}
+									;*/
 
 
 /*function_parameters			::=		expression:e
@@ -249,7 +249,7 @@ literal_expression			::=		NUMEROENTERO:num
 
 statements					::=		statement statements
 										{: System.out.println("statements"); :}
-									| /* Vacio */
+									|	/* Vacio */
 									;
 
 
@@ -285,14 +285,14 @@ range						::=		expression DOBLEPUNTO expression
 									;
 
 
-variable_ids				::=		ID
+/*variable_ids				::=		ID
 										{: System.out.println("Id"); :}
 									| ID COMA variable_ids
 										{: System.out.println("Ids"); :}
-									;
+									;*/
 
 
-variable_type				::=		INTEGER
+/*variable_type				::=		INTEGER
 										{: System.out.println("Tipo Integer"); :}
 									| BOOLEAN
 										{: System.out.println("Tipo Boolean"); :}
@@ -302,7 +302,7 @@ variable_type				::=		INTEGER
 										{: System.out.println("Tipo Character"); :}
 									| STRING
 										{: System.out.println("Tipo String"); :}
-									;
+									;*/
 
 
 assign_variable				::=		ID OPERASIG expression PUNTOCOMA

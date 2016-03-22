@@ -3,9 +3,8 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 
 
-public abstract class Expression extends Statement{
+public abstract class VariableType {
     
-    @Override
     public abstract void callPath(ParentPath PP);
     
 }
