@@ -16,4 +16,12 @@ public class IntegerNumber extends LiteralExpression{
        PP.path(this);
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+    
 }

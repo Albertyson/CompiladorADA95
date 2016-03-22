@@ -22,5 +22,21 @@ public class FunctionCall extends Expression {
     public void callPath(ParentPath PP) {
         PP.path(this);
     }
+
+    public Identifier getId() {
+        return id;
+    }
+
+    public void setId(Identifier id) {
+        this.id = id;
+    }
+
+    public FunctionParameters getFp() {
+        return fp;
+    }
+
+    public void setFp(FunctionParameters fp) {
+        this.fp = fp;
+    }
     
 }

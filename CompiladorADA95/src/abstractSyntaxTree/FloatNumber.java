@@ -15,5 +15,13 @@ public class FloatNumber extends LiteralExpression{
     public void callPath(ParentPath PP) {
         PP.path(this);
     }
+
+    public Double getNumber() {
+        return number;
+    }
+
+    public void setNumber(Double number) {
+        this.number = number;
+    }
     
 }
