@@ -9,8 +9,12 @@ import abstractSyntaxTree.Minus;
 import abstractSyntaxTree.StringLiteral;
 import abstractSyntaxTree.Add;
 import abstractSyntaxTree.And;
+import abstractSyntaxTree.CaseNotOthers;
+import abstractSyntaxTree.CaseOthers;
 import abstractSyntaxTree.Division;
 import abstractSyntaxTree.Equal;
+import abstractSyntaxTree.Exit;
+import abstractSyntaxTree.For;
 import abstractSyntaxTree.FunctionCall;
 import abstractSyntaxTree.FunctionParameters;
 import abstractSyntaxTree.GetValue;
@@ -18,6 +22,7 @@ import abstractSyntaxTree.Greater;
 import abstractSyntaxTree.GreaterOrEqual;
 import abstractSyntaxTree.Less;
 import abstractSyntaxTree.LessOrEqual;
+import abstractSyntaxTree.Loop;
 import abstractSyntaxTree.Module;
 import abstractSyntaxTree.Multiplication;
 import abstractSyntaxTree.Negative;
@@ -26,12 +31,16 @@ import abstractSyntaxTree.NotEqual;
 import abstractSyntaxTree.Or;
 import abstractSyntaxTree.Pow;
 import abstractSyntaxTree.PutValue;
+import abstractSyntaxTree.Range;
+import abstractSyntaxTree.Return;
 import abstractSyntaxTree.Statements;
 import abstractSyntaxTree.TypeBoolean;
 import abstractSyntaxTree.TypeFloat;
 import abstractSyntaxTree.TypeInteger;
 import abstractSyntaxTree.TypeString;
 import abstractSyntaxTree.VariableIDs;
+import abstractSyntaxTree.WhenOption;
+import abstractSyntaxTree.WhenOptions;
 import abstractSyntaxTree.While;
 
 
@@ -69,13 +78,18 @@ public interface ParentPath {
     public void path(TypeBoolean h);
     public void path(TypeFloat h);
     public void path(TypeString h);
-
-    public void path(GetValue aThis);
-
-    public void path(PutValue aThis);
-
-    public void path(While aThis);
-
-    public void path(Statements aThis);
+    public void path(GetValue h);
+    public void path(PutValue h);
+    public void path(While h);
+    public void path(Statements h);
+    public void path(Range h);
+    public void path(For h);
+    public void path(Exit h);
+    public void path(Loop h);
+    public void path(Return h);
+    public void path(WhenOption h);
+    public void path(WhenOptions h);
+    public void path(CaseOthers h);
+    public void path(CaseNotOthers h);
     
 }
