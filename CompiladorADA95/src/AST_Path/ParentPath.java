@@ -11,11 +11,13 @@ import abstractSyntaxTree.Add;
 import abstractSyntaxTree.And;
 import abstractSyntaxTree.CaseNotOthers;
 import abstractSyntaxTree.CaseOthers;
+import abstractSyntaxTree.DeclarationPart;
 import abstractSyntaxTree.Division;
 import abstractSyntaxTree.Equal;
 import abstractSyntaxTree.Exit;
 import abstractSyntaxTree.For;
 import abstractSyntaxTree.FunctionCall;
+import abstractSyntaxTree.FunctionDeclaration;
 import abstractSyntaxTree.FunctionParameters;
 import abstractSyntaxTree.GetValue;
 import abstractSyntaxTree.Greater;
@@ -23,13 +25,19 @@ import abstractSyntaxTree.GreaterOrEqual;
 import abstractSyntaxTree.Less;
 import abstractSyntaxTree.LessOrEqual;
 import abstractSyntaxTree.Loop;
+import abstractSyntaxTree.ModeIn;
+import abstractSyntaxTree.ModeInOut;
+import abstractSyntaxTree.ModeOut;
 import abstractSyntaxTree.Module;
 import abstractSyntaxTree.Multiplication;
 import abstractSyntaxTree.Negative;
 import abstractSyntaxTree.Not;
 import abstractSyntaxTree.NotEqual;
 import abstractSyntaxTree.Or;
+import abstractSyntaxTree.Parameter;
+import abstractSyntaxTree.ParameterDeclarations;
 import abstractSyntaxTree.Pow;
+import abstractSyntaxTree.ProcedureDeclaration;
 import abstractSyntaxTree.PutValue;
 import abstractSyntaxTree.Range;
 import abstractSyntaxTree.Return;
@@ -93,5 +101,14 @@ public interface ParentPath {
     public void path(CaseOthers h);
     public void path(CaseNotOthers h);
     public void path(VariableDeclaration h);
+    public void path(Parameter aThis);
+    public void path(ModeIn aThis);
+    public void path(ModeInOut aThis);
+    public void path(ModeOut aThis);
+    public void path(ParameterDeclarations aThis);
+    public void path(ProcedureDeclaration aThis);
+    public void path(FunctionDeclaration aThis);
+
+    public void path(DeclarationPart aThis);
     
 }

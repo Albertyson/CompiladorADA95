@@ -104,11 +104,12 @@ precedence nonassoc	ELSE;
 /* ------------------------			Sección de gramática		----------------------------- */
 
 										/* Programa Principal */
+/*
 program						::=		PROCEDURE ID IS declaration_part BEGIN statements END ID PUNTOCOMA 
 										{: System.out.println("Programa principal");:}
 									;
-
-
+*/
+/*
 declaration_part 			::=		variable_declaration PUNTOCOMA declaration_part
 										{:System.out.println("variable_declaration");:}
 									| function_declaration declaration_part
@@ -117,26 +118,26 @@ declaration_part 			::=		variable_declaration PUNTOCOMA declaration_part
 										{:System.out.println("procedure_declaration");:}
 									|
 									;
-
-
+*/
+/*
 function_declaration		::=		FUNCTION ID PARIZQ parameter_declarations PARDER RETURN variable_type IS declaration_part BEGIN statements END ID PUNTOCOMA
 										{:System.out.println("inside function_declaration");:}
 									;
-
-
+*/
+/*
 procedure_declaration 		::=		PROCEDURE ID PARIZQ parameter_declarations PARDER IS declaration_part BEGIN statements END ID PUNTOCOMA
 										{:System.out.println("inside procedure_declaration");:}
  									;
-
-
+*/
+/*
 parameter_declarations 		::=		parameter
 										{:System.out.println("parameter");:}
  									| parameter_declarations PUNTOCOMA parameter
 										{:System.out.println("parameter_declarations");:}
 									|
  									;
-
-
+*/
+/*
 parameter 					::=	 	variable_ids DOSPUNTOS mode variable_type OPERASIG expression
 										{:System.out.println("parameter with type and mode and assign");:}
 									| variable_ids DOSPUNTOS mode variable_type
@@ -146,8 +147,8 @@ parameter 					::=	 	variable_ids DOSPUNTOS mode variable_type OPERASIG expressi
 									| variable_ids DOSPUNTOS variable_type OPERASIG expression
 										{:System.out.println("parameter with type and assignation");:}
  									;
-
-
+*/
+/*
 mode              			::= 	IN
 										{:System.out.println("IN");:}
 		 							| INOUT 
@@ -155,7 +156,7 @@ mode              			::= 	IN
 		 							| OUT
 										{:System.out.println("OUT");:}
 		 							;
-
+*/
 
 							/*      >> Expresiones <<    */
 /*expression					::=		literal_expression
