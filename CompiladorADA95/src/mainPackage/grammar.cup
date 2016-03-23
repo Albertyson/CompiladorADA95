@@ -312,9 +312,9 @@ assign_variable				::=		ID OPERASIG expression PUNTOCOMA
 									;
 
 
-variable_declaration		::=		variable_ids DOSPUNTOS variable_type
+/*variable_declaration		::=		variable_ids DOSPUNTOS variable_type
 										{: System.out.println("Declaracion de variables"); :}
-									;
+									;*/
 
 
 /*get_value					::=		GET PARIZQ ID PARDER PUNTOCOMA

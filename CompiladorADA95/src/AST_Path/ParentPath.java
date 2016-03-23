@@ -38,6 +38,7 @@ import abstractSyntaxTree.TypeBoolean;
 import abstractSyntaxTree.TypeFloat;
 import abstractSyntaxTree.TypeInteger;
 import abstractSyntaxTree.TypeString;
+import abstractSyntaxTree.VariableDeclaration;
 import abstractSyntaxTree.VariableIDs;
 import abstractSyntaxTree.WhenOption;
 import abstractSyntaxTree.WhenOptions;
@@ -91,5 +92,6 @@ public interface ParentPath {
     public void path(WhenOptions h);
     public void path(CaseOthers h);
     public void path(CaseNotOthers h);
+    public void path(VariableDeclaration h);
     
 }
