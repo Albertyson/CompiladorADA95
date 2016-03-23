@@ -11,17 +11,18 @@ public class IntegerNumber extends LiteralExpression{
         this.number = number;
     }
     
-    @Override
-    public void callPath(ParentPath PP) {
-       PP.path(this);
-    }
-
     public Integer getNumber() {
         return number;
     }
 
     public void setNumber(Integer number) {
         this.number = number;
+    }
+    
+    
+    @Override
+    public void callPath(ParentPath PP) {
+       PP.path(this);
     }
     
 }

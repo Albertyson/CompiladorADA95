@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
@@ -12,6 +7,7 @@ import AST_Path.ParentPath;
  * @author Albertyson
  */
 public class Program {
+    
     private Identifier id;
     private DeclarationPart declarations;
     private Statements statements;
@@ -20,9 +16,6 @@ public class Program {
         this.id = id;
         this.declarations = declarations;
         this.statements = statements;
-    }
-    public void callPath(ParentPath PP) {
-        PP.path(this);
     }
 
     public Identifier getId() {
@@ -47,6 +40,11 @@ public class Program {
 
     public void setStatements(Statements statements) {
         this.statements = statements;
+    }
+    
+    
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
     
 }

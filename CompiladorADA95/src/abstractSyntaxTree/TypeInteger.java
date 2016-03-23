@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class TypeInteger extends VariableType {
 

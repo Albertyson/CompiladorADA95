@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class Range {
     
@@ -28,8 +33,7 @@ public class Range {
         this.exp2 = exp2;
     }
     
-    
-    
+
     public void callPath(ParentPath PP) {
         PP.path(this);
     }

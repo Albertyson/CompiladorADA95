@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
@@ -32,16 +27,16 @@ public class ParameterDeclarations {
         return parameters.get(pos);
     }
 
-    public void callPath(ParentPath PP) {
-        PP.path(this);
-    }
-
     public ArrayList<Parameter> getParameters() {
         return parameters;
     }
 
     public void setParameters(ArrayList<Parameter> parameters) {
         this.parameters = parameters;
+    }
+    
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
 
 }

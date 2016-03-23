@@ -116,7 +116,7 @@ declaration_part 			::=		variable_declaration PUNTOCOMA declaration_part
 										{:System.out.println("function_declaration");:}
 									| procedure_declaration declaration_part
 										{:System.out.println("procedure_declaration");:}
-									|
+									| /* vacio */
 									;
 
 
@@ -149,7 +149,7 @@ parameter 					::=	 	variable_ids DOSPUNTOS mode variable_type OPERASIG expressi
  									;
 
 
-mode              			::= 	IN
+mode              			::= 	  IN
 										{:System.out.println("IN");:}
 		 							| INOUT 
 										{:System.out.println("INOUT");:}
@@ -257,8 +257,8 @@ statements					::=		statement statements
 
 statement					::=		assign_variable
 										{: System.out.println("statement asignacion de variables"); :}
-									| variable_declaration PUNTOCOMA
-										{: System.out.println("statement Declaracion Variable"); :}
+									/*| variable_declaration PUNTOCOMA
+										{: System.out.println("statement Declaracion Variable"); :}*/
 									| expression PUNTOCOMA
 										{: System.out.println("statement expression"); :}
 									| get_value
@@ -307,10 +307,10 @@ variable_type				::=		INTEGER
 									;
 
 
-assign_variable				::=		  ID OPERASIG expression PUNTOCOMA
+assign_variable				::=		ID OPERASIG expression PUNTOCOMA
 										{: System.out.println("Asignacion a Variable"); :}
-									| variable_declaration OPERASIG expression PUNTOCOMA
-										{: System.out.println("declaracion y Asignacion de variable"); :}
+									/*| variable_declaration OPERASIG expression PUNTOCOMA
+										{: System.out.println("declaracion y Asignacion de variable"); :}*/
 									;
 
 

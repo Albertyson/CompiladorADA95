@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class Module extends ArithmeticExpression {
     
@@ -10,11 +15,6 @@ public class Module extends ArithmeticExpression {
     public Module(Expression exp1, Expression exp2) {
         this.exp1 = exp1;
         this.exp2 = exp2;
-    }
-    
-    @Override
-    public void callPath(ParentPath PP) {
-        PP.path(this);
     }
 
     public Expression getExp1() {
@@ -31,6 +31,12 @@ public class Module extends ArithmeticExpression {
 
     public void setExp2(Expression exp2) {
         this.exp2 = exp2;
+    }
+    
+    
+    @Override
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
     
 }

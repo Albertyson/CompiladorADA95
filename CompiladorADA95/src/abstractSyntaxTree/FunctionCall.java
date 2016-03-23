@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class FunctionCall extends Expression {
     
@@ -17,11 +22,6 @@ public class FunctionCall extends Expression {
         this.id = id;
     }
     
-    @Override
-    public void callPath(ParentPath PP) {
-        PP.path(this);
-    }
-
     public Identifier getId() {
         return id;
     }
@@ -36,6 +36,11 @@ public class FunctionCall extends Expression {
 
     public void setFp(FunctionParameters fp) {
         this.fp = fp;
+    }
+    
+    @Override
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
     
 }

@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class StringLiteral extends LiteralExpression {
     
@@ -10,11 +15,6 @@ public class StringLiteral extends LiteralExpression {
     public StringLiteral(String string) {
         this.string = string;
     }
-    
-    @Override
-    public void callPath(ParentPath PP) {
-        PP.path(this);
-    }
 
     public String getString() {
         return string;
@@ -22,6 +22,11 @@ public class StringLiteral extends LiteralExpression {
 
     public void setString(String string) {
         this.string = string;
+    }
+    
+    @Override
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
     
 }

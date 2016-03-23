@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class Not extends LogicalExpression {
     
@@ -10,11 +15,6 @@ public class Not extends LogicalExpression {
     public Not(Expression exp) {
         this.exp = exp;
     }
-    
-    @Override
-    public void callPath(ParentPath PP) {
-        PP.path(this);
-    }
 
     public Expression getExp() {
         return exp;
@@ -22,6 +22,11 @@ public class Not extends LogicalExpression {
 
     public void setExp(Expression exp) {
         this.exp = exp;
+    }
+    
+    @Override
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
     
 }

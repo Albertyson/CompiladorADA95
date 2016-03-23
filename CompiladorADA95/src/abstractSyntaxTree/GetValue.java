@@ -2,8 +2,13 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
 
-public class GetValue extends Statement{
+
+public class GetValue extends Statement {
     
     public Identifier id;
 

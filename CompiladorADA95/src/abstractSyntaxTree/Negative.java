@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class Negative extends ArithmeticExpression {
     
@@ -10,11 +15,6 @@ public class Negative extends ArithmeticExpression {
     public Negative(Expression exp) {
         this.exp = exp;
     }
-    
-    @Override
-    public void callPath(ParentPath PP) {
-        PP.path(this);
-    }
 
     public Expression getExp() {
         return exp;
@@ -22,6 +22,12 @@ public class Negative extends ArithmeticExpression {
 
     public void setExp(Expression exp) {
         this.exp = exp;
+    }
+    
+    
+    @Override
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
     
 }

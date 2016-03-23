@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class Division extends ArithmeticExpression {
     
@@ -10,11 +15,6 @@ public class Division extends ArithmeticExpression {
     public Division(Expression exp1, Expression exp2) {
         this.exp1 = exp1;
         this.exp2 = exp2;
-    }
-
-    @Override
-    public void callPath(ParentPath PP) {
-        PP.path(this);
     }
 
     public Expression getExp1() {
@@ -33,5 +33,10 @@ public class Division extends ArithmeticExpression {
         this.exp2 = exp2;
     }
     
+    
+    @Override
+    public void callPath(ParentPath PP) {
+        PP.path(this);
+    }
     
 }

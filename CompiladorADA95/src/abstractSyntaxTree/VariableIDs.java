@@ -3,6 +3,11 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class VariableIDs {
    

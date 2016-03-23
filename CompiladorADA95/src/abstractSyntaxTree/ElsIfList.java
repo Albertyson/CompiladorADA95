@@ -35,7 +35,6 @@ public class ElsIfList {
         this.list = list;
     }
 
-    
     public void callPath(ParentPath PP) {
         PP.path(this);
     }

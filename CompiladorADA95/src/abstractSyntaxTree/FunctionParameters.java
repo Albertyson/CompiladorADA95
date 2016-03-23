@@ -3,6 +3,11 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class FunctionParameters {
     
@@ -24,16 +29,16 @@ public class FunctionParameters {
         return exps.get(pos);
     }
     
-    public void callPath(ParentPath PP) {
-        PP.path(this);
-    }
-
     public ArrayList<Expression> getExps() {
         return exps;
     }
 
     public void setExps(ArrayList<Expression> exps) {
         this.exps = exps;
+    }
+    
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
     
 }

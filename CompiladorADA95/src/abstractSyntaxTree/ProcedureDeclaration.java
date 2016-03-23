@@ -3,7 +3,13 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author Albertyson
+ */
+
 public class ProcedureDeclaration {
+    
     private Identifier id;
     private ParameterDeclarations parameterDeclarations;
     private DeclarationPart declarations;
@@ -14,9 +20,6 @@ public class ProcedureDeclaration {
         this.parameterDeclarations = parameterDeclarations;
         this.declarations = declarations;
         this.statements = statements;
-    }
-    public void callPath(ParentPath PP) {
-        PP.path(this);
     }
 
     public Identifier getId() {
@@ -49,6 +52,11 @@ public class ProcedureDeclaration {
 
     public void setStatements(Statements statements) {
         this.statements = statements;
+    }
+    
+    
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
     
 }

@@ -3,7 +3,13 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author Albertyson
+ */
+
 public class Parameter {
+    
     private VariableIDs vars;
     private Mode mode;
     private VariableType type;
@@ -64,6 +70,8 @@ public class Parameter {
     public void setExp(Expression exp) {
         this.exp = exp;
     }
+    
+    
     public void callPath(ParentPath PP) {
         PP.path(this);
     }    

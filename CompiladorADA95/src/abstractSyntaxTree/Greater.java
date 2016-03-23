@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class Greater extends BooleanExpression {
     
@@ -11,12 +16,7 @@ public class Greater extends BooleanExpression {
         this.exp1 = exp1;
         this.exp2 = exp2;
     }
-    
-    @Override
-    public void callPath(ParentPath PP) {
-        PP.path(this);
-    }
-
+   
     public Expression getExp1() {
         return exp1;
     }
@@ -31,6 +31,11 @@ public class Greater extends BooleanExpression {
 
     public void setExp2(Expression exp2) {
         this.exp2 = exp2;
+    }
+    
+    @Override
+    public void callPath(ParentPath PP) {
+        PP.path(this);
     }
     
 }

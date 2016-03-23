@@ -2,6 +2,11 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 
+/**
+ *
+ * @author JosuéNoel
+ */
+
 
 public class VariableDeclaration extends Statement {
     
@@ -28,9 +33,8 @@ public class VariableDeclaration extends Statement {
     public void setType(VariableType type) {
         this.type = type;
     }
-    
-    
 
+    
     @Override
     public void callPath(ParentPath PP) {
         PP.path(this);
