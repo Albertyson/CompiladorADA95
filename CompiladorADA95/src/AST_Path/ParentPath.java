@@ -9,10 +9,14 @@ import abstractSyntaxTree.Minus;
 import abstractSyntaxTree.StringLiteral;
 import abstractSyntaxTree.Add;
 import abstractSyntaxTree.And;
+import abstractSyntaxTree.AssignVariableSimple;
+import abstractSyntaxTree.AssignVariableWithDeclaration;
 import abstractSyntaxTree.CaseNotOthers;
 import abstractSyntaxTree.CaseOthers;
 import abstractSyntaxTree.DeclarationPart;
 import abstractSyntaxTree.Division;
+import abstractSyntaxTree.ElsIf;
+import abstractSyntaxTree.ElsIfList;
 import abstractSyntaxTree.Equal;
 import abstractSyntaxTree.Exit;
 import abstractSyntaxTree.For;
@@ -22,6 +26,10 @@ import abstractSyntaxTree.FunctionParameters;
 import abstractSyntaxTree.GetValue;
 import abstractSyntaxTree.Greater;
 import abstractSyntaxTree.GreaterOrEqual;
+import abstractSyntaxTree.IfSimple;
+import abstractSyntaxTree.IfWithElsIF;
+import abstractSyntaxTree.IfWithElsIfAndElse;
+import abstractSyntaxTree.IfWithElse;
 import abstractSyntaxTree.Less;
 import abstractSyntaxTree.LessOrEqual;
 import abstractSyntaxTree.Loop;
@@ -38,6 +46,7 @@ import abstractSyntaxTree.Parameter;
 import abstractSyntaxTree.ParameterDeclarations;
 import abstractSyntaxTree.Pow;
 import abstractSyntaxTree.ProcedureDeclaration;
+import abstractSyntaxTree.Program;
 import abstractSyntaxTree.PutValue;
 import abstractSyntaxTree.Range;
 import abstractSyntaxTree.Return;
@@ -63,9 +72,6 @@ public interface ParentPath {
     public void path(Identifier h);
     public void path(Add h);
     public void path(Minus h);
-    
-    // Agregar clases abstractas, tienen que estar todas
-
     public void path(Division h);
     public void path(Multiplication h);
     public void path(Pow h);
@@ -101,14 +107,24 @@ public interface ParentPath {
     public void path(CaseOthers h);
     public void path(CaseNotOthers h);
     public void path(VariableDeclaration h);
-    public void path(Parameter aThis);
-    public void path(ModeIn aThis);
-    public void path(ModeInOut aThis);
-    public void path(ModeOut aThis);
-    public void path(ParameterDeclarations aThis);
-    public void path(ProcedureDeclaration aThis);
-    public void path(FunctionDeclaration aThis);
-
-    public void path(DeclarationPart aThis);
+    public void path(Parameter h);
+    public void path(ModeIn h);
+    public void path(ModeInOut h);
+    public void path(ModeOut h);
+    public void path(ParameterDeclarations h);
+    public void path(ProcedureDeclaration h);
+    public void path(FunctionDeclaration h);
+    public void path(DeclarationPart h);
+    public void path(Program h);
+    public void path(AssignVariableSimple h);
+    public void path(AssignVariableWithDeclaration h);
+    public void path(IfSimple h);
+    public void path(IfWithElse h);
+    public void path(ElsIf h);
+    public void path(ElsIfList h);
+    public void path(IfWithElsIF h);
+    public void path(IfWithElsIfAndElse h);
+    
+    // Agregar clases abstractas, tienen que estar todas
     
 }

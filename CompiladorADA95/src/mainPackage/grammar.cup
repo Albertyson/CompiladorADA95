@@ -104,12 +104,12 @@ precedence nonassoc	ELSE;
 /* ------------------------			Sección de gramática		----------------------------- */
 
 										/* Programa Principal */
-/*
+
 program						::=		PROCEDURE ID IS declaration_part BEGIN statements END ID PUNTOCOMA 
 										{: System.out.println("Programa principal");:}
 									;
-*/
-/*
+
+
 declaration_part 			::=		variable_declaration PUNTOCOMA declaration_part
 										{:System.out.println("variable_declaration");:}
 									| function_declaration declaration_part
@@ -118,26 +118,26 @@ declaration_part 			::=		variable_declaration PUNTOCOMA declaration_part
 										{:System.out.println("procedure_declaration");:}
 									|
 									;
-*/
-/*
+
+
 function_declaration		::=		FUNCTION ID PARIZQ parameter_declarations PARDER RETURN variable_type IS declaration_part BEGIN statements END ID PUNTOCOMA
 										{:System.out.println("inside function_declaration");:}
 									;
-*/
-/*
+
+
 procedure_declaration 		::=		PROCEDURE ID PARIZQ parameter_declarations PARDER IS declaration_part BEGIN statements END ID PUNTOCOMA
 										{:System.out.println("inside procedure_declaration");:}
  									;
-*/
-/*
+
+
 parameter_declarations 		::=		parameter
 										{:System.out.println("parameter");:}
  									| parameter_declarations PUNTOCOMA parameter
 										{:System.out.println("parameter_declarations");:}
 									|
  									;
-*/
-/*
+
+
 parameter 					::=	 	variable_ids DOSPUNTOS mode variable_type OPERASIG expression
 										{:System.out.println("parameter with type and mode and assign");:}
 									| variable_ids DOSPUNTOS mode variable_type
@@ -147,8 +147,8 @@ parameter 					::=	 	variable_ids DOSPUNTOS mode variable_type OPERASIG expressi
 									| variable_ids DOSPUNTOS variable_type OPERASIG expression
 										{:System.out.println("parameter with type and assignation");:}
  									;
-*/
-/*
+
+
 mode              			::= 	IN
 										{:System.out.println("IN");:}
 		 							| INOUT 
@@ -156,10 +156,11 @@ mode              			::= 	IN
 		 							| OUT
 										{:System.out.println("OUT");:}
 		 							;
-*/
+
+
 
 							/*      >> Expresiones <<    */
-/*expression					::=		literal_expression
+expression					::=		literal_expression
 										{: System.out.println("Expresion literal"); :}
 									| ID:id
 										{: System.out.println(id); :}
@@ -173,9 +174,9 @@ mode              			::= 	IN
 										{: System.out.println("Expresion Logica"); :}
 									| function_call
 										{: System.out.println("Expresion Llamado a Funcion"); :}
-									;*/
+									;
 
-/*
+
 literal_expression			::=		NUMEROENTERO:num
 										{: System.out.println(num); :}
 									| NUMEROFLOAT:num
@@ -186,10 +187,10 @@ literal_expression			::=		NUMEROENTERO:num
 										{: System.out.println("false"); :}
 									| CADENA:cad
 										{: System.out.println("Cadena"); :}
-									;*/
+									;
 
 
-/*arithmetic_expression		::=		expression OPERSUMA expression
+arithmetic_expression		::=		expression OPERSUMA expression
 										{: System.out.println("Suma"); :}
 									| expression OPERRESTA expression
 										{: System.out.println("Resta"); :}
@@ -204,10 +205,10 @@ literal_expression			::=		NUMEROENTERO:num
 										%prec NEGATIVO
 									| expression MOD expression
 										{: System.out.println("Residuo"); :}										
-									;*/
+									;
 
 
-/*boolean_expression			::=		expression OPERIGUAL expression
+boolean_expression			::=		expression OPERIGUAL expression
 										{: System.out.println("Igual"); :}
 									| expression OPERDISTINTO expression
 										{: System.out.println("Distinto"); :}
@@ -219,42 +220,42 @@ literal_expression			::=		NUMEROENTERO:num
 										{: System.out.println("Mayor o Igual"); :}
 									| expression OPERMENORIGUAL expression
 										{: System.out.println("Menor o Igual"); :}
-									;*/
+									;
 
 
-/*logical_expression			::=		expression AND expression
+logical_expression			::=		expression AND expression
 										{: System.out.println("and"); :}
 									| expression OR expression
 										{: System.out.println("or"); :}
 									| NOT expression
 										{: System.out.println("not"); :}
-									;*/
+									;
 
 
-/*function_parameters			::=		expression:e
+function_parameters			::=		expression:e
 										{: RESULT = new FunctionParameters(); RESULT.add(e); :}
 									| expression:e COMA function_parameters:fp
 										{: fp.add(e); RESULT = fp; :}
-									;*/
+									;
 
 
-/*function_call				::=		ID PARIZQ function_parameters PARDER
+function_call				::=		ID PARIZQ function_parameters PARDER
 										{: System.out.println("llamado a funcion o procedimiento"); :}
 									| ID PARIZQ PARDER
 										{: System.out.println("llamado a funcion o procedimiento sin parametros"); :}
-									;*/
+									;
 
 
 
 							/*      >> Statements <<    */
 
-/*statements					::=		statement statements
+statements					::=		statement statements
 										{: System.out.println("statements"); :}
 									|	// Vacio 
-									;*/
+									;
 
 
-/*statement					::=		assign_variable
+statement					::=		assign_variable
 										{: System.out.println("statement asignacion de variables"); :}
 									| variable_declaration PUNTOCOMA
 										{: System.out.println("statement Declaracion Variable"); :}
@@ -278,22 +279,22 @@ literal_expression			::=		NUMEROENTERO:num
 										{: System.out.println("case statement");:}
 									| return_statement
 										{: System.out.println("return de función");:}
-									;*/
+									;
 
 
-/*range						::=		expression DOBLEPUNTO expression
+range						::=		expression DOBLEPUNTO expression
 										{: System.out.println("rango"); :}
-									;*/
+									;
 
 
-/*variable_ids				::=		ID
+variable_ids				::=		ID
 										{: System.out.println("Id"); :}
 									| ID COMA variable_ids
 										{: System.out.println("Ids"); :}
-									;*/
+									;
 
 
-/*variable_type				::=		INTEGER
+variable_type				::=		INTEGER
 										{: System.out.println("Tipo Integer"); :}
 									| BOOLEAN
 										{: System.out.println("Tipo Boolean"); :}
@@ -303,29 +304,29 @@ literal_expression			::=		NUMEROENTERO:num
 										{: System.out.println("Tipo Character"); :}
 									| STRING
 										{: System.out.println("Tipo String"); :}
-									;*/
+									;
 
 
-assign_variable				::=		ID OPERASIG expression PUNTOCOMA
+assign_variable				::=		  ID OPERASIG expression PUNTOCOMA
 										{: System.out.println("Asignacion a Variable"); :}
 									| variable_declaration OPERASIG expression PUNTOCOMA
 										{: System.out.println("declaracion y Asignacion de variable"); :}
 									;
 
 
-/*variable_declaration		::=		variable_ids DOSPUNTOS variable_type
+variable_declaration		::=		variable_ids DOSPUNTOS variable_type
 										{: System.out.println("Declaracion de variables"); :}
-									;*/
+									;
 
 
-/*get_value					::=		GET PARIZQ ID PARDER PUNTOCOMA
+get_value					::=		GET PARIZQ ID PARDER PUNTOCOMA
 										{: System.out.println("Get"); :}
-									;*/
+									;
 
 
-/*put_value					::=		PUT PARIZQ expression PARDER PUNTOCOMA
+put_value					::=		PUT PARIZQ expression PARDER PUNTOCOMA
 										{: System.out.println("Put"); :}
-									;*/
+									;
 
 
 elsif_statements			::=		elsif_statement elsif_statements
@@ -340,7 +341,7 @@ elsif_statement				::=		ELSIF expression THEN statements
 									;
 
 
-if_statement				::=		IF expression THEN statements END IF PUNTOCOMA
+if_statement				::=		  IF expression THEN statements END IF PUNTOCOMA
 										{: System.out.println("If Sencillo"); :}
 									| IF expression THEN statements ELSE statements END IF PUNTOCOMA
 										{: System.out.println("If Sencillo con else"); :}
@@ -351,48 +352,47 @@ if_statement				::=		IF expression THEN statements END IF PUNTOCOMA
 									;
 
 
-/*while_statemet				::=		WHILE expression LOOP statements END LOOP PUNTOCOMA
+while_statemet				::=		WHILE expression LOOP statements END LOOP PUNTOCOMA
 										{: System.out.println("while"); :}
-									;*/
+									;
 
 
-/*for_statement				::=		FOR ID IN range LOOP statements END LOOP PUNTOCOMA
+for_statement				::=		FOR ID IN range LOOP statements END LOOP PUNTOCOMA
 										{: System.out.println("for"); :}
-									;*/
+									;
 
 
-/*exit_statement				::=		EXIT WHEN expression PUNTOCOMA
+exit_statement				::=		EXIT WHEN expression PUNTOCOMA
 										{: System.out.println("exit when"); :}
-									;*/
+									;
 
 
-/*loop_statement				::=		LOOP statements END LOOP PUNTOCOMA
+loop_statement				::=		LOOP statements END LOOP PUNTOCOMA
 										{: System.out.println("loop"); :}
-									;*/
+									;
 
 
-/*case_statement				::=		  CASE expression IS WHEN when_options OPERPUNTERO statements END CASE PUNTOCOMA
+case_statement				::=		  CASE expression IS WHEN when_options OPERPUNTERO statements END CASE PUNTOCOMA
 										{: System.out.println("case_statement"); :}
 									| CASE expression IS WHEN when_options OTHERS OPERPUNTERO statements END CASE PUNTOCOMA
 										{: System.out.println("case_statement and Others"); :}
-									;*/
+									;
 
 
-/*when_options  				::= 	option_when
+when_options  				::= 	option_when
 										{: System.out.println("option_when"); :}
 									| option_when PIPE when_options
 										{: System.out.println("when_options"); :}
-									;*/
+									;
 
 
-/*option_when					::=		expression 
+option_when					::=		expression 
 										{: System.out.println("expression"); :}
 									| range
 										{: System.out.println("range"); :}
-									;*/
+									;
 
 
-/*return_statement			::=		RETURN expression PUNTOCOMA
+return_statement			::=		RETURN expression PUNTOCOMA
 										{: System.out.println("return_statement"); :}
 									;
-*/
