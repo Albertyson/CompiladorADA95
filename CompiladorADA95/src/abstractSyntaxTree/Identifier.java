@@ -1,17 +1,22 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Identifier extends Expression {
     
     public String id;
 
+    public Identifier() {
+    }
+    
     public Identifier(String id) {
         this.id = id;
     }

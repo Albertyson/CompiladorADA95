@@ -1,16 +1,22 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class IfWithElsIF extends If {
     
     public Expression expression;
     public Statements statements;
     public ElsIfList elsIfList;
+
+    public IfWithElsIF() {
+    }
 
     public IfWithElsIF(Expression expression, Statements statements, ElsIfList elsIfList) {
         this.expression = expression;

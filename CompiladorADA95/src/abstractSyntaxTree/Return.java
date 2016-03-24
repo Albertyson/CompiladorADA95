@@ -1,16 +1,21 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Return extends Statement {
 
     public Expression exp;
+
+    public Return() {
+    }
 
     public Return(Expression exp) {
         this.exp = exp;

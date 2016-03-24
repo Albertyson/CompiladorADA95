@@ -1,19 +1,24 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CaseNotOthers extends Case {
     
     public Expression exp;
     public WhenOptions whenOptions;
     public Statements statements;
 
+    public CaseNotOthers() {
+    }
+    
     public CaseNotOthers(Expression exp, WhenOptions whenOptions, Statements statements) {
         this.exp = exp;
         this.whenOptions = whenOptions;

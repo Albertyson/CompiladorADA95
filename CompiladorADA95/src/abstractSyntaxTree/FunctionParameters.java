@@ -2,13 +2,15 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class FunctionParameters {
     
     private ArrayList<Expression> exps;

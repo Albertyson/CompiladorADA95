@@ -2,12 +2,14 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author Albertyson
  */
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProcedureDeclaration extends Declaration {
     
     private Identifier id1;
@@ -15,6 +17,9 @@ public class ProcedureDeclaration extends Declaration {
     private DeclarationPart declarations;
     private Statements statements;
     private Identifier id2;
+
+    public ProcedureDeclaration() {
+    }
 
     public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, DeclarationPart declarations, Statements statements, Identifier id2) {
         this.id1 = id1;

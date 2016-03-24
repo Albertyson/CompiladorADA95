@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -69,6 +70,11 @@ public class formPrincipal extends javax.swing.JFrame {
 
         btnShowTree.setText("Mostrar Árbol");
         btnShowTree.setEnabled(false);
+        btnShowTree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnShowTreeMouseClicked(evt);
+            }
+        });
 
         txtOutput.setColumns(20);
         txtOutput.setRows(5);
@@ -220,6 +226,16 @@ public class formPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtOutput.setText("");
     }//GEN-LAST:event_btnCleanMouseClicked
+
+    private void btnShowTreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowTreeMouseClicked
+        // TODO add your handling code here:
+        try{
+            File htmlFile = new File("src/mainPackage/ast.xml");
+            Desktop.getDesktop().browse(htmlFile.toURI());
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }        
+    }//GEN-LAST:event_btnShowTreeMouseClicked
 
     /**
      * @param args the command line arguments

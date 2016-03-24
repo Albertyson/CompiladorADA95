@@ -1,18 +1,23 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class For extends Statement {
     
     public Identifier id;
     public Range range;
     public Statements statements;
+
+    public For() {
+    }
 
     public For(Identifier id, Range range, Statements statements) {
         this.id = id;

@@ -2,18 +2,23 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author Albertyson
  */
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Parameter {
     
     private VariableIDs vars;
     private Mode mode;
     private VariableType type;
     private Expression exp;
+
+    public Parameter() {
+    }
 
     public Parameter(VariableIDs vars, VariableType type) {
         this.vars = vars;

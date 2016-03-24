@@ -1,15 +1,21 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class IfSimple extends If {
     
     public Expression exp;
     public Statements statements;
+
+    public IfSimple() {
+    }
 
     public IfSimple(Expression exp, Statements statements) {
         this.exp = exp;

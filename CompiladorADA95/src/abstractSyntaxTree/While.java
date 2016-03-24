@@ -1,17 +1,22 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class While extends Statement {
     
     public Expression exp;
     public Statements est;
+
+    public While() {
+    }
 
     public While(Expression exp, Statements est) {
         this.exp = exp;

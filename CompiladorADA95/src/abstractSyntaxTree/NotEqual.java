@@ -1,16 +1,21 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class NotEqual extends BooleanExpression {
     
     public Expression exp1, exp2;
+
+    public NotEqual() {
+    }
 
     public NotEqual(Expression exp1, Expression exp2) {
         this.exp1 = exp1;

@@ -1,13 +1,15 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author JosuéNoel
  */
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CaseOthers extends Case {
     
     public Expression exp;
@@ -15,6 +17,9 @@ public class CaseOthers extends Case {
     public Statements statementsOptions;
     public Statements statementsOthers;
 
+    public CaseOthers() {
+    }
+    
     public CaseOthers(Expression exp, WhenOptions whenOptions, Statements statementsOptions,Statements statementsOthers) {
         this.exp = exp;
         this.whenOptions = whenOptions;
