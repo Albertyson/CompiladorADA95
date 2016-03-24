@@ -20,7 +20,7 @@ public class VariableIDs {
     }
     
     public void add(Identifier e) {
-        ids.add(e);
+        ids.add(0,e);
     }
     
     public int size() {

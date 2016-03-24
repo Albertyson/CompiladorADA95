@@ -20,7 +20,7 @@ public class Statements {
     }
     
     public void add(Statement s) {
-        statements.add(s);
+        statements.add(0,s);
     }
     
     public int size() {

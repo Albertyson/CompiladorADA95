@@ -19,7 +19,7 @@ public class DeclarationPart {
     }
     
     public void add(Declaration e) {
-        declaration.add(e);
+        declaration.add(0,e);
     }
     
     public int size() {

@@ -20,7 +20,7 @@ public class WhenOptions {
     }
     
     public void add(WhenOption e) {
-        options.add(e);
+        options.add(0,e);
     }
     
     public int size() {

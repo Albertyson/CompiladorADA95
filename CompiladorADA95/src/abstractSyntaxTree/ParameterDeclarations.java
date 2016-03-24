@@ -23,7 +23,7 @@ public class ParameterDeclarations {
     }
 
     public void add(Parameter p) {
-        parameters.add(p);
+        parameters.add(0,p);
     }
 
     public Parameter getAt(int pos) {

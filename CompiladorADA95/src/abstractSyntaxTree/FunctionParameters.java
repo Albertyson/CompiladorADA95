@@ -20,7 +20,7 @@ public class FunctionParameters {
     }
     
     public void add(Expression e) {
-        exps.add(e);
+        exps.add(0,e);
     }
     
     public int size() {

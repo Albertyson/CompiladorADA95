@@ -19,7 +19,7 @@ public class ElsIfList {
     }
     
     public void add(ElsIf e) {
-        list.add(e);
+        list.add(0,e);
     }
     
     public int size() {
