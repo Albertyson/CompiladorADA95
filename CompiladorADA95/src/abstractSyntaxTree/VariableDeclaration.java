@@ -8,7 +8,7 @@ import AST_Path.ParentPath;
  */
 
 
-public class VariableDeclaration extends Statement {
+public class VariableDeclaration extends Declaration {
     
     public VariableIDs variables;
     public VariableType type;

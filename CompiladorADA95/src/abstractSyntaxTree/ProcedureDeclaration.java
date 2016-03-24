@@ -8,7 +8,7 @@ import AST_Path.ParentPath;
  * @author Albertyson
  */
 
-public class ProcedureDeclaration {
+public class ProcedureDeclaration extends Declaration {
     
     private Identifier id1;
     private ParameterDeclarations parameterDeclarations;
@@ -64,6 +64,7 @@ public class ProcedureDeclaration {
         this.id2 = id2;
     }
     
+    @Override
     public void callPath(ParentPath PP) {
         PP.path(this);
     }

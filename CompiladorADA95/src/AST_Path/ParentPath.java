@@ -125,6 +125,5 @@ public interface ParentPath {
     public void path(IfWithElsIF h);
     public void path(IfWithElsIfAndElse h);
     
-    // Agregar clases abstractas, tienen que estar todas
-    
+     
 }
