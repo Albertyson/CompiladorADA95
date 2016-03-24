@@ -6,6 +6,7 @@ package mainPackage;
 
 import java_cup.runtime.*;
 import abstractSyntaxTree.*;
+import java.io.File;
 
 parser code {:
 	public void report_error(String message, Object info) {
@@ -79,16 +80,13 @@ non terminal Loop						loop_statement;
 non terminal Case 						case_statement;
 non terminal WhenOptions 				when_options;
 non terminal WhenOption 				option_when;
-non terminal  			declaration_part;
+non terminal DeclarationPart  			declaration_part;
 non terminal FunctionDeclaration		function_declaration;
 non terminal ProcedureDeclaration 		procedure_declaration;
 non terminal ParameterDeclarations 		parameter_declarations;
 non terminal Parameter 					parameter;
 non terminal Mode 						mode;
 non terminal Return						return_statement;
-non terminal variable_declarations;
-non terminal procedure_declarations;
-non terminal function_declarations;
 
 
 /*      Precedencias        */
@@ -108,24 +106,39 @@ precedence nonassoc	ELSE;
 
 										/* Programa Principal */
 
-program						::=		PROCEDURE ID IS declaration_part BEGIN statements END ID PUNTOCOMA 
-										{: System.out.println("Programa principal");:}
+program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA 
+										{: 
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new Program(identifier1,dp,s,identifier2);
+											// try{
+											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"),RESULT);
+											// 	xmlConverter.toXML();												
+											// }catch(Exception e){
+											// 	System.out.println(e.getMessage());
+											// }
+										:}
 									;
 
 
 declaration_part 			::=		variable_declaration:vd PUNTOCOMA declaration_part:dp
 										{:
-											System.out.println("variable_declaration");
+											dp.add(vd);
+											RESULT = dp;
 										:}
 									| function_declaration:fd declaration_part:dp
 										{:
-											System.out.println("function_declaration");
+											dp.add(fd);
+											RESULT = dp;
 										:}
 									| procedure_declaration:pd declaration_part:dp
-										{:
-											System.out.println("procedure_declaration");
+										{:	
+											dp.add(pd);
+											RESULT = dp;
 										:}
-									|
+									|	{:
+											RESULT = new DeclarationPart();
+										:}
 									;
 
 
@@ -298,7 +311,7 @@ statement					::=		assign_variable:av
 										{: RESULT = pv; :}
 									| if_statement:is
 										{: RESULT = is; :}
-									| while_statemet:w
+									| while_statemet:ws
 										{: RESULT = ws; :}
 									| for_statement:fs
 										{: RESULT = fs; :}
@@ -395,9 +408,9 @@ if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
 									| IF expression:e THEN statements:s1 ELSE statements:s2 END IF PUNTOCOMA
 										{: RESULT = new  IfWithElse(e,s1,s2); :}
 									| IF expression:e THEN statements:s elsif_statements:es END IF PUNTOCOMA
-										{: RESULT = new IfWithElseIf(e,s,es); :}
+										{: RESULT = new IfWithElsIF(e,s,es); :}
 									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 END IF PUNTOCOMA
-										{: RESULT = new IfWithElseIfAndElse(e,s1,es,s2); :}
+										{: RESULT = new IfWithElsIfAndElse(e,s1,es,s2); :}
 									;
 
 
@@ -438,7 +451,7 @@ when_options  				::= 	option_when:opt
 										:}
 									| option_when:opt PIPE when_options:opts
 										{: 
-											opts.add(opts);
+											opts.add(opt);
 											RESULT = opts;
 										:}
 									;
@@ -447,7 +460,7 @@ when_options  				::= 	option_when:opt
 option_when					::=		expression:e 
 										{: RESULT = new WhenOption(e); :}
 									| range:r
-										{: RESULT = new WhenOption(r) :}
+										{: RESULT = new WhenOption(r); :}
 									;
 
 
