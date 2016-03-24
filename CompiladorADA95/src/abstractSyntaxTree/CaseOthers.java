@@ -12,12 +12,14 @@ public class CaseOthers extends Case {
     
     public Expression exp;
     public WhenOptions whenOptions;
-    public Statements statements;
+    public Statements statementsOptions;
+    public Statements statementsOthers;
 
-    public CaseOthers(Expression exp, WhenOptions whenOptions, Statements statements) {
+    public CaseOthers(Expression exp, WhenOptions whenOptions, Statements statementsOptions,Statements statementsOthers) {
         this.exp = exp;
         this.whenOptions = whenOptions;
-        this.statements = statements;
+        this.statementsOptions = statementsOptions;
+        this.statementsOthers = statementsOthers;
     }
 
     public Expression getExp() {
@@ -34,15 +36,24 @@ public class CaseOthers extends Case {
 
     public void setWhenOptions(WhenOptions whenOptions) {
         this.whenOptions = whenOptions;
+    }    
+
+    public Statements getStatementsOptions() {
+        return statementsOptions;
     }
 
-    public Statements getStatements() {
-        return statements;
+    public void setStatementsOptions(Statements statementsOptions) {
+        this.statementsOptions = statementsOptions;
     }
 
-    public void setStatements(Statements statements) {
-        this.statements = statements;
+    public Statements getStatementsOthers() {
+        return statementsOthers;
     }
+
+    public void setStatementsOthers(Statements statementsOthers) {
+        this.statementsOthers = statementsOthers;
+    }
+ 
     
     @Override
     public void callPath(ParentPath PP) {

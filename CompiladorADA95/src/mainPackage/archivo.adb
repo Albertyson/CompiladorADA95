@@ -14,19 +14,20 @@ procedure f4 is
       end loop;
    end MM;
 
+   function QQ2(Str: String) return Integer is
+   begin
+      return a;
+      --return Str(1) = 'T';
+   end QQ2;
    function QQ(Str: String) return Integer is
    begin
-      return Str(1) = 'T';
-   end QQ;
-   function QQ(Str: String) return Integer is
-   begin
-      return "Length del string es "&"3";
+      return "Length del string es 3";
    end QQ;
 
    M: Integer;
    B: Boolean;
 begin
-   MM(5, 'a');
+   MM(5, "a");
    --MM(Height => 4);
 
    M := QQ("Left Turn");
