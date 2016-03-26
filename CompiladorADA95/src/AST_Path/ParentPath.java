@@ -57,6 +57,8 @@ import abstractSyntaxTree.TypeInteger;
 import abstractSyntaxTree.TypeString;
 import abstractSyntaxTree.VariableDeclaration;
 import abstractSyntaxTree.VariableIDs;
+import abstractSyntaxTree.WhenElement;
+import abstractSyntaxTree.WhenList;
 import abstractSyntaxTree.WhenOption;
 import abstractSyntaxTree.WhenOptions;
 import abstractSyntaxTree.While;
@@ -124,6 +126,8 @@ public interface ParentPath {
     public void path(ElsIfList h);
     public void path(IfWithElsIF h);
     public void path(IfWithElsIfAndElse h);
+    public void path(WhenElement aThis);
+    public void path(WhenList aThis);
     
      
 }

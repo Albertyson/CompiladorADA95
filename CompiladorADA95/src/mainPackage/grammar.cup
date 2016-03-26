@@ -32,7 +32,7 @@ parser code {:
 		} else {
 			StringBuffer m = new StringBuffer("Error ");
 			if (info instanceof java_cup.runtime.Symbol){
-				m.append( "(" + info.toString() + ")" );     
+				m.append( "(" + info.toString() + "\tat:" + (((Symbol)info).left+1) + "," + (((Symbol)info).right+1) + ")" );     
 			}
 			m.append(" : " + message);   
 			System.err.println(m);
@@ -95,6 +95,8 @@ non terminal For						for_statement;
 non terminal Exit						exit_statement;
 non terminal Loop						loop_statement;
 non terminal Case 						case_statement;
+non terminal WhenElement 				when_element;
+non terminal WhenList 					when_list;
 non terminal WhenOptions 				when_options;
 non terminal WhenOption 				option_when;
 non terminal DeclarationPart  			declaration_part;
@@ -455,19 +457,50 @@ loop_statement				::=		LOOP statements:s END LOOP PUNTOCOMA
 									;
 
 
-case_statement				::=		  CASE expression:e IS WHEN when_options:w OPERPUNTERO statements:s END CASE PUNTOCOMA
-										{: RESULT = new CaseNotOthers(e,w,s); :}
-
-
-									| CASE error {: parser.report_error("Expresion inválida para el Case", "WRONG"); :} IS WHEN when_options:w OPERPUNTERO statements:s END CASE PUNTOCOMA
-
-
-
-
-									| CASE expression:e IS WHEN when_options:w OPERPUNTERO statements:s1 OTHERS OPERPUNTERO statements:s2 END CASE PUNTOCOMA
-										{: RESULT = new CaseOthers(e,w,s1,s2); :}
+case_statement				::=		  CASE expression:e IS when_list:wl END CASE PUNTOCOMA
+										{: 
+											//recorrer wl para ver si tiene algun elemento Others
+											boolean hasOthers=false;
+											Statements othersStatements=null;
+											int othersCount = 0;
+											for(int i=0;i<wl.size();i++){
+												if(wl.getAt(i).getWhenOptions() == null){
+													hasOthers = true;
+													othersStatements = wl.getAt(i).getStatements();
+													othersCount++;
+													if(i < wl.size()-1 ){
+														parser.report_error("Others debe estar al final","ERROR");
+													}
+												}
+											}
+											if(hasOthers){
+												if(othersCount>1){
+													parser.report_error("Case no puede traer mas de 1 opción others","ERROR");
+												}
+													RESULT = new CaseOthers(e,wl,othersStatements);													
+											}else{
+												RESULT = new CaseNotOthers(e,wl);												
+											}
+										:}
+									// | CASE expression:e IS when_list:wl WHEN OTHERS OPERPUNTERO statements:s END CASE PUNTOCOMA
+									// 	{: RESULT = new CaseOthers(e,wl,s); :}
+									//| CASE error {: parser.report_error("Expresion inválida para el Case", "WRONG"); :} IS WHEN when_options:w OPERPUNTERO statements:s END CASE PUNTOCOMA
 									;
 
+when_list 					::=		when_element:we
+										{: RESULT = new WhenList(); RESULT.add(we); :}
+									| when_element:we when_list:wl
+										{: 
+											wl.add(we); 
+											RESULT = wl; 
+										:}
+									;
+
+when_element 				::=		WHEN when_options:w OPERPUNTERO statements:s
+										{: RESULT = new WhenElement(w,s); :}
+									| WHEN OTHERS OPERPUNTERO statements:s
+										{: RESULT = new WhenElement(s); :}
+									;
 
 when_options  				::= 	option_when:opt
 										{: 

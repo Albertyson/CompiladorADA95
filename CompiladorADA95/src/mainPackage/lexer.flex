@@ -74,6 +74,8 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
 <YYINITIAL> "false"     { System.out.println("<FALSE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FALSE); }
 <YYINITIAL> "character" { System.out.println("<CHARACTER "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.CHARACTER); }
 <YYINITIAL> "string"    { System.out.println("<STRING "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.STRING); }
+<YYINITIAL> "case"      { System.out.println("<CASE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.CASE); }
+<YYINITIAL> "others"    { System.out.println("<OTHERS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OTHERS); }
 
 /* Operadores */
 <YYINITIAL> ":="        { System.out.println("<ASIG, \":=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERASIG); }
@@ -102,7 +104,7 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
 <YYINITIAL> "("         { System.out.println("<ABRIRPARENTESIS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PARIZQ); }
 <YYINITIAL> ")"         { System.out.println("<CERRARPARENTESIS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PARDER); }
 <YYINITIAL> ";"         { System.out.println("<PUNTOCOMA "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PUNTOCOMA); }
-<YYINITIAL> ".."        { System.out.println("<RANGO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DOBLEPUNTO); }
+<YYINITIAL> ".."        { System.out.println("<DOBLEPUNTO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DOBLEPUNTO); }
 <YYINITIAL> ","         { System.out.println("<COMA "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.COMA); }
 <YYINITIAL> ":"         { System.out.println("<DOS PUNTOS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DOSPUNTOS); }
 <YYINITIAL> "&"         { System.out.println("<AMPERSAND "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.AMPERSAND); }

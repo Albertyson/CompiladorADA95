@@ -172,9 +172,13 @@ public class formPrincipal extends javax.swing.JFrame {
                 BufferedReader br = new BufferedReader(fr);
                 txtFile.setText("");
                 String linea= "";
+                int lineNumber = 1;
+                txtFile.setTabSize(4);
                 while ((linea = br.readLine())!=null) {
+                    txtFile.append(lineNumber + "\t");
                     txtFile.append(linea);
                     txtFile.append("\n");
+                    lineNumber++;
                 }
             } else {
                 txtFileName.setText("");

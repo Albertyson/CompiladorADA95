@@ -13,16 +13,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class CaseNotOthers extends Case {
     
     public Expression exp;
-    public WhenOptions whenOptions;
-    public Statements statements;
+    public WhenList whenList;
 
     public CaseNotOthers() {
     }
     
-    public CaseNotOthers(Expression exp, WhenOptions whenOptions, Statements statements) {
+    public CaseNotOthers(Expression exp, WhenList wl) {
         this.exp = exp;
-        this.whenOptions = whenOptions;
-        this.statements = statements;
+        this.whenList = wl;
     }
 
     public Expression getExp() {
@@ -33,20 +31,12 @@ public class CaseNotOthers extends Case {
         this.exp = exp;
     }
 
-    public WhenOptions getWhenOptions() {
-        return whenOptions;
+    public WhenList getWhenList() {
+        return whenList;
     }
 
-    public void setWhenOptions(WhenOptions whenOptions) {
-        this.whenOptions = whenOptions;
-    }
-
-    public Statements getStatements() {
-        return statements;
-    }
-
-    public void setStatements(Statements statements) {
-        this.statements = statements;
+    public void setWhenList(WhenList whenList) {
+        this.whenList = whenList;
     }
     
     @Override
