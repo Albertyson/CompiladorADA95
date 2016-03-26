@@ -10,7 +10,7 @@ import java.io.File;
 
 parser code {:
 
-	/*public void report_error(String message, Object info) {
+/*	public void report_error(String message, Object info) {
 		StringBuilder m = new StringBuilder("Error");
 		if (info instanceof java_cup.runtime.Symbol) {
 			java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
@@ -23,18 +23,19 @@ parser code {:
 		}
 		m.append(" : " + message);
 		System.err.println(m);
-	}*/
-
-
+	}
+*/
+	@Override
 	public void report_error(String message, Object info) {
 		if (info instanceof String){
-			System.err.println("  " + info + " "+ message /*+ "\n       Parsing resumed from 2nd token before" + s.current_lexeme()*/ + "\n");
+			//System.err.println("  " + info + " "+ message + "\n       Parsing resumed from 2nd token before" + s.current_lexeme() + "\n");
+			System.err.println("  " + info + " "+ message + "\n");
 		} else {
-			StringBuffer m = new StringBuffer("Error ");
+			StringBuffer m = new StringBuffer("Error");
 			if (info instanceof java_cup.runtime.Symbol){
-				m.append( "(" + info.toString() + "\tat:" + (((Symbol)info).left+1) + "," + (((Symbol)info).right+1) + ")" );     
+				m.append( "(Se ha encontrado el token \"" + ((Symbol)info).value + "\" en la linea " + (((Symbol)info).left+1) + ", columna" + (((Symbol)info).right+1) + ")" );     
 			}
-			m.append(" : " + message);   
+			m.append(" : " + message);
 			System.err.println(m);
 		}
 	}
@@ -133,10 +134,44 @@ program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END
 											try {
 												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
 												xmlConverter.toXML();
+												System.out.println("Se ha generado el arbol");
 											} catch(Exception e){
 												System.out.println(e.getMessage());
 											}
 										:}
+										//errores para la producción
+									|PROCEDURE error{:parser.report_error("Programa principal: Se esperaba ID","\t");:}  IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 error{:parser.report_error("Programa principal: Se esperaba IS","\t");:} declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS error{:parser.report_error("Programa principal: Se esperaban declaraciones","\t");:} BEGIN statements:s END ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS declaration_part:dp error{:parser.report_error("Programa principal: Se esperaba Begin","\t");:} statements:s END ID:id2 PUNTOCOMA 
+									//|PROCEDURE ID:id1 IS declaration_part:dp BEGIN error{:parser.report_error("Programa principal: Se esperaban statements","\t");:} END ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s error{:parser.report_error("Programa principal: Se esperaba End","\t");:} ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END error{:parser.report_error("Programa principal: Se esperaba ID","\t");:} PUNTOCOMA 
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END ID:id2 error{:parser.report_error("Programa principal: Se esperaba ;","\t");:} 
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA error{:parser.report_error("Programa principal: Simbolo no esperado","\t");:}
+									
+
+
+									|PROCEDURE ID:id1 IS BEGIN statements:s END ID:id2 PUNTOCOMA 
+										{: 
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new Program(identifier1,s,identifier2);
+											try {
+												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
+												xmlConverter.toXML();
+												System.out.println("Se ha generado el arbol");
+											} catch(Exception e){
+												System.out.println(e.getMessage());
+											}
+										:}
+										//errores para la producción
+									|PROCEDURE ID:id1 error{:parser.report_error("Programa principal sin declaraciones: Se esperaba IS","\t");:} BEGIN statements:s END ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS error{:parser.report_error("Programa principal sin declaraciones: Se esperaba Begin","\t");:} statements:s END ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS BEGIN statements:s error{:parser.report_error("Programa principal sin declaraciones: Se esperaba END","\t");:} ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS BEGIN statements:s END error{:parser.report_error("Programa principal sin declaraciones: Se esperaba ID","\t");:} PUNTOCOMA 
+									|PROCEDURE ID:id1 IS BEGIN statements:s END ID:id2 error{:parser.report_error("Programa principal sin declaraciones: Se esperaba \";\" ","\t");:}
+									|error{:parser.report_error("Programa principal: Se esperaba Procedure","\t");:}
 									;
 
 
@@ -155,9 +190,22 @@ declaration_part 			::=		variable_declaration:vd PUNTOCOMA declaration_part:dp
 											dp.add(pd);
 											RESULT = dp;
 										:}
-									|	{:
+									| function_declaration:fd
+										{:
 											RESULT = new DeclarationPart();
+											RESULT.add(fd);
 										:}
+									| procedure_declaration:pd
+										{:
+											RESULT = new DeclarationPart();
+											RESULT.add(pd);
+										:}
+									| variable_declaration:vd PUNTOCOMA
+										{:
+											RESULT = new DeclarationPart();
+											RESULT.add(vd);
+										:}
+									| variable_declaration:vd error{:parser.report_error("Se esperaba \";\" ","\t");:}
 									;
 
 
@@ -167,6 +215,32 @@ function_declaration		::=		FUNCTION ID:id1 PARIZQ parameter_declarations:pds PAR
 											Identifier identifier2 = new Identifier(id2);
 											RESULT = new FunctionDeclaration(identifier1,pds,vtype,dp,s,identifier2); 
 										:}
+										//errores para la producción
+									| FUNCTION error{:parser.report_error("Declaracion de funcion: Se esperaba ID","\t"); :} PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 error{:parser.report_error("Declaracion de funcion: Se esperaba \"(\"","\t");:} parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds error{:parser.report_error("Declaracion de funcion: Se esperaba\")\"","\t");:} RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER error{:parser.report_error("Declaracion de funcion: Se esperaba Return","\t");:} variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype error{:parser.report_error("Declaracion de funcion: Se esperaba IS","\t");:} declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp error{:parser.report_error("Declaracion de funcion: Se esperaba Begin","\t"); :}statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s error{:parser.report_error("Declaracion de funcion: Se esperaba End","\t"); :}ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END error{:parser.report_error("Declaracion de funcion: Se esperaba ID","\t"); :} PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 error{:parser.report_error("Declaracion de funcion: Se esperaba\";\"","\t");:}
+
+
+
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN statements:s END ID:id2 PUNTOCOMA
+										{:
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new FunctionDeclaration(identifier1,pds,vtype,s,identifier2); 
+										:}
+										//errores para la producción
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba un tipo ","\t"); :} IS BEGIN statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba IS","\t"); :}  BEGIN statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba Begin","\t"); :} statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN statements:s error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba END","\t"); :} ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN statements:s END error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba ID","\t"); :} PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN statements:s END ID:id2 error{:parser.report_error("Declaracion de funcion: Se esperaba \";\" ","\t"); :}
 									;
 
 
@@ -176,6 +250,28 @@ procedure_declaration 		::=		PROCEDURE ID:id1 PARIZQ parameter_declarations:pds 
 											Identifier identifier2 = new Identifier(id2);
 											RESULT = new ProcedureDeclaration(identifier1,pds,dp,s,identifier2); 
 										:}
+									|PROCEDURE error{:parser.report_error("Declaracion de Procedimiento: Se esperaba ID","\t"); :} PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 error{:parser.report_error("Declaracion de Procedimiento: Se esperaba  \"(\"","\t"); :} parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds error{:parser.report_error("Declaracion de Procedimiento: Se esperaba\")\"","\t");:} IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER error{:parser.report_error("Declaracion de Procedimiento: Se esperaba Is","\t");:} declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp error{:parser.report_error("Declaracion de Procedimiento: Se esperaba Begin","\t");:}  statements:s END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s error{:parser.report_error("Declaracion de Procedimiento: Se esperaba End","\t");:}  ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s END error{:parser.report_error("Declaracion de Procedimiento: Se esperaba ID","\t");:}  PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s END ID:id2 error{:parser.report_error("Declaracion de Procedimiento: Se esperaba\";\"","\t");:}
+
+
+
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN statements:s END ID:id2 PUNTOCOMA
+										{:
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new ProcedureDeclaration(identifier1,pds,s,identifier2); 
+										:}
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba IS","\t"); :} BEGIN statements:s END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba Begin","\t"); :} statements:s END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN statements:s error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba End","\t"); :} ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN statements:s END error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba ID","\t"); :} PUNTOCOMA									
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN statements:s END ID:id2 error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba \";\" ","\t"); :}
  									;
 
 
@@ -192,12 +288,26 @@ parameter_declarations 		::=		parameter:p
 
 parameter 					::=	 	variable_ids:vids DOSPUNTOS mode:m variable_type:vtype OPERASIG expression:e
 										{: RESULT = new Parameter(vids,m,vtype,e); :}
+										//errores para esta producción:
+									//| variable_ids:vids error{:parser.report_error("Se esperaba \":\" ","\t"); :} mode:m variable_type:vtype OPERASIG expression:e
+									| variable_ids:vids DOSPUNTOS error{:parser.report_error("parameter: Se esperaba un modo: IN,OUT,IN OUT ","\t"); :} variable_type:vtype OPERASIG expression:e
+									| variable_ids:vids DOSPUNTOS mode:m error{:parser.report_error("parameter: Se esperaba un tipo","\t"); :} OPERASIG expression:e
+									| variable_ids:vids DOSPUNTOS mode:m variable_type:vtype OPERASIG error{:parser.report_error("parameter: Se esperaba una expresion","\t"); :}
+
+
 									| variable_ids:vids DOSPUNTOS mode:m variable_type:vtype
 										{: RESULT = new Parameter(vids,m,vtype); :}
-									| variable_ids:vids DOSPUNTOS variable_type:vtype 
-										{: RESULT = new Parameter(vids,vtype); :}
-									| variable_ids:vids DOSPUNTOS variable_type:vtype OPERASIG expression:e
-										{: RESULT = new Parameter(vids,vtype,e); :}
+										//errores para esta producción:
+									| variable_ids:vids DOSPUNTOS mode:m error{:parser.report_error("parameter: Se esperaba un tipo","\t"); :}
+
+
+									| variable_declaration:vd
+										{: RESULT = new Parameter(vd.getVariables(),vd.getType()); :}
+										//errores para esta producción
+
+									| variable_declaration:vd OPERASIG expression:e
+										{: RESULT = new Parameter(vd.getVariables(),vd.getType(),e); :}
+										//errores para esta producción:
  									;
 
 
@@ -363,6 +473,14 @@ variable_ids				::=		ID:id
 											vids.add(identifier);
 											RESULT = vids;
 										:}
+										//errores para esta producción
+									| ID:id error{:
+											parser.report_error("variable_ids: Se esperaba \",\" ","\t");
+											Identifier identifier = new Identifier(id);
+											RESULT = new VariableIDs();
+											RESULT.add(identifier);
+									:}	variable_ids:vids
+									//| ID:id COMA error{:parser.report_error("variable_ids: Se esperaba ID ","\t");:}
 									;
 
 
@@ -389,6 +507,12 @@ assign_variable				::=		ID:id OPERASIG expression:e PUNTOCOMA
 
 variable_declaration		::=		variable_ids:vids DOSPUNTOS variable_type:types
 										{: RESULT = new VariableDeclaration(vids,types); :}
+										//errores para esta producción:
+									//|variable_ids:vids error{:parser.report_error("Se esperaba \":\" ","\t");:} variable_type:types
+									|variable_ids:vids DOSPUNTOS error{:
+										parser.report_error("variable_declaration:Se esperaba un tipo ","\t");
+										RESULT = new VariableDeclaration(vids,null); 
+									:}
 									;
 
 
@@ -475,7 +599,7 @@ case_statement				::=		  CASE expression:e IS when_list:wl END CASE PUNTOCOMA
 											}
 											if(hasOthers){
 												if(othersCount>1){
-													parser.report_error("Case no puede traer mas de 1 opción others","ERROR");
+													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
 													RESULT = new CaseOthers(e,wl,othersStatements);													
 											}else{

@@ -30,6 +30,15 @@ public class FunctionDeclaration extends Declaration {
         this.id2 = id2;
     }
 
+    public FunctionDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, VariableType returnType, Statements statements, Identifier id2) {
+        this.id1 = id1;
+        this.parameterDeclarations = parameterDeclarations;
+        this.returnType = returnType;
+        this.statements = statements;
+        this.id2 = id2;
+    }
+    
+
     public Identifier getId1() {
         return id1;
     }
