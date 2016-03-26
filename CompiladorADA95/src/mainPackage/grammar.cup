@@ -202,11 +202,11 @@ parameter 					::=	 	variable_ids:vids DOSPUNTOS mode:m variable_type:vtype OPER
 
 
 mode              			::= 	  IN
-										{:RESULT = new ModeIn(); :}
+										{: RESULT = new ModeIn(); :}
 		 							| INOUT 
-										{:RESULT = new ModeInOut(); :}
+										{: RESULT = new ModeInOut(); :}
 		 							| OUT
-										{:RESULT = new ModeOut(); :}
+										{: RESULT = new ModeOut(); :}
 		 							;
 
 
