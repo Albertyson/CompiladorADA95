@@ -993,63 +993,63 @@ class Lexer2 implements java_cup.runtime.Scanner {
             }
           case 70: break;
           case 3: 
-            { System.out.println("<ID, \"" + yytext() + "\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.ID, yytext());
+            { return symbol(sym.ID, yytext());
             }
           case 71: break;
           case 4: 
-            { System.out.println("<INT, \"" + yytext() + "\" " + (yyline + 1) + ":" + yycolumn + ">"); return symbol(sym.NUMEROENTERO, new Integer(Integer.parseInt(yytext())));
+            { return symbol(sym.NUMEROENTERO, new Integer(Integer.parseInt(yytext())));
             }
           case 72: break;
           case 5: 
-            { System.out.println("<OPRESTA, \"-\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERRESTA);
+            { return symbol(sym.OPERRESTA);
             }
           case 73: break;
           case 6: 
-            { System.out.println("<DOS PUNTOS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DOSPUNTOS);
+            { return symbol(sym.DOSPUNTOS);
             }
           case 74: break;
           case 7: 
-            { System.out.println("<OPREL, \"=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERIGUAL);
+            { return symbol(sym.OPERIGUAL);
             }
           case 75: break;
           case 8: 
-            { System.out.println("<OPREL, \"<\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMENOR);
+            { return symbol(sym.OPERMENOR);
             }
           case 76: break;
           case 9: 
-            { System.out.println("<OPREL, \">\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMAYOR);
+            { return symbol(sym.OPERMAYOR);
             }
           case 77: break;
           case 10: 
-            { System.out.println("<OPDIV, \"/\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERDIVISION);
+            { return symbol(sym.OPERDIVISION);
             }
           case 78: break;
           case 11: 
-            { System.out.println("<OPSUMA, \"+\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERSUMA);
+            { return symbol(sym.OPERSUMA);
             }
           case 79: break;
           case 12: 
-            { System.out.println("<OPMULT, \"*\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMULTIPLICACION);
+            { return symbol(sym.OPERMULTIPLICACION);
             }
           case 80: break;
           case 13: 
-            { System.out.println("<ABRIRPARENTESIS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PARIZQ);
+            { return symbol(sym.PARIZQ);
             }
           case 81: break;
           case 14: 
-            { System.out.println("<CERRARPARENTESIS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PARDER);
+            { return symbol(sym.PARDER);
             }
           case 82: break;
           case 15: 
-            { System.out.println("<PUNTOCOMA "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PUNTOCOMA);
+            { return symbol(sym.PUNTOCOMA);
             }
           case 83: break;
           case 16: 
-            { System.out.println("<COMA "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.COMA);
+            { return symbol(sym.COMA);
             }
           case 84: break;
           case 17: 
-            { System.out.println("<AMPERSAND "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.AMPERSAND);
+            { return symbol(sym.AMPERSAND);
             }
           case 85: break;
           case 18: 
@@ -1061,7 +1061,7 @@ class Lexer2 implements java_cup.runtime.Scanner {
             }
           case 87: break;
           case 20: 
-            { yybegin(YYINITIAL); System.out.println("<STRING, \"" + string.toString() + "\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.CADENA, string.toString());
+            { yybegin(YYINITIAL); return symbol(sym.CADENA, string.toString());
             }
           case 88: break;
           case 21: 
@@ -1069,47 +1069,47 @@ class Lexer2 implements java_cup.runtime.Scanner {
             }
           case 89: break;
           case 22: 
-            { System.out.println("<IS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.IS);
+            { return symbol(sym.IS);
             }
           case 90: break;
           case 23: 
-            { System.out.println("<IF "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.IF);
+            { return symbol(sym.IF);
             }
           case 91: break;
           case 24: 
-            { System.out.println("<IN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.IN);
+            { return symbol(sym.IN);
             }
           case 92: break;
           case 25: 
-            { System.out.println("<OPBOOL, \"or\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NOT);
+            { return symbol(sym.OR);
             }
           case 93: break;
           case 26: 
-            { System.out.println("<ASIG, \":=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERASIG);
+            { return symbol(sym.OPERASIG);
             }
           case 94: break;
           case 27: 
-            { System.out.println("<OPERPUNTERO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERPUNTERO);
+            { return symbol(sym.OPERPUNTERO);
             }
           case 95: break;
           case 28: 
-            { System.out.println("<OPREL, \"<=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMENORIGUAL);
+            { return symbol(sym.OPERMENORIGUAL);
             }
           case 96: break;
           case 29: 
-            { System.out.println("<OPREL, \">=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERMAYORIGUAL);
+            { return symbol(sym.OPERMAYORIGUAL);
             }
           case 97: break;
           case 30: 
-            { System.out.println("<OPREL, \"/=\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERDISTINTO);
+            { return symbol(sym.OPERDISTINTO);
             }
           case 98: break;
           case 31: 
-            { System.out.println("<OPEXP, \"**\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OPERPOTENCIA);
+            { return symbol(sym.OPERPOTENCIA);
             }
           case 99: break;
           case 32: 
-            { System.out.println("<DOBLEPUNTO "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.DOBLEPUNTO);
+            { return symbol(sym.DOBLEPUNTO);
             }
           case 100: break;
           case 33: 
@@ -1129,131 +1129,131 @@ class Lexer2 implements java_cup.runtime.Scanner {
             }
           case 104: break;
           case 37: 
-            { System.out.println("<FLOAT, \"" + yytext() + "\" " + (yyline + 1) + ":" + yycolumn + ">"); return symbol(sym.NUMEROFLOAT, new Double(Double.parseDouble(yytext())));
+            { return symbol(sym.NUMEROFLOAT, new Double(Double.parseDouble(yytext())));
             }
           case 105: break;
           case 38: 
-            { System.out.println("<CARACTER," + yytext() + (yyline + 1) + ":" + yycolumn + ">");return symbol(sym.CARACTER, yytext());
+            { return symbol(sym.CARACTER, yytext());
             }
           case 106: break;
           case 39: 
-            { System.out.println("<END " + (yyline + 1) + ":" + yycolumn + ">"); return symbol(sym.END);
+            { return symbol(sym.END);
             }
           case 107: break;
           case 40: 
-            { System.out.println("<OPBOOL, \"and\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.AND);
+            { return symbol(sym.AND);
             }
           case 108: break;
           case 41: 
-            { System.out.println("<FOR " + (yyline + 1) + ":" + yycolumn + ">"); return symbol(sym.FOR);
+            { return symbol(sym.FOR);
             }
           case 109: break;
           case 42: 
-            { System.out.println("<OPBOOL, \"not\" "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OR);
+            { return symbol(sym.NOT);
             }
           case 110: break;
           case 43: 
-            { System.out.println("<OUT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OUT);
+            { return symbol(sym.OUT);
             }
           case 111: break;
           case 44: 
-            { System.out.println("<PUT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PUT);
+            { return symbol(sym.PUT);
             }
           case 112: break;
           case 45: 
-            { System.out.println("<GET "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.GET);
+            { return symbol(sym.GET);
             }
           case 113: break;
           case 46: 
-            { System.out.println("<ELSE " + (yyline + 1) + ":" + yycolumn + ">"); return symbol(sym.ELSE);
+            { return symbol(sym.ELSE);
             }
           case 114: break;
           case 47: 
-            { System.out.println("<EXIT " + (yyline+1)+":"+yycolumn+">"); return symbol(sym.EXIT);
+            { return symbol(sym.EXIT);
             }
           case 115: break;
           case 48: 
-            { System.out.println("<CASE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.CASE);
+            { return symbol(sym.CASE);
             }
           case 116: break;
           case 49: 
-            { System.out.println("<LOOP "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.LOOP);
+            { return symbol(sym.LOOP);
             }
           case 117: break;
           case 50: 
-            { System.out.println("<NULL "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.NULL);
+            { return symbol(sym.NULL);
             }
           case 118: break;
           case 51: 
-            { System.out.println("<TRUE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.TRUE);
+            { return symbol(sym.TRUE);
             }
           case 119: break;
           case 52: 
-            { System.out.println("<THEN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.THEN);
+            { return symbol(sym.THEN);
             }
           case 120: break;
           case 53: 
-            { System.out.println("<WHEN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.WHEN);
+            { return symbol(sym.WHEN);
             }
           case 121: break;
           case 54: 
-            { System.out.println("<ELSE " + (yyline + 1) + ":" + yycolumn + ">"); return symbol(sym.ELSIF);
+            { return symbol(sym.ELSIF);
             }
           case 122: break;
           case 55: 
-            { System.out.println("<FLOAT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FLOAT);
+            { return symbol(sym.FLOAT);
             }
           case 123: break;
           case 56: 
-            { System.out.println("<FALSE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FALSE);
+            { return symbol(sym.FALSE);
             }
           case 124: break;
           case 57: 
-            { System.out.println("<WHILE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.WHILE);
+            { return symbol(sym.WHILE);
             }
           case 125: break;
           case 58: 
-            { System.out.println("<BEGIN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.BEGIN);
+            { return symbol(sym.BEGIN);
             }
           case 126: break;
           case 59: 
-            { System.out.println("<RETURN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.RETURN);
+            { return symbol(sym.RETURN);
             }
           case 127: break;
           case 60: 
-            { System.out.println("<STRING "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.STRING);
+            { return symbol(sym.STRING);
             }
           case 128: break;
           case 61: 
-            { System.out.println("<IN_OUT "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.INOUT);
+            { return symbol(sym.INOUT);
             }
           case 129: break;
           case 62: 
-            { System.out.println("<OTHERS "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.OTHERS);
+            { return symbol(sym.OTHERS);
             }
           case 130: break;
           case 63: 
-            { System.out.println("<DECLARE " + (yyline+1) + ":" + yycolumn + ">"); return symbol(sym.DECLARE);
+            { return symbol(sym.DECLARE);
             }
           case 131: break;
           case 64: 
-            { System.out.println("<INTEGER "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.INTEGER);
+            { return symbol(sym.INTEGER);
             }
           case 132: break;
           case 65: 
-            { System.out.println("<BOOLEAN "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.BOOLEAN);
+            { return symbol(sym.BOOLEAN);
             }
           case 133: break;
           case 66: 
-            { System.out.println("<FUNCTION "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.FUNCTION);
+            { return symbol(sym.FUNCTION);
             }
           case 134: break;
           case 67: 
-            { System.out.println("<CHARACTER "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.CHARACTER);
+            { return symbol(sym.CHARACTER);
             }
           case 135: break;
           case 68: 
-            { System.out.println("<PROCEDURE "+(yyline+1)+":"+yycolumn+">"); return symbol(sym.PROCEDURE);
+            { return symbol(sym.PROCEDURE);
             }
           case 136: break;
           default:

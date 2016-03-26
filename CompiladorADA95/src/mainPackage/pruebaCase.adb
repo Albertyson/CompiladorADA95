@@ -1,7 +1,7 @@
 procedure Grade is
    Score : Integer;
    Letter: String;
-begin
+begin 
 
    loop
 
@@ -19,7 +19,7 @@ begin
          when 71 ..  80 => Letter := "C";
          when 61 ..  70 => Letter := "D";
          when others    => Letter := "F";
-         when others    => Letter := "G";
+        -- when others    => Letter := "G";
       end case;
 
       Put ("A score of ");
