@@ -9,7 +9,8 @@ import abstractSyntaxTree.*;
 import java.io.File;
 
 parser code {:
-	public void report_error(String message, Object info) {
+
+	/*public void report_error(String message, Object info) {
 		StringBuilder m = new StringBuilder("Error");
 		if (info instanceof java_cup.runtime.Symbol) {
 			java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
@@ -22,12 +23,28 @@ parser code {:
 		}
 		m.append(" : " + message);
 		System.err.println(m);
+	}*/
+
+
+	public void report_error(String message, Object info) {
+		if (info instanceof String){
+			System.err.println("  " + info + " "+ message /*+ "\n       Parsing resumed from 2nd token before" + s.current_lexeme()*/ + "\n");
+		} else {
+			StringBuffer m = new StringBuffer("Error ");
+			if (info instanceof java_cup.runtime.Symbol){
+				m.append( "(" + info.toString() + ")" );     
+			}
+			m.append(" : " + message);   
+			System.err.println(m);
+		}
 	}
+
 
 	public void report_fatal_error(String message, Object info) {
 		report_error(message, info);
-		//System.exit(1);
+		throw new RuntimeException("Fatal Syntax Error");
 	}
+
 :};
 
 /* ----------Sección de declaraciones de terminales y no terminales--------- */
@@ -111,10 +128,10 @@ program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END
 											Identifier identifier1 = new Identifier(id1);
 											Identifier identifier2 = new Identifier(id2);
 											RESULT = new Program(identifier1,dp,s,identifier2);
-											try{
-												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"),RESULT);
+											try {
+												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
 												xmlConverter.toXML();
-											}catch(Exception e){
+											} catch(Exception e){
 												System.out.println(e.getMessage());
 											}
 										:}
@@ -193,6 +210,7 @@ mode              			::= 	  IN
 
 
 							/*      >> Expresiones <<    */
+
 expression					::=		literal_expression:le
 										{: RESULT = le; :}
 									| ID:id
@@ -421,7 +439,7 @@ while_statemet				::=		WHILE expression:e LOOP statements:s END LOOP PUNTOCOMA
 
 for_statement				::=		FOR ID:id IN range:r LOOP statements:s END LOOP PUNTOCOMA
 										{: 
-											Identifier identifier=new Identifier(id);
+											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s); 
 										:}
 									;
@@ -439,6 +457,13 @@ loop_statement				::=		LOOP statements:s END LOOP PUNTOCOMA
 
 case_statement				::=		  CASE expression:e IS WHEN when_options:w OPERPUNTERO statements:s END CASE PUNTOCOMA
 										{: RESULT = new CaseNotOthers(e,w,s); :}
+
+
+									| CASE error {: parser.report_error("Expresion inválida para el Case", "WRONG"); :} IS WHEN when_options:w OPERPUNTERO statements:s END CASE PUNTOCOMA
+
+
+
+
 									| CASE expression:e IS WHEN when_options:w OPERPUNTERO statements:s1 OTHERS OPERPUNTERO statements:s2 END CASE PUNTOCOMA
 										{: RESULT = new CaseOthers(e,w,s1,s2); :}
 									;
@@ -466,4 +491,6 @@ option_when					::=		expression:e
 
 return_statement			::=		RETURN expression:e PUNTOCOMA
 										{: RESULT = new Return(e); :}
+									| RETURN error
+										{: parser.report_error("Se esperaba un valor de retorno", "ERROR: "); :}
 									;

@@ -16,7 +16,7 @@ procedure f4 is
 
    function QQ2(Str: String) return Integer is
    begin
-      return a;
+      return ;
       --return Str(1) = 'T';
    end QQ2;
    function QQ(Str: String) return Integer is

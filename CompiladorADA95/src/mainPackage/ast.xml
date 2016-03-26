@@ -111,11 +111,7 @@
             <returnType xsi:type="typeInteger"/>
             <declarations/>
             <statements>
-                <statements xsi:type="return">
-                    <exp xsi:type="identifier">
-                        <id>a</id>
-                    </exp>
-                </statements>
+                <statements xsi:nil="true"/>
             </statements>
             <id2>
                 <id>QQ2</id>
