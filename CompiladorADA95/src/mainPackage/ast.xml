@@ -316,9 +316,6 @@
                             </id>
                             <exp xsi:type="and">
 <exp1 xsi:type="add">
-    <exp1 xsi:type="integerNumber">
-        <number>3</number>
-    </exp1>
     <exp2 xsi:type="integerNumber">
         <number>90</number>
     </exp2>
