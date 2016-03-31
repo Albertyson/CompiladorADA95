@@ -7,6 +7,7 @@ package mainPackage;
 import java_cup.runtime.*;
 import abstractSyntaxTree.*;
 import java.io.File;
+import java.util.List;
 
 parser code {:
 
@@ -39,7 +40,32 @@ parser code {:
 			System.err.println(m);
 		}
 	}
+	@Override
+	public void syntax_error(Symbol s){
+		System.err.println( "(Se ha encontrado el token \"" + sym.terminalNames[s.sym] + "\" en la linea " + (s.left+1) + ", columna" + (s.right+1) + ")" ); 
+                seEsperaba();
+	}
 
+	public void seEsperaba(){
+		List<Integer> listaTokens = this.expected_token_ids();
+		if (listaTokens.size() <= 0){
+			listaTokens = this.expected_token_ids();
+		}
+		String cadenaTokensEsperados = "";
+		for (int i = 0 ; i < listaTokens.size(); i++){
+			int id = listaTokens.get(i);
+			if (id == 1){
+				continue;
+			}
+			String nombreTerminal = sym.terminalNames[id];
+			if (i == listaTokens.size() - 1){
+				cadenaTokensEsperados += nombreTerminal;
+			}else{
+				cadenaTokensEsperados += nombreTerminal + " or ";
+			}
+		}
+		System.err.print("Se esperaba " + cadenaTokensEsperados);
+	};
 
 	public void report_fatal_error(String message, Object info) {
 		report_error(message, info);
@@ -331,6 +357,9 @@ expression					::=		literal_expression:le
 										{: RESULT = ae; :}
 									| PARIZQ expression:e PARDER
 										{: RESULT = e; :}
+										//errores para la producción:
+									| PARIZQ expression:e error{:parser.report_error("expression: se esperaba\")\" ","\t");:}
+
 									| boolean_expression:be
 										{: RESULT = be; :}
 									| logical_expression:le
@@ -355,43 +384,91 @@ literal_expression			::=		NUMEROENTERO:num
 
 arithmetic_expression		::=		expression:e1 OPERSUMA expression:e2
 										{: RESULT = new Add(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERSUMA error{:parser.report_error("arithmetic_expression: se esperaba expresion ","\t");:}
+
+
 									| expression:e1 OPERRESTA expression:e2
 										{: RESULT = new  Minus(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERRESTA error{:parser.report_error("arithmetic_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 OPERDIVISION expression : e2
 										{: RESULT = new Division(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERDIVISION error{:parser.report_error("arithmetic_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 OPERMULTIPLICACION expression:e2
 										{: RESULT = new Multiplication(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERMULTIPLICACION error{:parser.report_error("arithmetic_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 OPERPOTENCIA expression:e2
 										{: RESULT = new Pow(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERPOTENCIA error{:parser.report_error("arithmetic_expression: se esperaba expresion ","\t");:}
+
 									| OPERRESTA expression:e
 										{: RESULT = new Negative(e); :}
 										%prec NEGATIVO
+										//errores para la producción:
+									| OPERRESTA error{:parser.report_error("arithmetic_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 MOD expression:e2
 										{: RESULT = new Module(e1,e2); :}										
+										//errores para la producción:
+									| expression:e1 MOD error{:parser.report_error("arithmetic_expression: se esperaba expresion ","\t");:}
 									;
 
 
 boolean_expression			::=		expression:e1 OPERIGUAL expression:e2
 										{: RESULT = new Equal(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERIGUAL error{:parser.report_error("boolean_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 OPERDISTINTO expression:e2
 										{: RESULT = new NotEqual(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERDISTINTO error{:parser.report_error("boolean_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 OPERMAYOR expression:e2
 										{: RESULT = new Greater(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERMAYOR error{:parser.report_error("boolean_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 OPERMENOR expression:e2
 										{: RESULT = new Less(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERMENOR error{:parser.report_error("boolean_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 OPERMAYORIGUAL expression:e2
 										{: RESULT = new GreaterOrEqual(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERMAYORIGUAL error{:parser.report_error("boolean_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 OPERMENORIGUAL expression:e2
 										{: RESULT = new LessOrEqual(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OPERMENORIGUAL error{:parser.report_error("boolean_expression: se esperaba expresion ","\t");:}
+
 									;
 
 
 logical_expression			::=		expression:e1 AND expression:e2
 										{: RESULT = new And(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 AND error{:parser.report_error("logical_expression: se esperaba expresion ","\t");:}
+
 									| expression:e1 OR expression:e2
 										{: RESULT = new Or(e1,e2); :}
+										//errores para la producción:
+									| expression:e1 OR error{:parser.report_error("logical_expression: se esperaba expresion ","\t");:}
+
 									| NOT expression:e
 										{: RESULT = new Not(e); :}
+										//errores para la producción:
+									| NOT error{:parser.report_error("logical_expression: se esperaba expresion ","\t");:}
+
 									;
 
 
@@ -405,6 +482,7 @@ function_parameters			::=		expression:e
 											fp.add(e); 
 											RESULT = fp; 
 										:}
+									//| expression:e error{:parser.report_error("function_parameters: se esperaba \",\" ","\t");:} function_parameters:fp
 									;
 
 function_call				::=		ID:id PARIZQ function_parameters:fp PARDER
@@ -412,11 +490,16 @@ function_call				::=		ID:id PARIZQ function_parameters:fp PARDER
 											Identifier identifier = new Identifier(id); 
 											RESULT = new FunctionCall(identifier,fp); 
 										:}
+										//errores para la producción:
+									|ID:id PARIZQ function_parameters:fp error{:parser.report_error("function_call: se esperaba \")\" ","\t");:}
+
 									| ID:id PARIZQ PARDER
 										{: 
 											Identifier identifier = new Identifier(id);  
 											RESULT = new FunctionCall(identifier);
 										:}
+										//errores para la producción:
+									| ID:id PARIZQ error{:parser.report_error("function_call: se esperaba \")\" ","\t");:}
 									;
 
 
@@ -435,6 +518,9 @@ statement					::=		assign_variable:av
 										{: System.out.println("statement Declaracion Variable"); :}*/
 									| expression:e PUNTOCOMA
 										{: RESULT = e; :}
+										//errores para la producción:
+									| expression:e error{:parser.report_error("function_call: se esperaba \";\" ","\t");:}
+
 									| get_value:gv
 										{: RESULT = gv; :}
 									| put_value:pv
@@ -454,21 +540,6 @@ statement					::=		assign_variable:av
 									| return_statement:rs
 										{: RESULT = rs; :}
 									;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 range						::=		  expression:e1 DOBLEPUNTO expression:e2
