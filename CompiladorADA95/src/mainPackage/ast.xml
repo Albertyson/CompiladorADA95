@@ -1,163 +1,215 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Program>
     <id1>
-        <id>FunctionsProcedures</id>
+        <id>Condition</id>
     </id1>
     <declarations>
-        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="functionDeclaration">
-            <id1>
-                <id>calcular</id>
-            </id1>
-            <parameterDeclarations>
-                <parameters>
-                    <vars>
-                        <ids>
-                            <id>r</id>
-                        </ids>
-                    </vars>
-                    <mode xsi:type="modeInOut"/>
-                    <type xsi:type="typeInteger"/>
-                </parameters>
-            </parameterDeclarations>
-            <returnType xsi:type="typeInteger"/>
-            <declarations>
-                <declaration xsi:type="variableDeclaration">
-                    <variables>
-                        <ids>
-                            <id>unaVariable</id>
-                        </ids>
-                    </variables>
-                    <type xsi:type="typeInteger"/>
-                </declaration>
-            </declarations>
-            <statements>
-                <statements xsi:type="assignVariableSimple">
-                    <id>
-                        <id>unaVariable</id>
-                    </id>
-                    <exp xsi:type="integerNumber">
-                        <number>23</number>
-                    </exp>
-                </statements>
-                <statements xsi:type="assignVariableSimple">
-                    <id>
-                        <id>r</id>
-                    </id>
-                    <exp xsi:type="multiplication">
-                        <exp1 xsi:type="identifier">
-                            <id>r</id>
-                        </exp1>
-                        <exp2 xsi:type="identifier">
-                            <id>unaVariable</id>
-                        </exp2>
-                    </exp>
-                </statements>
-                <statements xsi:type="return">
-                    <exp xsi:type="identifier">
-                        <id>r</id>
-                    </exp>
-                </statements>
-            </statements>
-            <id2>
-                <id>calcular</id>
-            </id2>
-        </declaration>
-        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="procedureDeclaration">
-            <id1>
-                <id>imprimirCadena</id>
-            </id1>
-            <parameterDeclarations>
-                <parameters>
-                    <vars>
-                        <ids>
-                            <id>s</id>
-                        </ids>
-                    </vars>
-                    <mode xsi:type="modeIn"/>
-                    <type xsi:type="typeString"/>
-                </parameters>
-            </parameterDeclarations>
-            <declarations>
-                <declaration xsi:type="procedureDeclaration">
-                    <id1>
-                        <id>innerProc</id>
-                    </id1>
-                    <parameterDeclarations/>
-                    <statements>
-                        <statements xsi:type="putValue">
-                            <exp xsi:type="stringLiteral">
-<string>hola</string>
-                            </exp>
-                        </statements>
-                    </statements>
-                    <id2>
-                        <id>innerProc</id>
-                    </id2>
-                </declaration>
-            </declarations>
-            <statements>
-                <statements xsi:type="putValue">
-                    <exp xsi:type="stringLiteral">
-                        <string>la cadena es: </string>
-                    </exp>
-                </statements>
-                <statements xsi:type="putValue">
-                    <exp xsi:type="identifier">
-                        <id>s</id>
-                    </exp>
-                </statements>
-                <statements xsi:type="functionCall">
-                    <id>
-                        <id>innerProc</id>
-                    </id>
-                </statements>
-            </statements>
-            <id2>
-                <id>imprimirCadena</id>
-            </id2>
-        </declaration>
         <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="variableDeclaration">
             <variables>
                 <ids>
-                    <id>calculo</id>
+                    <id>n1</id>
+                </ids>
+                <ids>
+                    <id>n2</id>
+                </ids>
+                <ids>
+                    <id>n3</id>
+                </ids>
+                <ids>
+                    <id>n4</id>
                 </ids>
             </variables>
             <type xsi:type="typeInteger"/>
         </declaration>
+        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="variableDeclaration">
+            <variables>
+                <ids>
+                    <id>promedio</id>
+                </ids>
+            </variables>
+            <type xsi:type="typeFloat"/>
+        </declaration>
     </declarations>
     <statements>
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="getValue">
+            <id>
+                <id>n1</id>
+            </id>
+        </statements>
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="getValue">
+            <id>
+                <id>n2</id>
+            </id>
+        </statements>
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="getValue">
+            <id>
+                <id>n3</id>
+            </id>
+        </statements>
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="getValue">
+            <id>
+                <id>n4</id>
+            </id>
+        </statements>
         <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="assignVariableSimple">
             <id>
-                <id>calculo</id>
+                <id>promedio</id>
             </id>
-            <exp xsi:type="functionCall">
-                <id>
-                    <id>calcular</id>
-                </id>
-                <fp>
-                    <exps xsi:type="integerNumber">
-                        <number>23</number>
-                    </exps>
-                </fp>
+            <exp xsi:type="division">
+                <exp1 xsi:type="add">
+                    <exp1 xsi:type="add">
+                        <exp1 xsi:type="add">
+                            <exp1 xsi:type="identifier">
+<id>n1</id>
+                            </exp1>
+                            <exp2 xsi:type="identifier">
+<id>n2</id>
+                            </exp2>
+                        </exp1>
+                        <exp2 xsi:type="identifier">
+                            <id>n3</id>
+                        </exp2>
+                    </exp1>
+                    <exp2 xsi:type="identifier">
+                        <id>n4</id>
+                    </exp2>
+                </exp1>
+                <exp2 xsi:type="integerNumber">
+                    <number>4</number>
+                </exp2>
             </exp>
         </statements>
-        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="functionCall">
-            <id>
-                <id>imprimirCadena</id>
-            </id>
-            <fp>
-                <exps xsi:type="stringLiteral">
-                    <string>Hey</string>
-                </exps>
-            </fp>
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ifWithElsIfAndElse">
+            <expression xsi:type="less">
+                <exp1 xsi:type="identifier">
+                    <id>promedio</id>
+                </exp1>
+                <exp2 xsi:type="integerNumber">
+                    <number>40</number>
+                </exp2>
+            </expression>
+            <statements>
+                <statements xsi:type="putValue">
+                    <exp xsi:type="stringLiteral">
+                        <string>promedio insuficiente: </string>
+                    </exp>
+                </statements>
+            </statements>
+            <elsIfList>
+                <list>
+                    <exp xsi:type="and">
+                        <exp1 xsi:type="greaterOrEqual">
+                            <exp1 xsi:type="identifier">
+<id>promedio</id>
+                            </exp1>
+                            <exp2 xsi:type="integerNumber">
+<number>40</number>
+                            </exp2>
+                        </exp1>
+                        <exp2 xsi:type="lessOrEqual">
+                            <exp1 xsi:type="identifier">
+<id>promedio</id>
+                            </exp1>
+                            <exp2 xsi:type="integerNumber">
+<number>59</number>
+                            </exp2>
+                        </exp2>
+                    </exp>
+                    <stms>
+                        <statements xsi:type="putValue">
+                            <exp xsi:type="stringLiteral">
+<string>promedio reprobado: </string>
+                            </exp>
+                        </statements>
+                    </stms>
+                </list>
+                <list>
+                    <exp xsi:type="and">
+                        <exp1 xsi:type="greaterOrEqual">
+                            <exp1 xsi:type="identifier">
+<id>promedio</id>
+                            </exp1>
+                            <exp2 xsi:type="integerNumber">
+<number>60</number>
+                            </exp2>
+                        </exp1>
+                        <exp2 xsi:type="lessOrEqual">
+                            <exp1 xsi:type="identifier">
+<id>promedio</id>
+                            </exp1>
+                            <exp2 xsi:type="integerNumber">
+<number>79</number>
+                            </exp2>
+                        </exp2>
+                    </exp>
+                    <stms>
+                        <statements xsi:type="putValue">
+                            <exp xsi:type="stringLiteral">
+<string>promedio aprobado bueno: </string>
+                            </exp>
+                        </statements>
+                    </stms>
+                </list>
+                <list>
+                    <exp xsi:type="and">
+                        <exp1 xsi:type="greaterOrEqual">
+                            <exp1 xsi:type="identifier">
+<id>promedio</id>
+                            </exp1>
+                            <exp2 xsi:type="integerNumber">
+<number>80</number>
+                            </exp2>
+                        </exp1>
+                        <exp2 xsi:type="lessOrEqual">
+                            <exp1 xsi:type="identifier">
+<id>promedio</id>
+                            </exp1>
+                            <exp2 xsi:type="integerNumber">
+<number>90</number>
+                            </exp2>
+                        </exp2>
+                    </exp>
+                    <stms>
+                        <statements xsi:type="putValue">
+                            <exp xsi:type="stringLiteral">
+<string>promedio aprobado muy bueno: </string>
+                            </exp>
+                        </statements>
+                    </stms>
+                </list>
+                <list>
+                    <exp xsi:type="lessOrEqual">
+                        <exp1 xsi:type="identifier">
+                            <id>promedio</id>
+                        </exp1>
+                        <exp2 xsi:type="integerNumber">
+                            <number>100</number>
+                        </exp2>
+                    </exp>
+                    <stms>
+                        <statements xsi:type="putValue">
+                            <exp xsi:type="stringLiteral">
+<string>promedio aprobado excelente: </string>
+                            </exp>
+                        </statements>
+                    </stms>
+                </list>
+            </elsIfList>
+            <elseStatements>
+                <statements xsi:type="putValue">
+                    <exp xsi:type="stringLiteral">
+                        <string>promedio fuera de rango: </string>
+                    </exp>
+                </statements>
+            </elseStatements>
         </statements>
         <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="putValue">
             <exp xsi:type="identifier">
-                <id>calculo</id>
+                <id>promedio</id>
             </exp>
         </statements>
     </statements>
     <id2>
-        <id>FunctionsProcedures</id>
+        <id>Condition</id>
     </id2>
 </Program>
