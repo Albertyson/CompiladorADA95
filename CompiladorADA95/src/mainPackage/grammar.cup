@@ -64,7 +64,7 @@ terminal 			CASE;
 
 /* Valores */
 terminal String 	ID;
-terminal String		CADENA,CARACTER;
+terminal String		CADENA, CARACTER;
 terminal Integer	NUMEROENTERO;
 terminal Double		NUMEROFLOAT;
 terminal True 		TRUE;
@@ -718,33 +718,33 @@ while_statemet				::=		  WHILE expression:e LOOP statements:s END LOOP PUNTOCOMA
 									;
 
 
-for_statement				::=		FOR ID:id IN range:r LOOP statements:s END LOOP PUNTOCOMA
+for_statement				::=		  FOR ID:id IN range:r LOOP statements:s END LOOP PUNTOCOMA
 										{: 
 											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s); 
 										:}
 									// Errores
-									FOR ID:id error range:r LOOP statements:s END LOOP PUNTOCOMA {:
+									| FOR ID:id error range:r LOOP statements:s END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"in\" ","Error en for: ");
 											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s);
 										:}
-									FOR ID:id IN range:r error statements:s END LOOP PUNTOCOMA {:
+									| FOR ID:id IN range:r error statements:s END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"loop\" ","Error en for: ");
 											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s);
 										:}
-									FOR ID:id IN range:r LOOP statements:s error {:
+									| FOR ID:id IN range:r LOOP statements:s error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
 											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s);
 										:} LOOP PUNTOCOMA
-									FOR ID:id IN range:r LOOP statements:s END error {:
+									| FOR ID:id IN range:r LOOP statements:s END error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
 											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s);
 										:} PUNTOCOMA
-									FOR ID:id IN range:r LOOP statements:s END LOOP error {:
+									| FOR ID:id IN range:r LOOP statements:s END LOOP error {:
 											parser.report_error("Se esperaba \";\" ","Error en for: ");
 											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s);
