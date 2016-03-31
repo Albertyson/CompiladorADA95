@@ -11,8 +11,8 @@ begin
     promedio := (n1+n2+n3+n4) / 4 ;
     if(promedio < 40) then
     	put("promedio insuficiente: ");
-    elsif(promedio >= 40 and promedio <= 59) then 
-    	put("promedio reprobado: ");
+    else if(promedio >= 40 and promedio <= 59) then 
+    	put("promedio reprobado: "); end
     elsif(promedio >= 60 and promedio <= 79) then
     	put("promedio aprobado bueno: ");
     elsif(promedio >= 80 and promedio <= 90) then
