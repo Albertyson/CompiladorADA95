@@ -3,7 +3,7 @@ procedure A_Test is
         while (A > B) loop
             ABC := 3 + 90 and JK;
             while A > B loop
-                ABC := 3 + 90 and JK -- ERROR AQUI
+                ABC := 3 + 90 and JK                                -- ERROR AQUI
             end loop;
         end loop;
     end A_Test;
@@ -24,7 +24,7 @@ begin
         ABC := 3 + 90 and JK;
     elsif A or C then
         ABC := 3 + 90 and JK;
-    elsif A or C then
+    elsif  then
         if A and B then
             ABC := 3 + 90 and JK;
         else
@@ -32,7 +32,7 @@ begin
         end if;
     else
         ABC := 3 + 90 and JK;
-    end;
+    end;                            -- ERROR AQUI
     while A > B loop
         ABC := 3 + 90 and JK;
         while A > B loop

@@ -1,42 +1,39 @@
-procedure A_Test is
-    procedure A_Test (A, B, C : Float; R1, R2  : out Float)is begin
-        while (A > B) loop
-            ABC := 3 + 90 and JK;
-            while A > B loop
-                ABC := 3 + 90 and JK                                -- ERROR AQUI
-            end loop;
-        end loop;
-    end A_Test;
-    procedure A_Test (A, B, C : Float; R1, R2  : out Float) is begin
-        while (A > B) loop
-            ABC := 3 + 90 and JK;
-            while A > B loop
-                ABC := 3 + 90 and JK;
-            end loop;
-        end loop;
-    end A_Test;
+procedure f4 is
+
+   procedure MM(Width: Integer) is
+   begin
+      for I in 1..Width loop
+         Put(Width);
+      end loop;
+      New_Line;
+   end MM;
+   procedure MM(Height: Integer) is
+   begin
+      for I in 1..Height loop
+         Put_Line("X");
+      end loop;
+   end MM;
+
+   function QQ2(Str: String) return Integer is
+   begin
+      return ;
+      --return Str(1) = 'T';
+   end QQ2;
+   function QQ(Str: String) return Integer is
+   begin
+      return "Length del string es 3";
+   end QQ;
+
+   M: Integer;
+   B: Boolean;
 begin
-    ABC := True;
-    BCF := False;
-    ABC := 3 + 90 and JK;
-    ABC := 3 + 90 and JK;
-    if  ((A and B) and (C or D and (F and G))) then
-        ABC := 3 + 90 and JK;
-    elsif A or C then
-        ABC := 3 + 90 and JK;
-    elsif  then
-        if A and B then
-            ABC := 3 + 90 and JK;
-        else
-            ABC := 3 + 90 and JK;
-        end if;
-    else
-        ABC := 3 + 90 and JK;
-    end;                            -- ERROR AQUI
-    while A > B loop
-        ABC := 3 + 90 and JK;
-        while A > B loop
-            ABC := 3 + 90 and JK;
-        end loop;
-    end loop;
-end A_Test;
+   MM(5, "a");
+   --MM(Height => 4);
+
+   M := QQ("Left Turn");
+   Put(M);
+   New_Line;
+   B := QQ("Blip");
+   Put(B);
+   New_Line;
+end f4;
