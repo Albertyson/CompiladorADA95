@@ -1,39 +1,34 @@
-procedure f4 is
+procedure Hola is
 
-   procedure MM(Width: Integer) is
-   begin
-      for I in 1..Width loop
-         Put(Width);
-      end loop;
-      New_Line;
-   end MM;
-   procedure MM(Height: Integer) is
-   begin
-      for I in 1..Height loop
-         Put_Line("X");
-      end loop;
-   end MM;
+    x,a : integer ;
 
-   function QQ2(Str: String) return Integer is
-   begin
-      return ;
-      --return Str(1) = 'T';
-   end QQ2;
-   function QQ(Str: String) return Integer is
-   begin
-      return "Length del string es 3";
-   end QQ;
+begin 
+    
+    x := 5;
+    get (a);
+    put (x);
+    
+    while a > 5 loop
+        Pointer := 3;
+        exit when a = b;
+    end loop;
 
-   M: Integer;
-   B: Boolean;
-begin
-   MM(5, "a");
-   --MM(Height => 4);
+    for i in 0..5 loop
+        s := i;
+    end loop;
 
-   M := QQ("Left Turn");
-   Put(M);
-   New_Line;
-   B := QQ("Blip");
-   Put(B);
-   New_Line;
-end f4;
+
+
+    case X is
+        when a    => Item := 1;
+        when b    => Item := 2;
+        when c    => Item := 3;
+        when d    => Item := 4;
+        when others => Item := 5;
+    end case;
+
+
+
+
+
+end Hola;

@@ -1,224 +1,200 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Program>
     <id1>
-        <id>f4</id>
+        <id>Hola</id>
     </id1>
     <declarations>
-        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="procedureDeclaration">
-            <id1>
-                <id>MM</id>
-            </id1>
-            <parameterDeclarations>
-                <parameters>
-                    <vars>
-                        <ids>
-                            <id>Width</id>
-                        </ids>
-                    </vars>
-                    <type xsi:type="typeInteger"/>
-                </parameters>
-            </parameterDeclarations>
-            <statements>
-                <statements xsi:type="for">
-                    <id>
-                        <id>I</id>
-                    </id>
-                    <range>
-                        <exp1 xsi:type="integerNumber">
-                            <number>1</number>
-                        </exp1>
-                        <exp2 xsi:type="identifier">
-                            <id>Width</id>
-                        </exp2>
-                    </range>
-                    <statements>
-                        <statements xsi:type="putValue">
-                            <exp xsi:type="identifier">
-<id>Width</id>
-                            </exp>
-                        </statements>
-                    </statements>
-                </statements>
-                <statements xsi:type="identifier">
-                    <id>New_Line</id>
-                </statements>
-            </statements>
-            <id2>
-                <id>MM</id>
-            </id2>
-        </declaration>
-        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="procedureDeclaration">
-            <id1>
-                <id>MM</id>
-            </id1>
-            <parameterDeclarations>
-                <parameters>
-                    <vars>
-                        <ids>
-                            <id>Height</id>
-                        </ids>
-                    </vars>
-                    <type xsi:type="typeInteger"/>
-                </parameters>
-            </parameterDeclarations>
-            <statements>
-                <statements xsi:type="for">
-                    <id>
-                        <id>I</id>
-                    </id>
-                    <range>
-                        <exp1 xsi:type="integerNumber">
-                            <number>1</number>
-                        </exp1>
-                        <exp2 xsi:type="identifier">
-                            <id>Height</id>
-                        </exp2>
-                    </range>
-                    <statements>
-                        <statements xsi:type="functionCall">
-                            <id>
-<id>Put_Line</id>
-                            </id>
-                            <fp>
-<exps xsi:type="stringLiteral">
-    <string>X</string>
-</exps>
-                            </fp>
-                        </statements>
-                    </statements>
-                </statements>
-            </statements>
-            <id2>
-                <id>MM</id>
-            </id2>
-        </declaration>
-        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="functionDeclaration">
-            <id1>
-                <id>QQ2</id>
-            </id1>
-            <parameterDeclarations>
-                <parameters>
-                    <vars>
-                        <ids>
-                            <id>Str</id>
-                        </ids>
-                    </vars>
-                    <type xsi:type="typeString"/>
-                </parameters>
-            </parameterDeclarations>
-            <returnType xsi:type="typeInteger"/>
-            <statements>
-                <statements xsi:nil="true"/>
-            </statements>
-            <id2>
-                <id>QQ2</id>
-            </id2>
-        </declaration>
-        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="functionDeclaration">
-            <id1>
-                <id>QQ</id>
-            </id1>
-            <parameterDeclarations>
-                <parameters>
-                    <vars>
-                        <ids>
-                            <id>Str</id>
-                        </ids>
-                    </vars>
-                    <type xsi:type="typeString"/>
-                </parameters>
-            </parameterDeclarations>
-            <returnType xsi:type="typeInteger"/>
-            <statements>
-                <statements xsi:type="return">
-                    <exp xsi:type="stringLiteral">
-                        <string>Length del string es 3</string>
-                    </exp>
-                </statements>
-            </statements>
-            <id2>
-                <id>QQ</id>
-            </id2>
-        </declaration>
         <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="variableDeclaration">
             <variables>
                 <ids>
-                    <id>M</id>
+                    <id>x</id>
+                </ids>
+                <ids>
+                    <id>a</id>
                 </ids>
             </variables>
             <type xsi:type="typeInteger"/>
         </declaration>
-        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="variableDeclaration">
-            <variables>
-                <ids>
-                    <id>B</id>
-                </ids>
-            </variables>
-            <type xsi:type="typeBoolean"/>
-        </declaration>
     </declarations>
     <statements>
-        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="functionCall">
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="assignVariableSimple">
             <id>
-                <id>MM</id>
+                <id>x</id>
             </id>
-            <fp>
-                <exps xsi:type="integerNumber">
+            <exp xsi:type="integerNumber">
+                <number>5</number>
+            </exp>
+        </statements>
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="getValue">
+            <id>
+                <id>a</id>
+            </id>
+        </statements>
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="putValue">
+            <exp xsi:type="identifier">
+                <id>x</id>
+            </exp>
+        </statements>
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="while">
+            <exp xsi:type="greater">
+                <exp1 xsi:type="identifier">
+                    <id>a</id>
+                </exp1>
+                <exp2 xsi:type="integerNumber">
                     <number>5</number>
-                </exps>
-                <exps xsi:type="stringLiteral">
-                    <string>a</string>
-                </exps>
-            </fp>
+                </exp2>
+            </exp>
+            <est>
+                <statements xsi:type="assignVariableSimple">
+                    <id>
+                        <id>Pointer</id>
+                    </id>
+                    <exp xsi:type="integerNumber">
+                        <number>3</number>
+                    </exp>
+                </statements>
+                <statements xsi:type="exit">
+                    <exp xsi:type="equal">
+                        <exp1 xsi:type="identifier">
+                            <id>a</id>
+                        </exp1>
+                        <exp2 xsi:type="identifier">
+                            <id>b</id>
+                        </exp2>
+                    </exp>
+                </statements>
+            </est>
         </statements>
-        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="assignVariableSimple">
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="for">
             <id>
-                <id>M</id>
+                <id>i</id>
             </id>
-            <exp xsi:type="functionCall">
-                <id>
-                    <id>QQ</id>
-                </id>
-                <fp>
-                    <exps xsi:type="stringLiteral">
-                        <string>Left Turn</string>
-                    </exps>
-                </fp>
-            </exp>
+            <range>
+                <exp1 xsi:type="integerNumber">
+                    <number>0</number>
+                </exp1>
+                <exp2 xsi:type="integerNumber">
+                    <number>5</number>
+                </exp2>
+            </range>
+            <statements>
+                <statements xsi:type="assignVariableSimple">
+                    <id>
+                        <id>s</id>
+                    </id>
+                    <exp xsi:type="identifier">
+                        <id>i</id>
+                    </exp>
+                </statements>
+            </statements>
         </statements>
-        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="putValue">
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="caseOthers">
             <exp xsi:type="identifier">
-                <id>M</id>
+                <id>X</id>
             </exp>
-        </statements>
-        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="identifier">
-            <id>New_Line</id>
-        </statements>
-        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="assignVariableSimple">
-            <id>
-                <id>B</id>
-            </id>
-            <exp xsi:type="functionCall">
-                <id>
-                    <id>QQ</id>
-                </id>
-                <fp>
-                    <exps xsi:type="stringLiteral">
-                        <string>Blip</string>
-                    </exps>
-                </fp>
-            </exp>
-        </statements>
-        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="putValue">
-            <exp xsi:type="identifier">
-                <id>B</id>
-            </exp>
-        </statements>
-        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="identifier">
-            <id>New_Line</id>
+            <whenList>
+                <whenElements>
+                    <whenOptions>
+                        <options>
+                            <exp xsi:type="identifier">
+<id>a</id>
+                            </exp>
+                        </options>
+                    </whenOptions>
+                    <statements>
+                        <statements xsi:type="assignVariableSimple">
+                            <id>
+<id>Item</id>
+                            </id>
+                            <exp xsi:type="integerNumber">
+<number>1</number>
+                            </exp>
+                        </statements>
+                    </statements>
+                </whenElements>
+                <whenElements>
+                    <whenOptions>
+                        <options>
+                            <exp xsi:type="identifier">
+<id>b</id>
+                            </exp>
+                        </options>
+                    </whenOptions>
+                    <statements>
+                        <statements xsi:type="assignVariableSimple">
+                            <id>
+<id>Item</id>
+                            </id>
+                            <exp xsi:type="integerNumber">
+<number>2</number>
+                            </exp>
+                        </statements>
+                    </statements>
+                </whenElements>
+                <whenElements>
+                    <whenOptions>
+                        <options>
+                            <exp xsi:type="identifier">
+<id>c</id>
+                            </exp>
+                        </options>
+                    </whenOptions>
+                    <statements>
+                        <statements xsi:type="assignVariableSimple">
+                            <id>
+<id>Item</id>
+                            </id>
+                            <exp xsi:type="integerNumber">
+<number>3</number>
+                            </exp>
+                        </statements>
+                    </statements>
+                </whenElements>
+                <whenElements>
+                    <whenOptions>
+                        <options>
+                            <exp xsi:type="identifier">
+<id>d</id>
+                            </exp>
+                        </options>
+                    </whenOptions>
+                    <statements>
+                        <statements xsi:type="assignVariableSimple">
+                            <id>
+<id>Item</id>
+                            </id>
+                            <exp xsi:type="integerNumber">
+<number>4</number>
+                            </exp>
+                        </statements>
+                    </statements>
+                </whenElements>
+                <whenElements>
+                    <statements>
+                        <statements xsi:type="assignVariableSimple">
+                            <id>
+<id>Item</id>
+                            </id>
+                            <exp xsi:type="integerNumber">
+<number>5</number>
+                            </exp>
+                        </statements>
+                    </statements>
+                </whenElements>
+            </whenList>
+            <statementsOthers>
+                <statements xsi:type="assignVariableSimple">
+                    <id>
+                        <id>Item</id>
+                    </id>
+                    <exp xsi:type="integerNumber">
+                        <number>5</number>
+                    </exp>
+                </statements>
+            </statementsOthers>
         </statements>
     </statements>
     <id2>
-        <id>f4</id>
+        <id>Hola</id>
     </id2>
 </Program>

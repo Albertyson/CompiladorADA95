@@ -368,7 +368,7 @@ expression					::=		literal_expression:le
 									;
 
 
-literal_expression			::=		NUMEROENTERO:num
+literal_expression			::=		  NUMEROENTERO:num
 										{: RESULT = new IntegerNumber(num); :}
 									| NUMEROFLOAT:num
 										{: RESULT = new FloatNumber(num); :}
@@ -399,7 +399,7 @@ arithmetic_expression		::=		expression:e1 OPERSUMA expression:e2
 									;
 
 
-boolean_expression			::=		expression:e1 OPERIGUAL expression:e2
+boolean_expression			::=		  expression:e1 OPERIGUAL expression:e2
 										{: RESULT = new Equal(e1,e2); :}
 									| expression:e1 OPERDISTINTO expression:e2
 										{: RESULT = new NotEqual(e1,e2); :}
@@ -539,7 +539,7 @@ assign_variable				::=		ID:id OPERASIG expression:e PUNTOCOMA
 										//		>> ERRORES <<
 									| ID:id OPERASIG error {: parser.report_error("Se esperaba el valor a asignar.","Error en asignación: "); :} PUNTOCOMA
 									| ID:id OPERASIG expression:e error {:
-											parser.report_error("Se esperaba \";\"","Error en asignación: ");
+											parser.report_error("Se esperaba \";\"","Error en asignación: ");	// OJO
 											Identifier identifier = new Identifier(id); 
 											RESULT = new AssignVariableSimple(identifier, e); 
 										:}
@@ -551,8 +551,8 @@ variable_declaration		::=		variable_ids:vids DOSPUNTOS variable_type:types
 										//errores para esta producción:
 									//|variable_ids:vids error{:parser.report_error("Se esperaba \":\" ","\t");:} variable_type:types
 									|variable_ids:vids DOSPUNTOS error{:
-										parser.report_error("variable_declaration:Se esperaba un tipo ","\t");
-										RESULT = new VariableDeclaration(vids,null); 
+										parser.report_error("variable_declaration: Se esperaba un tipo ","\t");
+										RESULT = new VariableDeclaration(vids, null); 
 									:}
 									;
 
