@@ -24,7 +24,7 @@ procedure f4 is
       return "Length del string es 3";
    end QQ;
 
-   M: Integer;
+   M Integer;
    B: Boolean;
 begin
    MM(5, "a");
