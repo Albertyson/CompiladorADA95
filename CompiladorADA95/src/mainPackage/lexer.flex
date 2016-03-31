@@ -130,4 +130,4 @@ Comentario = "--" {InputCaracter}* {FinLinea}?
     \\                  { string.append('\\'); }
 }
 
-[^]                     { throw new Error("Illegal character <" + yytext() + ">"); } //{ System.out.println((yyline+1)+":"+yycolumn+"\tNo se encuentra token: " + yytext()); return 0; }
+[^]                     { System.out.println((yyline+1)+":"+yycolumn+"\tNo se encuentra token: " + yytext());}//throw new Error("Illegal character <" + yytext() + ">"); } //{ System.out.println((yyline+1)+":"+yycolumn+"\tNo se encuentra token: " + yytext()); return 0; }

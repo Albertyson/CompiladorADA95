@@ -7,6 +7,7 @@ package mainPackage;
 import java_cup.runtime.*;
 import abstractSyntaxTree.*;
 import java.io.File;
+import java.util.List;
 
 parser code {:
 
@@ -39,7 +40,32 @@ parser code {:
 			System.err.println(m);
 		}
 	}
+	@Override
+	public void syntax_error(Symbol s){
+		System.err.println( "(Se ha encontrado el token \"" + sym.terminalNames[s.sym] + "\" en la linea " + (s.left+1) + ", columna" + (s.right+1) + ")" ); 
+                seEsperaba();
+	}
 
+	public void seEsperaba(){
+		List<Integer> listaTokens = this.expected_token_ids();
+		if (listaTokens.size() <= 0){
+			listaTokens = this.expected_token_ids();
+		}
+		String cadenaTokensEsperados = "";
+		for (int i = 0 ; i < listaTokens.size(); i++){
+			int id = listaTokens.get(i);
+			if (id == 1){
+				continue;
+			}
+			String nombreTerminal = sym.terminalNames[id];
+			if (i == listaTokens.size() - 1){
+				cadenaTokensEsperados += nombreTerminal;
+			}else{
+				cadenaTokensEsperados += nombreTerminal + " or ";
+			}
+		}
+		System.err.print("Se esperaba " + cadenaTokensEsperados);
+	};
 
 	public void report_fatal_error(String message, Object info) {
 		report_error(message, info);
