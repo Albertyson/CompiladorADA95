@@ -1,6 +1,6 @@
 /*
 	Para regenerar el Parser.java y sym.java, ejecutar el comando:
-		java -jar ../../lib/java-cup-11a.jar grammar.cup
+		java -jar ../../lib/java-cup-11b.jar grammar.cup
 */
 package mainPackage;
 
@@ -31,9 +31,9 @@ parser code {:
 			//System.err.println("  " + info + " "+ message + "\n       Parsing resumed from 2nd token before" + s.current_lexeme() + "\n");
 			System.err.println("  " + info + " "+ message + "\n");
 		} else {
-			StringBuffer m = new StringBuffer("Error");
+			StringBuffer m = new StringBuffer("Error ");
 			if (info instanceof java_cup.runtime.Symbol){
-				m.append( "(Se ha encontrado el token \"" + ((Symbol)info).value + "\" en la linea " + (((Symbol)info).left+1) + ", columna" + (((Symbol)info).right+1) + ")" );     
+				m.append( "(Se ha encontrado el token \"" + ((Symbol)info).value + "\" en la linea " + (((Symbol)info).left + 1) + ", columna" + (((Symbol)info).right + 1) + ")" );
 			}
 			m.append(" : " + message);
 			System.err.println(m);
@@ -50,21 +50,21 @@ parser code {:
 
 /* ----------Sección de declaraciones de terminales y no terminales--------- */
 /* Tipos */
-terminal INTEGER, BOOLEAN, FLOAT, CHARACTER, STRING;
+terminal INTEGER, BOOLEAN, FLOAT, STRING;
 
 /* Estructuras de Control*/
 terminal IF, ELSE, ELSIF, FOR;
 
-terminal			DECLARE, END, EXIT, FUNCTION, NULL, OUT, PROCEDURE;
+terminal			END, EXIT, FUNCTION, OUT, PROCEDURE;
 terminal			RETURN, THEN, WHEN, IN, WHILE, LOOP, INOUT, PUT, GET, IS, BEGIN;
 terminal			OPERASIG, OPERMENOR, OPERMAYOR, OPERIGUAL, OPERDISTINTO, OPERMAYORIGUAL, OPERMENORIGUAL;
 terminal			OPERSUMA, OPERRESTA, OPERMULTIPLICACION, OPERDIVISION, OPERPOTENCIA, AND, OR, NOT, PARIZQ, PARDER;
-terminal			PUNTOCOMA, DOBLEPUNTO, COMA, DOSPUNTOS, NEGATIVO,PIPE, PUNTO, NUMERAL, AMPERSAND, DO, OPERPUNTERO, MOD, GOTO, OTHERS;
+terminal			PUNTOCOMA, DOBLEPUNTO, COMA, DOSPUNTOS, NEGATIVO,PIPE, OPERPUNTERO, MOD, OTHERS;
 terminal 			CASE;
 
 /* Valores */
 terminal String 	ID;
-terminal String		CADENA,CARACTER;
+terminal String		CADENA;
 terminal Integer	NUMEROENTERO;
 terminal Double		NUMEROFLOAT;
 terminal True 		TRUE;
@@ -205,7 +205,7 @@ declaration_part 			::=		variable_declaration:vd PUNTOCOMA declaration_part:dp
 											RESULT = new DeclarationPart();
 											RESULT.add(vd);
 										:}
-									| variable_declaration:vd error{:parser.report_error("Se esperaba \";\" ","\t");:}
+									| variable_declaration:vd error{: parser.report_error("Se esperaba \";\" ","\t"); :}
 									;
 
 
@@ -456,12 +456,27 @@ statement					::=		assign_variable:av
 									;
 
 
-range						::=		expression:e1 DOBLEPUNTO expression:e2
-										{: RESULT = new Range(e1,e2); :}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+range						::=		  expression:e1 DOBLEPUNTO expression:e2
+										{: RESULT = new Range(e1, e2); :}
 									;
 
 
-variable_ids				::=		ID:id
+variable_ids				::=		  ID:id
 										{:
 											Identifier identifier = new Identifier(id);
 											RESULT = new VariableIDs();
@@ -473,18 +488,23 @@ variable_ids				::=		ID:id
 											vids.add(identifier);
 											RESULT = vids;
 										:}
-										//errores para esta producción
-									| ID:id error{:
-											parser.report_error("variable_ids: Se esperaba \",\" ","\t");
+									//		>> ERRORES <<
+									/*| ID:id error {:
+											parser.report_error("Se esperaba \",\" ", "Error en variables: ");
 											Identifier identifier = new Identifier(id);
 											RESULT = new VariableIDs();
 											RESULT.add(identifier);
-									:}	variable_ids:vids
-									//| ID:id COMA error{:parser.report_error("variable_ids: Se esperaba ID ","\t");:}
+										:} variable_ids:vids*/
+									| ID:id COMA error {:
+											parser.report_error("Se esperaba una variable después de la coma.", "Error en variables: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new VariableIDs();
+											RESULT.add(identifier);
+										:}
 									;
 
 
-variable_type				::=		INTEGER
+variable_type				::=		  INTEGER
 										{: RESULT = new TypeInteger(); :}
 									| BOOLEAN
 										{: RESULT = new TypeBoolean(); :}
@@ -498,21 +518,31 @@ variable_type				::=		INTEGER
 assign_variable				::=		ID:id OPERASIG expression:e PUNTOCOMA
 										{: 
 											Identifier identifier = new Identifier(id); 
-											RESULT = new AssignVariableSimple(identifier,e); 
+											RESULT = new AssignVariableSimple(identifier, e); 
 										:}
 									/*| variable_declaration OPERASIG expression PUNTOCOMA
 										{: System.out.println("declaracion y Asignacion de variable"); :}*/
+
+										//		>> ERRORES <<
+									| ID:id OPERASIG error {: parser.report_error("Se esperaba el valor a asignar.","Error en asignación: "); :} PUNTOCOMA
+									| ID:id OPERASIG expression:e error {:
+											parser.report_error("Se esperaba \";\"","Error en asignación: ");
+											Identifier identifier = new Identifier(id); 
+											RESULT = new AssignVariableSimple(identifier, e); 
+										:}
 									;
 
 
-variable_declaration		::=		variable_ids:vids DOSPUNTOS variable_type:types
+variable_declaration		::=		variable_ids:vids DOSPUNTOS variable_type:types PUNTOCOMA
 										{: RESULT = new VariableDeclaration(vids,types); :}
-										//errores para esta producción:
-									//|variable_ids:vids error{:parser.report_error("Se esperaba \":\" ","\t");:} variable_type:types
-									|variable_ids:vids DOSPUNTOS error{:
-										parser.report_error("variable_declaration:Se esperaba un tipo ","\t");
-										RESULT = new VariableDeclaration(vids,null); 
-									:}
+									// Errores para esta producción:
+									| variable_ids:vids error {:
+											parser.report_error("Se esperaba \":\" ","Error en declaración de variables: ");
+											RESULT = new VariableDeclaration(vids, types);
+										:} variable_type:types PUNTOCOMA
+									| variable_ids:vids DOSPUNTOS error {:
+											parser.report_error("Se esperaba el tipo de variables.","Error en declaración de variables: ");
+										:}
 									;
 
 
@@ -521,15 +551,48 @@ get_value					::=		GET PARIZQ ID:id PARDER PUNTOCOMA
 											Identifier identifier = new Identifier(id);
 											RESULT = new GetValue(identifier);
 										:}
+									| GET error {:
+											parser.report_error("Se esperaba \"(\" ","Error en Get: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new GetValue(identifier);
+										:} ID:id PARDER PUNTOCOMA
+									| GET PARIZQ error {:
+											parser.report_error("Se esperaba una variable","Error en Get: ");
+										:} PARDER PUNTOCOMA
+									| GET PARIZQ ID:id error {:
+											parser.report_error("Se esperaba \")\" ","Error en Get: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new GetValue(identifier);
+										:} PUNTOCOMA
+									| GET PARIZQ ID:id PARDER error {:
+											parser.report_error("Se esperaba \";\" ","Error en Get: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new GetValue(identifier);
+										:}
 									;
 
 
-put_value					::=		PUT PARIZQ expression:e PARDER PUNTOCOMA
+put_value					::=		  PUT PARIZQ expression:e PARDER PUNTOCOMA
 										{: RESULT = new PutValue(e); :}
+									| PUT error {:
+											parser.report_error("Se esperaba \"(\" ","Error en Put: ");
+											RESULT = new PutValue(e);
+										:} expression:e PARDER PUNTOCOMA
+									| PUT PARIZQ error {:
+											parser.report_error("Se esperaba valor a imprimir.","Error en Put: ");
+										:} PARDER PUNTOCOMA
+									| PUT PARIZQ expression:e error {:
+											parser.report_error("Se esperaba \")\" ","Error en Put: ");
+											RESULT = new PutValue(e);
+										:} PUNTOCOMA
+									| PUT PARIZQ expression:e PARDER error {:
+											parser.report_error("Se esperaba \";\" ","Error en Put: ");
+											RESULT = new PutValue(e);
+										:}
 									;
 
 
-elsif_statements			::=		elsif_statement:es elsif_statements:ess
+elsif_statements			::=		  elsif_statement:es elsif_statements:ess
 										{: 
 											ess.add(es); 
 											RESULT = ess; 
@@ -542,24 +605,131 @@ elsif_statements			::=		elsif_statement:es elsif_statements:ess
 									;
 
 
-elsif_statement				::=		ELSIF expression:e THEN statements:s
-										{: RESULT = new ElsIf(e,s); :}
+elsif_statement				::=		  ELSIF expression:e THEN statements:s
+										{: RESULT = new ElsIf(e, s); :}
+									| ELSIF error {:
+											parser.report_error("Se esperaba un valor a evaluar.","Error en ElsIf: ");
+										:} THEN statements:s
+									| ELSIF expression:e error {:
+											parser.report_error("Se esperaba \"then\" ","Error en ElsIf: ");
+											RESULT = new ElsIf(e, s);
+										:} statements:s
 									;
 
 
 if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
 										{: RESULT = new IfSimple(e,s); :}
+									// Errores
+									| IF expression:e error {:
+											parser.report_error("Se esperaba \"then\" ","Error en If: ");
+											RESULT = new IfSimple(e, s);
+										:} statements:s END IF PUNTOCOMA
+									| IF expression:e THEN statements:s error {:
+											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
+											RESULT = new IfSimple(e, s);
+										:} IF PUNTOCOMA
+									| IF expression:e THEN statements:s END error {:
+											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
+											RESULT = new IfSimple(e, s);
+										:} PUNTOCOMA
+									| IF expression:e THEN statements:s END IF error {:
+											parser.report_error("Se esperaba \";\" ","Error en If: ");
+											RESULT = new IfSimple(e, s);
+										:}
+									
 									| IF expression:e THEN statements:s1 ELSE statements:s2 END IF PUNTOCOMA
 										{: RESULT = new  IfWithElse(e,s1,s2); :}
+									// Errores
+									/*| IF expression:e error {:
+											parser.report_error("Se esperaba \"then\" ","Error en If: ");
+											RESULT = new  IfWithElse(e,s1,s2);
+										:} statements:s1 ELSE statements:s2 END IF PUNTOCOMA*/
+									/*| IF expression:e THEN statements:s1 error {:
+											parser.report_error("Se esperaba \"else\" ","Error en If: ");
+											RESULT = new  IfWithElse(e,s1,s2);
+										:} statements:s2 END IF PUNTOCOMA*/
+									| IF expression:e THEN statements:s1 ELSE statements:s2 error {:
+											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
+											RESULT = new  IfWithElse(e,s1,s2);
+										:} IF PUNTOCOMA
+									| IF expression:e THEN statements:s1 ELSE statements:s2 END error {:
+											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
+											RESULT = new  IfWithElse(e,s1,s2);
+										:} PUNTOCOMA
+									| IF expression:e THEN statements:s1 ELSE statements:s2 END IF error {:
+											parser.report_error("Se esperaba \";\" ","Error en If: ");
+											RESULT = new  IfWithElse(e,s1,s2);
+										:}
+
 									| IF expression:e THEN statements:s elsif_statements:es END IF PUNTOCOMA
 										{: RESULT = new IfWithElsIF(e,s,es); :}
+									//	Errores
+									/*| error {:
+											parser.report_error("Se esperaba \"if\" ","Error en If: ");
+											RESULT = new IfWithElsIF(e,s,es);
+										:} expression:e THEN statements:s elsif_statements:es END IF PUNTOCOMA*/
+									/*| IF expression:e error {:
+											parser.report_error("Se esperaba \"then\" ","Error en If: ");
+											RESULT = new IfWithElsIF(e,s,es);
+										:} statements:s elsif_statements:es END IF PUNTOCOMA*/
+									| IF expression:e THEN statements:s elsif_statements:es error {:
+											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
+											RESULT = new IfWithElsIF(e,s,es);
+										:} IF PUNTOCOMA
+									| IF expression:e THEN statements:s elsif_statements:es END error {:
+											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
+											RESULT = new IfWithElsIF(e,s,es);
+										:} PUNTOCOMA
+									| IF expression:e THEN statements:s elsif_statements:es END IF error {:
+											parser.report_error("Se esperaba \";\" ","Error en If: ");
+											RESULT = new IfWithElsIF(e,s,es);
+										:}
+
 									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 END IF PUNTOCOMA
 										{: RESULT = new IfWithElsIfAndElse(e,s1,es,s2); :}
+									// Errores
+									/*| IF expression:e error {:
+											parser.report_error("Se esperaba \"then\" ","Error en If: ");
+											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+										:} statements:s1 elsif_statements:es ELSE statements:s2 END IF PUNTOCOMA*/
+									/*| IF expression:e THEN statements:s1 elsif_statements:es error {:
+											parser.report_error("Se esperaba \"else\" ","Error en If: ");
+											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+										:} statements:s2 END IF PUNTOCOMA*/
+									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 error {:
+											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
+											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+										:} IF PUNTOCOMA
+									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 END error {:
+											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
+											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+										:} PUNTOCOMA
+									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 END IF error {:
+											parser.report_error("Se esperaba \";\" ","Error en If: ");
+											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+										:} 
 									;
 
 
-while_statemet				::=		WHILE expression:e LOOP statements:s END LOOP PUNTOCOMA
+while_statemet				::=		  WHILE expression:e LOOP statements:s END LOOP PUNTOCOMA
 										{: RESULT = new While(e,s); :}
+									// Error
+									| WHILE expression:e error {:
+											parser.report_error("Se esperaba \"loop\" ","Error en while: ");
+											RESULT = new While(e,s);
+										:} statements:s END LOOP PUNTOCOMA
+									| WHILE expression:e LOOP statements:s error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
+											RESULT = new While(e,s);
+										:} LOOP PUNTOCOMA
+									| WHILE expression:e LOOP statements:s END error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
+											RESULT = new While(e,s);
+										:} PUNTOCOMA
+									| WHILE expression:e LOOP statements:s END LOOP error {:
+											parser.report_error("Se esperaba \";\" ","Error en while: ");
+											RESULT = new While(e,s);
+										:}
 									;
 
 
@@ -568,50 +738,196 @@ for_statement				::=		FOR ID:id IN range:r LOOP statements:s END LOOP PUNTOCOMA
 											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s); 
 										:}
+									// Errores
+									FOR ID:id error {:
+											parser.report_error("Se esperaba \"in\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r,s);
+										:} range:r LOOP statements:s END LOOP PUNTOCOMA
+									FOR ID:id IN range:r error {:
+											parser.report_error("Se esperaba \"loop\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r,s);
+										:} statements:s END LOOP PUNTOCOMA
+									FOR ID:id IN range:r LOOP statements:s error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r,s);
+										:} LOOP PUNTOCOMA
+									FOR ID:id IN range:r LOOP statements:s END error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r,s);
+										:} PUNTOCOMA
+									FOR ID:id IN range:r LOOP statements:s END LOOP error {:
+											parser.report_error("Se esperaba \";\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r,s);
+										:}
 									;
 
 
 exit_statement				::=		EXIT WHEN expression:e PUNTOCOMA
 										{: RESULT = new Exit(e); :}
+									// Errores
+									| EXIT error {:
+											parser.report_error("Se esperaba \"when\" ","Error: ");
+											RESULT = new Exit(e);
+										:} expression:e PUNTOCOMA
+									| EXIT WHEN expression:e error {:
+											parser.report_error("Se esperaba \";\" ","Error: ");
+											RESULT = new Exit(e);
+										:}
 									;
 
 
 loop_statement				::=		LOOP statements:s END LOOP PUNTOCOMA
 										{: RESULT = new Loop(s); :}
+									// Errores
+									| LOOP statements:s error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
+											RESULT = new Loop(s);
+										:} LOOP PUNTOCOMA
+									| LOOP statements:s END error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
+											RESULT = new Loop(s);
+										:} PUNTOCOMA
+									| LOOP statements:s END LOOP error {:
+											parser.report_error("Se esperaba \";\" ","Error en loop: ");
+											RESULT = new Loop(s);
+										:}
 									;
 
 
 case_statement				::=		  CASE expression:e IS when_list:wl END CASE PUNTOCOMA
 										{: 
 											//recorrer wl para ver si tiene algun elemento Others
-											boolean hasOthers=false;
-											Statements othersStatements=null;
+											boolean hasOthers = false;
+											Statements othersStatements = null;
 											int othersCount = 0;
-											for(int i=0;i<wl.size();i++){
+											for(int i = 0; i < wl.size(); i++){
 												if(wl.getAt(i).getWhenOptions() == null){
 													hasOthers = true;
 													othersStatements = wl.getAt(i).getStatements();
 													othersCount++;
-													if(i < wl.size()-1 ){
+													if(i < wl.size() - 1){
 														parser.report_error("Others debe estar al final","ERROR");
 													}
 												}
 											}
 											if(hasOthers){
-												if(othersCount>1){
+												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-													RESULT = new CaseOthers(e,wl,othersStatements);													
-											}else{
+												RESULT = new CaseOthers(e,wl,othersStatements);													
+											} else {
 												RESULT = new CaseNotOthers(e,wl);												
 											}
 										:}
 									// | CASE expression:e IS when_list:wl WHEN OTHERS OPERPUNTERO statements:s END CASE PUNTOCOMA
 									// 	{: RESULT = new CaseOthers(e,wl,s); :}
 									//| CASE error {: parser.report_error("Expresion inválida para el Case", "WRONG"); :} IS WHEN when_options:w OPERPUNTERO statements:s END CASE PUNTOCOMA
+									
+									// Errores
+									| CASE expression:e error {:
+											parser.report_error("Se esperaba \"is\" ","Error en case: ");
+											boolean hasOthers = false;
+											Statements othersStatements = null;
+											int othersCount = 0;
+											for(int i = 0; i < wl.size(); i++){
+												if(wl.getAt(i).getWhenOptions() == null){
+													hasOthers = true;
+													othersStatements = wl.getAt(i).getStatements();
+													othersCount++;
+													if(i < wl.size() - 1){
+														parser.report_error("Others debe estar al final","ERROR");
+													}
+												}
+											}
+											if(hasOthers){
+												if(othersCount > 1){
+													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
+												}
+												RESULT = new CaseOthers(e,wl,othersStatements);													
+											} else {
+												RESULT = new CaseNotOthers(e,wl);												
+											}
+										:} when_list:wl END CASE PUNTOCOMA
+									| CASE expression:e IS when_list:wl error {:
+											parser.report_error("Se esperaba \"end case\" ","Error en case: ");
+											boolean hasOthers = false;
+											Statements othersStatements = null;
+											int othersCount = 0;
+											for(int i = 0; i < wl.size(); i++){
+												if(wl.getAt(i).getWhenOptions() == null){
+													hasOthers = true;
+													othersStatements = wl.getAt(i).getStatements();
+													othersCount++;
+													if(i < wl.size() - 1){
+														parser.report_error("Others debe estar al final","ERROR");
+													}
+												}
+											}
+											if(hasOthers){
+												if(othersCount > 1){
+													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
+												}
+												RESULT = new CaseOthers(e,wl,othersStatements);													
+											} else {
+												RESULT = new CaseNotOthers(e,wl);												
+											}
+										:} CASE PUNTOCOMA
+									| CASE expression:e IS when_list:wl END error {:
+											parser.report_error("Se esperaba \"end case\" ","Error en case: ");
+											boolean hasOthers = false;
+											Statements othersStatements = null;
+											int othersCount = 0;
+											for(int i = 0; i < wl.size(); i++){
+												if(wl.getAt(i).getWhenOptions() == null){
+													hasOthers = true;
+													othersStatements = wl.getAt(i).getStatements();
+													othersCount++;
+													if(i < wl.size() - 1){
+														parser.report_error("Others debe estar al final","ERROR");
+													}
+												}
+											}
+											if(hasOthers){
+												if(othersCount > 1){
+													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
+												}
+												RESULT = new CaseOthers(e,wl,othersStatements);													
+											} else {
+												RESULT = new CaseNotOthers(e,wl);												
+											}
+										:} PUNTOCOMA
+									| CASE expression:e IS when_list:wl END CASE error {:
+											parser.report_error("Se esperaba \";\" ","Error en case: ");
+											boolean hasOthers = false;
+											Statements othersStatements = null;
+											int othersCount = 0;
+											for(int i = 0; i < wl.size(); i++){
+												if(wl.getAt(i).getWhenOptions() == null){
+													hasOthers = true;
+													othersStatements = wl.getAt(i).getStatements();
+													othersCount++;
+													if(i < wl.size() - 1){
+														parser.report_error("Others debe estar al final","ERROR");
+													}
+												}
+											}
+											if(hasOthers){
+												if(othersCount > 1){
+													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
+												}
+												RESULT = new CaseOthers(e,wl,othersStatements);													
+											} else {
+												RESULT = new CaseNotOthers(e,wl);												
+											}
+										:}
 									;
 
-when_list 					::=		when_element:we
+when_list 					::=		  when_element:we
 										{: RESULT = new WhenList(); RESULT.add(we); :}
 									| when_element:we when_list:wl
 										{: 
@@ -620,13 +936,28 @@ when_list 					::=		when_element:we
 										:}
 									;
 
-when_element 				::=		WHEN when_options:w OPERPUNTERO statements:s
+when_element 				::=		  WHEN when_options:w OPERPUNTERO statements:s
 										{: RESULT = new WhenElement(w,s); :}
+									// Error
+									| WHEN when_options:w error {:
+											parser.report_error("Se esperaba \"=>\" ","Error: ");
+											RESULT = new WhenElement(w,s);
+										:} statements:s
+
 									| WHEN OTHERS OPERPUNTERO statements:s
 										{: RESULT = new WhenElement(s); :}
+									// Error
+									| WHEN error {:
+											parser.report_error("Se esperaba \"others\" ","Error: ");
+											RESULT = new WhenElement(s);
+										:} OPERPUNTERO statements:s
+									| WHEN OTHERS error {:
+											parser.report_error("Se esperaba \"=>\" ","Error: ");
+											RESULT = new WhenElement(s);
+										:} statements:s
 									;
 
-when_options  				::= 	option_when:opt
+when_options  				::= 	  option_when:opt
 										{: 
 											RESULT = new WhenOptions();
 											RESULT.add(opt); 
@@ -639,15 +970,19 @@ when_options  				::= 	option_when:opt
 									;
 
 
-option_when					::=		expression:e 
+option_when					::=		  expression:e 
 										{: RESULT = new WhenOption(e); :}
 									| range:r
 										{: RESULT = new WhenOption(r); :}
 									;
 
 
-return_statement			::=		RETURN expression:e PUNTOCOMA
+return_statement			::=		  RETURN expression:e PUNTOCOMA
 										{: RESULT = new Return(e); :}
-									| RETURN error
-										{: parser.report_error("Se esperaba un valor de retorno", "ERROR: "); :}
+									// Errores
+									| RETURN expression:e error
+										{:
+											parser.report_error("Se esperaba \";\" ","Error: ");
+											RESULT = new Return(e);
+										:}
 									;
