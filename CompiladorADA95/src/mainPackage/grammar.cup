@@ -1,12 +1,13 @@
 /*
 	Para regenerar el Parser.java y sym.java, ejecutar el comando:
-		java -jar ../../lib/java-cup-11a.jar grammar.cup
+		java -jar ../../lib/java-cup-11b.jar grammar.cup
 */
 package mainPackage;
 
 import java_cup.runtime.*;
 import abstractSyntaxTree.*;
 import java.io.File;
+import java.util.List;
 
 parser code {:
 
@@ -39,6 +40,33 @@ parser code {:
 			System.err.println(m);
 		}
 	}
+
+	@Override
+	public void syntax_error(Symbol s){
+		System.err.println( "(Se ha encontrado el token \"" + sym.terminalNames[s.sym] + "\" en la linea " + (s.left+1) + ", columna" + (s.right+1) + ")" ); 
+                seEsperaba();
+	}
+
+	public void seEsperaba(){
+		List<Integer> listaTokens = this.expected_token_ids();
+		if (listaTokens.size() <= 0){
+			listaTokens = this.expected_token_ids();
+		}
+		String cadenaTokensEsperados = "";
+		for (int i = 0 ; i < listaTokens.size(); i++){
+			int id = listaTokens.get(i);
+			if (id == 1){
+				continue;
+			}
+			String nombreTerminal = sym.terminalNames[id];
+			if (i == listaTokens.size() - 1){
+				cadenaTokensEsperados += nombreTerminal;
+			}else{
+				cadenaTokensEsperados += nombreTerminal + " , ";
+			}
+		}
+		System.err.print("Se esperaba alguno de los siguientes tokens:" + cadenaTokensEsperados);
+	};
 
 
 	public void report_fatal_error(String message, Object info) {
@@ -518,16 +546,14 @@ assign_variable				::=		ID:id OPERASIG expression:e PUNTOCOMA
 									;
 
 
-variable_declaration		::=		variable_ids:vids DOSPUNTOS variable_type:types PUNTOCOMA
-										{: RESULT = new VariableDeclaration(vids, types); :}
-									// Errores para esta producción:
-									| variable_ids:vids error variable_type:types PUNTOCOMA {:
-											parser.report_error("Se esperaba \":\" ","Error en declaración de variables: ");
-											RESULT = new VariableDeclaration(vids, types);
-										:}
-									| variable_ids:vids DOSPUNTOS error {:
-											parser.report_error("Se esperaba el tipo de variables.","Error en declaración de variables: ");
-										:}
+variable_declaration		::=		variable_ids:vids DOSPUNTOS variable_type:types
+										{: RESULT = new VariableDeclaration(vids,types); :}
+										//errores para esta producción:
+									//|variable_ids:vids error{:parser.report_error("Se esperaba \":\" ","\t");:} variable_type:types
+									|variable_ids:vids DOSPUNTOS error{:
+										parser.report_error("variable_declaration:Se esperaba un tipo ","\t");
+										RESULT = new VariableDeclaration(vids,null); 
+									:}
 									;
 
 
@@ -965,9 +991,6 @@ option_when					::=		  expression:e
 return_statement			::=		  RETURN expression:e PUNTOCOMA
 										{: RESULT = new Return(e); :}
 									// Errores
-									| RETURN expression:e error
-										{:
-											parser.report_error("Se esperaba \";\" ","Error: ");
-											RESULT = new Return(e);
-										:}
+									| RETURN error
+										{: parser.report_error("Se esperaba un valor de retorno", "ERROR: "); :}
 									;
