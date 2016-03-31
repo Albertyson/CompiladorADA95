@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Program>
     <id1>
+<<<<<<< HEAD
         <id>Hola</id>
     </id1>
     <declarations>
@@ -12,12 +13,135 @@
                 <ids>
                     <id>a</id>
                 </ids>
+=======
+        <id>FunctionsProcedures</id>
+    </id1>
+    <declarations>
+        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="functionDeclaration">
+            <id1>
+                <id>calcular</id>
+            </id1>
+            <parameterDeclarations>
+                <parameters>
+                    <vars>
+                        <ids>
+                            <id>r</id>
+                        </ids>
+                    </vars>
+                    <mode xsi:type="modeInOut"/>
+                    <type xsi:type="typeInteger"/>
+                </parameters>
+            </parameterDeclarations>
+            <returnType xsi:type="typeInteger"/>
+            <declarations>
+                <declaration xsi:type="variableDeclaration">
+                    <variables>
+                        <ids>
+                            <id>unaVariable</id>
+                        </ids>
+                    </variables>
+                    <type xsi:type="typeInteger"/>
+                </declaration>
+            </declarations>
+            <statements>
+                <statements xsi:type="assignVariableSimple">
+                    <id>
+                        <id>unaVariable</id>
+                    </id>
+                    <exp xsi:type="integerNumber">
+                        <number>23</number>
+                    </exp>
+                </statements>
+                <statements xsi:type="assignVariableSimple">
+                    <id>
+                        <id>r</id>
+                    </id>
+                    <exp xsi:type="multiplication">
+                        <exp1 xsi:type="identifier">
+                            <id>r</id>
+                        </exp1>
+                        <exp2 xsi:type="identifier">
+                            <id>unaVariable</id>
+                        </exp2>
+                    </exp>
+                </statements>
+                <statements xsi:type="return">
+                    <exp xsi:type="identifier">
+                        <id>r</id>
+                    </exp>
+                </statements>
+            </statements>
+            <id2>
+                <id>calcular</id>
+            </id2>
+        </declaration>
+        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="procedureDeclaration">
+            <id1>
+                <id>imprimirCadena</id>
+            </id1>
+            <parameterDeclarations>
+                <parameters>
+                    <vars>
+                        <ids>
+                            <id>s</id>
+                        </ids>
+                    </vars>
+                    <mode xsi:type="modeIn"/>
+                    <type xsi:type="typeString"/>
+                </parameters>
+            </parameterDeclarations>
+            <declarations>
+                <declaration xsi:type="procedureDeclaration">
+                    <id1>
+                        <id>innerProc</id>
+                    </id1>
+                    <parameterDeclarations/>
+                    <statements>
+                        <statements xsi:type="putValue">
+                            <exp xsi:type="stringLiteral">
+<string>hola</string>
+                            </exp>
+                        </statements>
+                    </statements>
+                    <id2>
+                        <id>innerProc</id>
+                    </id2>
+                </declaration>
+            </declarations>
+            <statements>
+                <statements xsi:type="putValue">
+                    <exp xsi:type="stringLiteral">
+                        <string>la cadena es: </string>
+                    </exp>
+                </statements>
+                <statements xsi:type="putValue">
+                    <exp xsi:type="identifier">
+                        <id>s</id>
+                    </exp>
+                </statements>
+                <statements xsi:type="functionCall">
+                    <id>
+                        <id>innerProc</id>
+                    </id>
+                </statements>
+            </statements>
+            <id2>
+                <id>imprimirCadena</id>
+            </id2>
+        </declaration>
+        <declaration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="variableDeclaration">
+            <variables>
+                <ids>
+                    <id>calculo</id>
+                </ids>
+>>>>>>> 3604785ba9657136f0476ab99ce257822a46f266
             </variables>
             <type xsi:type="typeInteger"/>
         </declaration>
     </declarations>
     <statements>
         <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="assignVariableSimple">
+<<<<<<< HEAD
             <id>
                 <id>x</id>
             </id>
@@ -87,9 +211,35 @@
                     </exp>
                 </statements>
             </statements>
+=======
+            <id>
+                <id>calculo</id>
+            </id>
+            <exp xsi:type="functionCall">
+                <id>
+                    <id>calcular</id>
+                </id>
+                <fp>
+                    <exps xsi:type="integerNumber">
+                        <number>23</number>
+                    </exps>
+                </fp>
+            </exp>
+        </statements>
+        <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="functionCall">
+            <id>
+                <id>imprimirCadena</id>
+            </id>
+            <fp>
+                <exps xsi:type="stringLiteral">
+                    <string>Hey</string>
+                </exps>
+            </fp>
+>>>>>>> 3604785ba9657136f0476ab99ce257822a46f266
         </statements>
         <statements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="caseOthers">
             <exp xsi:type="identifier">
+<<<<<<< HEAD
                 <id>X</id>
             </exp>
             <whenList>
@@ -196,5 +346,13 @@
     </statements>
     <id2>
         <id>Hola</id>
+=======
+                <id>calculo</id>
+            </exp>
+        </statements>
+    </statements>
+    <id2>
+        <id>FunctionsProcedures</id>
+>>>>>>> 3604785ba9657136f0476ab99ce257822a46f266
     </id2>
 </Program>
