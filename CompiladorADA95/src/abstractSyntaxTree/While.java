@@ -18,6 +18,11 @@ public class While extends Statement {
     public While() {
     }
 
+    public While(Expression exp) {
+        this.exp = exp;
+    }
+    
+    
     public While(Expression exp, Statements est) {
         this.exp = exp;
         this.est = est;

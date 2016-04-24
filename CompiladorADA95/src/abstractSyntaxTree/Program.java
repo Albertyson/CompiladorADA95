@@ -30,6 +30,15 @@ public class Program {
         this.statements = statements;
         this.id2 = id2;
     }
+    public Program(Identifier id1, Identifier id2) {
+        this.id1 = id1;
+        this.id2 = id2;
+    }
+    public Program(Identifier id1, DeclarationPart declarations, Identifier id2) {
+        this.id1 = id1;
+        this.declarations = declarations;
+        this.id2 = id2;
+    }
 
     public Program(Identifier id1, Statements statements, Identifier id2) {
         this.id1 = id1;

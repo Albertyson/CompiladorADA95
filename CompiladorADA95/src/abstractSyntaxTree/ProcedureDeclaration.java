@@ -35,6 +35,19 @@ public class ProcedureDeclaration extends Declaration {
         this.statements = statements;
         this.id2 = id2;
     }
+
+    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, DeclarationPart declarations, Identifier id2) {
+        this.id1 = id1;
+        this.parameterDeclarations = parameterDeclarations;
+        this.declarations = declarations;
+        this.id2 = id2;
+    }
+
+    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, Identifier id2) {
+        this.id1 = id1;
+        this.parameterDeclarations = parameterDeclarations;
+        this.id2 = id2;
+    }
     
 
     public Identifier getId1() {

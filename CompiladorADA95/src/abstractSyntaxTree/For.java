@@ -25,6 +25,12 @@ public class For extends Statement {
         this.statements = statements;
     }
 
+    public For(Identifier id, Range range) {
+        this.id = id;
+        this.range = range;
+    }
+    
+
     public Identifier getId() {
         return id;
     }

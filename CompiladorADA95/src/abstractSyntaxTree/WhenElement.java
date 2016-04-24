@@ -25,6 +25,11 @@ public class WhenElement {
         this.whenOptions = whenOptions;
         this.statements = statements;
     }
+    
+    public WhenElement(WhenOptions whenOptions) {
+        this.whenOptions = whenOptions;
+    }
+    
     // Caso que usa OTHERS
     public WhenElement(Statements statements) {
         this.statements = statements;

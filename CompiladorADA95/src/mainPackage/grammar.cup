@@ -167,19 +167,37 @@ program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END
 												System.out.println(e.getMessage());
 											}
 										:}
-										//errores para la producción
 									|PROCEDURE error{:parser.report_error("Programa principal: Se esperaba ID","\t");:}  IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA 
 									|PROCEDURE ID:id1 error{:parser.report_error("Programa principal: Se esperaba IS","\t");:} declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA 
 									|PROCEDURE ID:id1 IS error{:parser.report_error("Programa principal: Se esperaban declaraciones","\t");:} BEGIN statements:s END ID:id2 PUNTOCOMA 
 									|PROCEDURE ID:id1 IS declaration_part:dp error{:parser.report_error("Programa principal: Se esperaba Begin","\t");:} statements:s END ID:id2 PUNTOCOMA 
-									//|PROCEDURE ID:id1 IS declaration_part:dp BEGIN error{:parser.report_error("Programa principal: Se esperaban statements","\t");:} END ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN error{:parser.report_error("Programa principal: Se esperaban statements","\t");:} END ID:id2 PUNTOCOMA 
 									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s error{:parser.report_error("Programa principal: Se esperaba End","\t");:} ID:id2 PUNTOCOMA 
 									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END error{:parser.report_error("Programa principal: Se esperaba ID","\t");:} PUNTOCOMA 
 									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END ID:id2 error{:parser.report_error("Programa principal: Se esperaba ;","\t");:} 
 									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA error{:parser.report_error("Programa principal: Simbolo no esperado","\t");:}
-									
+									//la regla anterior sin statements
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN END ID:id2 PUNTOCOMA 
+										{: 
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new Program(identifier1,dp,identifier2);
+											try {
+												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
+												xmlConverter.toXML();
+												System.out.println("Se ha generado el arbol");
+											} catch(Exception e){
+												System.out.println(e.getMessage());
+											}
+										:}
+										//errores para la producción
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN error{:parser.report_error("Programa principal: Se esperaba End","\t");:} ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN END error{:parser.report_error("Programa principal: Se esperaba ID","\t");:} PUNTOCOMA 
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN END ID:id2 error{:parser.report_error("Programa principal: Se esperaba ;","\t");:} 
+									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN END ID:id2 PUNTOCOMA error{:parser.report_error("Programa principal: Simbolo no esperado","\t");:}
 
 
+									//regla sin declaraciones
 									|PROCEDURE ID:id1 IS BEGIN statements:s END ID:id2 PUNTOCOMA 
 										{: 
 											Identifier identifier1 = new Identifier(id1);
@@ -194,11 +212,32 @@ program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END
 											}
 										:}
 										//errores para la producción
-									|PROCEDURE ID:id1 error{:parser.report_error("Programa principal sin declaraciones: Se esperaba IS","\t");:} BEGIN statements:s END ID:id2 PUNTOCOMA 
 									|PROCEDURE ID:id1 IS error{:parser.report_error("Programa principal sin declaraciones: Se esperaba Begin","\t");:} statements:s END ID:id2 PUNTOCOMA 
 									|PROCEDURE ID:id1 IS BEGIN statements:s error{:parser.report_error("Programa principal sin declaraciones: Se esperaba END","\t");:} ID:id2 PUNTOCOMA 
 									|PROCEDURE ID:id1 IS BEGIN statements:s END error{:parser.report_error("Programa principal sin declaraciones: Se esperaba ID","\t");:} PUNTOCOMA 
 									|PROCEDURE ID:id1 IS BEGIN statements:s END ID:id2 error{:parser.report_error("Programa principal sin declaraciones: Se esperaba \";\" ","\t");:}
+
+									//regla anterior sin statements
+									|PROCEDURE ID:id1 IS BEGIN END ID:id2 PUNTOCOMA 
+										{: 
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new Program(identifier1,identifier2);
+											try {
+												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
+												xmlConverter.toXML();
+												System.out.println("Se ha generado el arbol");
+											} catch(Exception e){
+												System.out.println(e.getMessage());
+											}
+										:}
+										//errores para la producción
+									|PROCEDURE ID:id1 IS error{:parser.report_error("Programa principal sin declaraciones: Se esperaba Begin","\t");:} END ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS BEGIN error{:parser.report_error("Programa principal sin declaraciones: Se esperaba END","\t");:} ID:id2 PUNTOCOMA 
+									|PROCEDURE ID:id1 IS BEGIN END error{:parser.report_error("Programa principal sin declaraciones: Se esperaba ID","\t");:} PUNTOCOMA 
+									|PROCEDURE ID:id1 IS BEGIN END ID:id2 error{:parser.report_error("Programa principal sin declaraciones: Se esperaba \";\" ","\t");:}
+									
+
 									|error{:parser.report_error("Programa principal: Se esperaba Procedure","\t");:}
 									;
 
@@ -250,12 +289,25 @@ function_declaration		::=		FUNCTION ID:id1 PARIZQ parameter_declarations:pds PAR
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER error{:parser.report_error("Declaracion de funcion: Se esperaba Return","\t");:} variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype error{:parser.report_error("Declaracion de funcion: Se esperaba IS","\t");:} declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp error{:parser.report_error("Declaracion de funcion: Se esperaba Begin","\t"); :}statements:s END ID:id2 PUNTOCOMA
-									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s error{:parser.report_error("Declaracion de funcion: Se esperaba End","\t"); :}ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN error{:parser.report_error("Declaracion de funcion: Se esperaba Statements","\t"); :} END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s error{:parser.report_error("Declaracion de funcion: Se esperaba End","\t"); :} ID:id2 PUNTOCOMA
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END error{:parser.report_error("Declaracion de funcion: Se esperaba ID","\t"); :} PUNTOCOMA
-									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 error{:parser.report_error("Declaracion de funcion: Se esperaba\";\"","\t");:}
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 error{:parser.report_error("Declaracion de funcion: Se esperaba\";\"","\t");:} 
+									
 
+									//regla anterior sin statements
+									|FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN END ID:id2 PUNTOCOMA
+										{:
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new FunctionDeclaration(identifier1,pds,vtype,dp,identifier2); 
+										:}
+										//errores para la producción
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp error{:parser.report_error("Declaracion de funcion: Se esperaba Begin","\t"); :} END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN END error{:parser.report_error("Declaracion de funcion: Se esperaba ID","\t"); :} PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN END ID:id2 error{:parser.report_error("Declaracion de funcion: Se esperaba\";\"","\t");:}
 
-
+									//regla sin declaration part
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN statements:s END ID:id2 PUNTOCOMA
 										{:
 											Identifier identifier1 = new Identifier(id1);
@@ -266,9 +318,23 @@ function_declaration		::=		FUNCTION ID:id1 PARIZQ parameter_declarations:pds PAR
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba un tipo ","\t"); :} IS BEGIN statements:s END ID:id2 PUNTOCOMA
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba IS","\t"); :}  BEGIN statements:s END ID:id2 PUNTOCOMA
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba Begin","\t"); :} statements:s END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba Statements","\t"); :} END ID:id2 PUNTOCOMA
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN statements:s error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba END","\t"); :} ID:id2 PUNTOCOMA
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN statements:s END error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba ID","\t"); :} PUNTOCOMA
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN statements:s END ID:id2 error{:parser.report_error("Declaracion de funcion: Se esperaba \";\" ","\t"); :}
+
+									//regla anterior sin statements
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN END ID:id2 PUNTOCOMA
+										{:
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new FunctionDeclaration(identifier1,pds,vtype,identifier2); 
+										:}
+										//errores para la producción
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba Begin","\t"); :} END ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN  error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba END","\t"); :} ID:id2 PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN  END error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba ID","\t"); :} PUNTOCOMA
+									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN  END ID:id2 error{:parser.report_error("Declaracion de funcion: Se esperaba \";\" ","\t"); :}
 									;
 
 
@@ -283,12 +349,24 @@ procedure_declaration 		::=		PROCEDURE ID:id1 PARIZQ parameter_declarations:pds 
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds error{:parser.report_error("Declaracion de Procedimiento: Se esperaba\")\"","\t");:} IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER error{:parser.report_error("Declaracion de Procedimiento: Se esperaba Is","\t");:} declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp error{:parser.report_error("Declaracion de Procedimiento: Se esperaba Begin","\t");:}  statements:s END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN error{:parser.report_error("Declaracion de Procedimiento: Se esperaba Statements","\t");:} END ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s error{:parser.report_error("Declaracion de Procedimiento: Se esperaba End","\t");:}  ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s END error{:parser.report_error("Declaracion de Procedimiento: Se esperaba ID","\t");:}  PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s END ID:id2 error{:parser.report_error("Declaracion de Procedimiento: Se esperaba\";\"","\t");:}
+									
+									//regla anterior sin statements
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN END ID:id2 PUNTOCOMA
+										{:
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new ProcedureDeclaration(identifier1,pds,dp,identifier2); 
+										:}
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp error{:parser.report_error("Declaracion de Procedimiento: Se esperaba Begin","\t");:}  END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN error{:parser.report_error("Declaracion de Procedimiento: Se esperaba End","\t");:}  ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN END error{:parser.report_error("Declaracion de Procedimiento: Se esperaba ID","\t");:}  PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN END ID:id2 error{:parser.report_error("Declaracion de Procedimiento: Se esperaba\";\"","\t");:}
 
-
-
+									//regla sin declaration part
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN statements:s END ID:id2 PUNTOCOMA
 										{:
 											Identifier identifier1 = new Identifier(id1);
@@ -297,9 +375,22 @@ procedure_declaration 		::=		PROCEDURE ID:id1 PARIZQ parameter_declarations:pds 
 										:}
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba IS","\t"); :} BEGIN statements:s END ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba Begin","\t"); :} statements:s END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba Statements","\t"); :} END ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN statements:s error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba End","\t"); :} ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN statements:s END error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba ID","\t"); :} PUNTOCOMA									
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN statements:s END ID:id2 error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba \";\" ","\t"); :}
+
+									//regla anterior sin  statements
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN END ID:id2 PUNTOCOMA
+										{:
+											Identifier identifier1 = new Identifier(id1);
+											Identifier identifier2 = new Identifier(id2);
+											RESULT = new ProcedureDeclaration(identifier1,pds,identifier2); 
+										:}
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba Begin","\t"); :} END ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba End","\t"); :} ID:id2 PUNTOCOMA
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN END error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba ID","\t"); :} PUNTOCOMA									
+									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN END ID:id2 error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba \";\" ","\t"); :}
  									;
 
 
@@ -453,7 +544,8 @@ function_call				::=		ID:id PARIZQ function_parameters:fp PARDER
 
 statements					::=		statement:s statements:ss
 										{: ss.add(s); RESULT = ss; :}
-									|	{: RESULT = new Statements(); :}
+									|	statement:s 
+										{: RESULT = new Statements(); RESULT.add(s); :}
 									;
 
 
@@ -625,6 +717,9 @@ elsif_statement				::=		  ELSIF expression:e THEN statements:s
 											parser.report_error("Se esperaba \"then\" ","Error en ElsIf: ");
 											RESULT = new ElsIf(e, s);
 										:}
+									| ELSIF expression:e THEN error {:
+											parser.report_error("Se esperaba \"statements\" ","Error en ElsIf: ");
+										:}
 									;
 
 
@@ -635,6 +730,9 @@ if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
 											parser.report_error("Se esperaba \"then\" ","Error en If: ");
 											RESULT = new IfSimple(e, s);
 										:}
+									| IF expression:e THEN error {:
+											parser.report_error("Se esperaba \"statements\" ","Error en If: ");
+										:}	END IF PUNTOCOMA
 									| IF expression:e THEN statements:s error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
 											RESULT = new IfSimple(e, s);
@@ -659,6 +757,9 @@ if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
 											parser.report_error("Se esperaba \"else\" ","Error en If: ");
 											RESULT = new  IfWithElse(e,s1,s2);
 										:} statements:s2 END IF PUNTOCOMA*/
+									| IF expression:e THEN statements:s1 ELSE error {:
+											parser.report_error("Se esperaba \"statements\" ","Error en If: ");
+										:} END IF PUNTOCOMA
 									| IF expression:e THEN statements:s1 ELSE statements:s2 error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
 											RESULT = new  IfWithElse(e,s1,s2);
@@ -707,6 +808,10 @@ if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
 											parser.report_error("Se esperaba \"else\" ","Error en If: ");
 											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
 										:} statements:s2 END IF PUNTOCOMA*/
+									| IF expression:e THEN statements:s1 elsif_statements:es ELSE error {:
+											parser.report_error("Se esperaba \"statements\" ","Error en If: ");
+											// RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+										:}END IF PUNTOCOMA
 									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
 											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
@@ -722,12 +827,16 @@ if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
 									;
 
 
-while_statemet				::=		  WHILE expression:e LOOP statements:s END LOOP PUNTOCOMA
+while_statemet				::=		WHILE expression:e LOOP statements:s END LOOP PUNTOCOMA
 										{: RESULT = new While(e,s); :}
 									// Error
 									| WHILE expression:e error statements:s END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"loop\" ","Error en while: ");
 											RESULT = new While(e, s);
+										:}
+									| WHILE expression:e LOOP error END LOOP PUNTOCOMA {:
+											parser.report_error("Se esperaba \"Statements\" ","Error en while: ");
+											RESULT = new While(e);
 										:}
 									| WHILE expression:e LOOP statements:s error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
@@ -740,6 +849,26 @@ while_statemet				::=		  WHILE expression:e LOOP statements:s END LOOP PUNTOCOMA
 									| WHILE expression:e LOOP statements:s END LOOP error {:
 											parser.report_error("Se esperaba \";\" ","Error en while: ");
 											RESULT = new While(e, s);
+										:}
+									//regla sin statements
+									| WHILE expression:e LOOP END LOOP PUNTOCOMA
+										{: RESULT = new While(e); :}
+									// Error
+									| WHILE expression:e error END LOOP PUNTOCOMA {:
+											parser.report_error("Se esperaba \"loop\" ","Error en while: ");
+											RESULT = new While(e);
+										:}
+									| WHILE expression:e LOOP error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
+											RESULT = new While(e);
+										:} LOOP PUNTOCOMA
+									| WHILE expression:e LOOP END error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
+											RESULT = new While(e);
+										:} PUNTOCOMA
+									| WHILE expression:e LOOP END LOOP error {:
+											parser.report_error("Se esperaba \";\" ","Error en while: ");
+											RESULT = new While(e);
 										:}
 									;
 
@@ -760,6 +889,11 @@ for_statement				::=		  FOR ID:id IN range:r LOOP statements:s END LOOP PUNTOCOM
 											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s);
 										:}
+									| FOR ID:id IN range:r LOOP error END LOOP PUNTOCOMA {:
+											parser.report_error("Se esperaba \"statements\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r);
+										:}
 									| FOR ID:id IN range:r LOOP statements:s error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
 											Identifier identifier = new Identifier(id);
@@ -774,6 +908,39 @@ for_statement				::=		  FOR ID:id IN range:r LOOP statements:s END LOOP PUNTOCOM
 											parser.report_error("Se esperaba \";\" ","Error en for: ");
 											Identifier identifier = new Identifier(id);
 											RESULT = new For(identifier,r,s);
+										:}
+
+									//Regla anterior sin statements
+									| FOR ID:id IN range:r LOOP END LOOP PUNTOCOMA
+										{: 
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r); 
+										:}
+									// Errores
+									| FOR ID:id error range:r LOOP END LOOP PUNTOCOMA {:
+											parser.report_error("Se esperaba \"in\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r);
+										:}
+									| FOR ID:id IN range:r error END LOOP PUNTOCOMA {:
+											parser.report_error("Se esperaba \"loop\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r);
+										:}
+									| FOR ID:id IN range:r LOOP error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r);
+										:} LOOP PUNTOCOMA
+									| FOR ID:id IN range:r LOOP END error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r);
+										:} PUNTOCOMA
+									| FOR ID:id IN range:r LOOP END LOOP error {:
+											parser.report_error("Se esperaba \";\" ","Error en for: ");
+											Identifier identifier = new Identifier(id);
+											RESULT = new For(identifier,r);
 										:}
 									;
 
@@ -806,6 +973,23 @@ loop_statement				::=		LOOP statements:s END LOOP PUNTOCOMA
 									| LOOP statements:s END LOOP error {:
 											parser.report_error("Se esperaba \";\" ","Error en loop: ");
 											RESULT = new Loop(s);
+										:}
+
+									//regla anterior sin statements
+									LOOP END LOOP PUNTOCOMA
+										{: RESULT = new Loop(); :}
+									// Errores
+									| LOOP error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
+											RESULT = new Loop();
+										:} LOOP PUNTOCOMA
+									| LOOP END error {:
+											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
+											RESULT = new Loop();
+										:} PUNTOCOMA
+									| LOOP END LOOP error {:
+											parser.report_error("Se esperaba \";\" ","Error en loop: ");
+											RESULT = new Loop();
 										:}
 									;
 
@@ -954,6 +1138,14 @@ when_element 				::=		  WHEN when_options:w OPERPUNTERO statements:s
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
 											RESULT = new WhenElement(w,s);
 										:}
+									//regla anterior sin statements
+									| WHEN when_options:w OPERPUNTERO
+										{: RESULT = new WhenElement(w); :}
+									// Error
+									| WHEN when_options:w error {:
+											parser.report_error("Se esperaba \"=>\" ","Error: ");
+											RESULT = new WhenElement(w);
+										:}
 
 									| WHEN OTHERS OPERPUNTERO statements:s
 										{: RESULT = new WhenElement(s); :}
@@ -965,6 +1157,18 @@ when_element 				::=		  WHEN when_options:w OPERPUNTERO statements:s
 									| WHEN OTHERS error statements:s {:
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
 											RESULT = new WhenElement(s);
+										:}
+									//regla anterior sin statements
+									| WHEN OTHERS OPERPUNTERO
+										{: RESULT = new WhenElement(); :}
+									// Error
+									| WHEN error OPERPUNTERO {:
+											parser.report_error("Se esperaba \"others\" ","Error: ");
+											RESULT = new WhenElement();
+										:}
+									| WHEN OTHERS error {:
+											parser.report_error("Se esperaba \"=>\" ","Error: ");
+											RESULT = new WhenElement();
 										:}
 									;
 
