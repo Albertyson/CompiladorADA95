@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -14,8 +15,8 @@ public class Not extends LogicalExpression {
     
     public Expression exp;
 
-    public Not() {
-    }
+    
+    public Not() {}
 
     public Not(Expression exp) {
         this.exp = exp;
@@ -30,8 +31,14 @@ public class Not extends LogicalExpression {
     }
     
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

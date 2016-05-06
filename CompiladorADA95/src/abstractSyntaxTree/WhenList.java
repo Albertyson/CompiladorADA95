@@ -9,6 +9,7 @@ import AST_Path.ParentPath;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -21,12 +22,15 @@ public class WhenList {
     public WhenList() {
         whenElements = new ArrayList();
     }
+    
     public void add(WhenElement w){
         whenElements.add(0,w);
     }
+    
     public WhenElement getAt(int pos){
         return whenElements.get(pos);
     }
+    
     public int size(){
         return whenElements.size();
     }
@@ -39,7 +43,14 @@ public class WhenList {
         this.whenElements = whenElements;
     }
     
-    public void callPath(ParentPath PP) {
+    
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
+    
 }

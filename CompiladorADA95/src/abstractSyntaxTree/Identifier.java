@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -14,8 +15,7 @@ public class Identifier extends Expression {
     
     public String id;
 
-    public Identifier() {
-    }
+    public Identifier() {}
     
     public Identifier(String id) {
         this.id = id;
@@ -30,8 +30,14 @@ public class Identifier extends Expression {
     }
     
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

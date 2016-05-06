@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -15,13 +16,12 @@ public class While extends Statement {
     public Expression exp;
     public Statements est;
 
-    public While() {
-    }
+    
+    public While() {}
 
     public While(Expression exp) {
         this.exp = exp;
     }
-    
     
     public While(Expression exp, Statements est) {
         this.exp = exp;
@@ -46,8 +46,14 @@ public class While extends Statement {
     
     
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

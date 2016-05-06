@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -14,8 +15,8 @@ public class Negative extends ArithmeticExpression {
     
     public Expression exp;
 
-    public Negative() {
-    }
+    
+    public Negative() {}
 
     public Negative(Expression exp) {
         this.exp = exp;
@@ -31,8 +32,14 @@ public class Negative extends ArithmeticExpression {
     
     
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

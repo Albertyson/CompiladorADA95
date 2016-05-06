@@ -52,8 +52,10 @@ import abstractSyntaxTree.Range;
 import abstractSyntaxTree.Return;
 import abstractSyntaxTree.Statements;
 import abstractSyntaxTree.TypeBoolean;
+import abstractSyntaxTree.TypeError;
 import abstractSyntaxTree.TypeFloat;
 import abstractSyntaxTree.TypeInteger;
+import abstractSyntaxTree.TypeNull;
 import abstractSyntaxTree.TypeString;
 import abstractSyntaxTree.VariableDeclaration;
 import abstractSyntaxTree.VariableIDs;
@@ -128,6 +130,10 @@ public interface ParentPath {
     public void path(IfWithElsIfAndElse h);
     public void path(WhenElement aThis);
     public void path(WhenList aThis);
+
+    public void path(TypeError aThis);
+
+    public void path(TypeNull aThis);
     
      
 }

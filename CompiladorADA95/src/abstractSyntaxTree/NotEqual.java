@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -14,8 +15,8 @@ public class NotEqual extends BooleanExpression {
     
     public Expression exp1, exp2;
 
-    public NotEqual() {
-    }
+    
+    public NotEqual() {}
 
     public NotEqual(Expression exp1, Expression exp2) {
         this.exp1 = exp1;
@@ -39,8 +40,14 @@ public class NotEqual extends BooleanExpression {
     }
     
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

@@ -1,6 +1,7 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -10,6 +11,8 @@ public class AssignVariableWithDeclaration extends AssignVariable {
     
     public VariableDeclaration vd;
     public Expression exp;
+    
+    public AssignVariableWithDeclaration() {}
 
     public AssignVariableWithDeclaration(VariableDeclaration vd, Expression exp) {
         this.vd = vd;
@@ -34,8 +37,14 @@ public class AssignVariableWithDeclaration extends AssignVariable {
     
 
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

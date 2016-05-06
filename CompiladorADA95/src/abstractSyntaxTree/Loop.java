@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -14,8 +15,8 @@ public class Loop extends Statement {
     
     public Statements s;
 
-    public Loop() {
-    }
+    
+    public Loop() {}
 
     public Loop(Statements s) {
         this.s = s;
@@ -30,8 +31,14 @@ public class Loop extends Statement {
     }
 
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

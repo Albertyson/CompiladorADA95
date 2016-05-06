@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -15,8 +16,7 @@ public class IfWithElsIF extends If {
     public Statements statements;
     public ElsIfList elsIfList;
 
-    public IfWithElsIF() {
-    }
+    public IfWithElsIF() {}
 
     public IfWithElsIF(Expression expression, Statements statements, ElsIfList elsIfList) {
         this.expression = expression;
@@ -50,8 +50,14 @@ public class IfWithElsIF extends If {
     
 
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

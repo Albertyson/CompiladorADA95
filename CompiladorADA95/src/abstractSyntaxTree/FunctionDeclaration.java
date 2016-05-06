@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -11,15 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class FunctionDeclaration extends Declaration {
     
-    private Identifier id1;
-    private ParameterDeclarations parameterDeclarations;
-    private VariableType returnType;
-    private DeclarationPart declarations;
-    private Statements statements;
-    private Identifier id2;
+    public Identifier id1;
+    public ParameterDeclarations parameterDeclarations;
+    public VariableType returnType;
+    public DeclarationPart declarations;
+    public Statements statements;
+    public Identifier id2;
 
-    public FunctionDeclaration() {
-    }
 
     public FunctionDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, VariableType returnType, DeclarationPart declarations, Statements statements, Identifier id2) {
         this.id1 = id1;
@@ -54,7 +53,6 @@ public class FunctionDeclaration extends Declaration {
     }
     
     
-
     public Identifier getId1() {
         return id1;
     }
@@ -104,8 +102,14 @@ public class FunctionDeclaration extends Declaration {
     }
         
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

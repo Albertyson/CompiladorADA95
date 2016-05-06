@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -13,6 +14,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public abstract class Statement {
     
-    public abstract void callPath(ParentPath PP);
+    public abstract void accept(ParentPath PP);
+    
+    public abstract VariableType accept(TypeVisitor PP);
     
 }

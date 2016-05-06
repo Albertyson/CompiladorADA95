@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -15,8 +16,7 @@ public class VariableDeclaration extends Declaration {
     public VariableIDs variables;
     public VariableType type;
 
-    public VariableDeclaration() {
-    }
+    public VariableDeclaration() {}
 
     public VariableDeclaration(VariableIDs variables, VariableType type) {
         this.variables = variables;
@@ -41,8 +41,14 @@ public class VariableDeclaration extends Declaration {
 
     
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

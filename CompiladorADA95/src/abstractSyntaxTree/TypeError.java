@@ -1,22 +1,17 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import visitor.TypeVisitor;
 
 /**
  *
  * @author JosuéNoel
  */
+public class TypeError extends VariableType {
 
-@XmlAccessorType(XmlAccessType.FIELD)
-public class True extends LiteralExpression {
-
-    public True() {
+    public TypeError() {
     }
 
-    
     @Override
     public void accept(ParentPath PP) {
         PP.path(this);
@@ -26,6 +21,7 @@ public class True extends LiteralExpression {
     public VariableType accept(TypeVisitor PP) {
         return PP.path(this);
     }
+
 
     
 }

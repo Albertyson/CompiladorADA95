@@ -4,6 +4,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -16,9 +17,9 @@ public class Parameter {
     private Mode mode;
     private VariableType type;
     private Expression exp;
-
-    public Parameter() {
-    }
+    
+    
+    public Parameter() {}
 
     public Parameter(VariableIDs vars, VariableType type) {
         this.vars = vars;
@@ -77,8 +78,13 @@ public class Parameter {
     }
     
     
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
-    }    
+    }
+    
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -15,9 +16,8 @@ public class CaseOthers extends Case {
     public Expression exp;
     public WhenList whenList;
     public Statements statementsOthers;
-
-    public CaseOthers() {
-    }
+    
+    public CaseOthers() {}
     
     public CaseOthers(Expression exp, WhenList whenList, Statements statementsOthers) {
         this.exp = exp;
@@ -51,8 +51,14 @@ public class CaseOthers extends Case {
  
     
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

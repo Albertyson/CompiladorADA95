@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -14,8 +15,7 @@ public class Exit extends Statement {
     
     public Expression exp;
 
-    public Exit() {
-    }
+    public Exit() {}
 
     public Exit(Expression exp) {
         this.exp = exp;
@@ -31,8 +31,14 @@ public class Exit extends Statement {
     
 
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

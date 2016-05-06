@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -16,8 +17,7 @@ public class For extends Statement {
     public Range range;
     public Statements statements;
 
-    public For() {
-    }
+    public For() {}
 
     public For(Identifier id, Range range, Statements statements) {
         this.id = id;
@@ -30,7 +30,6 @@ public class For extends Statement {
         this.range = range;
     }
     
-
     public Identifier getId() {
         return id;
     }
@@ -57,8 +56,14 @@ public class For extends Statement {
     
     
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

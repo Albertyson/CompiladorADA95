@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -14,8 +15,7 @@ public class GetValue extends Statement {
     
     public Identifier id;
 
-    public GetValue() {
-    }
+    public GetValue() {}
 
     public GetValue(Identifier id) {
         this.id = id;
@@ -30,8 +30,14 @@ public class GetValue extends Statement {
     }
     
     @Override
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    @Override
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }

@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import visitor.TypeVisitor;
 
 /**
  *
@@ -15,8 +16,7 @@ public class WhenOption {
     public Expression exp;
     public Range range;
 
-    public WhenOption() {
-    }
+    public WhenOption() {}
 
     public WhenOption(Expression exp) {
         this.exp = exp;
@@ -43,8 +43,13 @@ public class WhenOption {
     }
     
 
-    public void callPath(ParentPath PP) {
+    public void accept(ParentPath PP) {
         PP.path(this);
     }
+    
+    public VariableType accept(TypeVisitor PP) {
+        return PP.path(this);
+    }
+
     
 }
