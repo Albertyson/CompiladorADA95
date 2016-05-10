@@ -2,18 +2,15 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import visitor.TypeVisitor;
 
 /**
  *
  * @author Albertyson
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 public class DeclarationPart {
     
-  private ArrayList<Declaration> declaration;
+    private ArrayList<Declaration> declaration;
     
     public DeclarationPart() {
         declaration = new ArrayList();
@@ -29,14 +26,6 @@ public class DeclarationPart {
     
     public Declaration getAt(int pos) {
         return declaration.get(pos);
-    }
-
-    public ArrayList<Declaration> getDeclaration() {
-        return declaration;
-    }
-
-    public void setDeclaration(ArrayList<Declaration> declaration) {
-        this.declaration = declaration;
     }
     
     

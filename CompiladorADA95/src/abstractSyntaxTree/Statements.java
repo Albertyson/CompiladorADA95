@@ -2,16 +2,12 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import visitor.TypeVisitor;
 
 /**
  *
  * @author JosuéNoel
  */
-
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Statements {
     
     private ArrayList<Statement> statements;
@@ -32,14 +28,6 @@ public class Statements {
         return statements.get(pos);
     }
 
-    public ArrayList<Statement> getStatements() {
-        return statements;
-    }
-
-    public void setStatements(ArrayList<Statement> statements) {
-        this.statements = statements;
-    }
-    
     
     public void accept(ParentPath PP) {
         PP.path(this);

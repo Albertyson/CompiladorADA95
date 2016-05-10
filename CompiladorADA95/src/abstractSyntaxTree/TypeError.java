@@ -9,8 +9,7 @@ import visitor.TypeVisitor;
  */
 public class TypeError extends VariableType {
 
-    public TypeError() {
-    }
+    public TypeError() {}
 
     @Override
     public void accept(ParentPath PP) {

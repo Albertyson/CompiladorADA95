@@ -18,7 +18,7 @@ public class main {
          lexer x = new lexer(r);
          while (x.yylex() == 1) {}*/
         try {
-            parser p = new parser(new Lexer2(new FileReader("./src/mainPackage/archivo.adb")));
+            parser p = new parser(new Lexer2(new FileReader("./src/mainPackage/pruebas adb/archivo.adb")));
             Object result = p.parse().value;
         } catch (Exception e) {
             e.printStackTrace();

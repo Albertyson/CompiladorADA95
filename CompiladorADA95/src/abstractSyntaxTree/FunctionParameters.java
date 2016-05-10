@@ -2,8 +2,6 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import visitor.TypeVisitor;
 
 /**
@@ -11,7 +9,6 @@ import visitor.TypeVisitor;
  * @author JosuéNoel
  */
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class FunctionParameters {
     
     private ArrayList<Expression> exps;
@@ -32,13 +29,6 @@ public class FunctionParameters {
         return exps.get(pos);
     }
     
-    public ArrayList<Expression> getExps() {
-        return exps;
-    }
-
-    public void setExps(ArrayList<Expression> exps) {
-        this.exps = exps;
-    }
     
     public void accept(ParentPath PP) {
         PP.path(this);

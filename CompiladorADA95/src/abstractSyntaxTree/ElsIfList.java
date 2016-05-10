@@ -2,15 +2,12 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import visitor.TypeVisitor;
 
 /**
  *
  * @author JosuéNoel
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 public class ElsIfList {
     
     private ArrayList<ElsIf> list;
@@ -29,14 +26,6 @@ public class ElsIfList {
     
     public ElsIf getAt(int pos) {
         return list.get(pos);
-    }
-
-    public ArrayList<ElsIf> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<ElsIf> list) {
-        this.list = list;
     }
 
     

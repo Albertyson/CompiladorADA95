@@ -57,6 +57,7 @@ import abstractSyntaxTree.Statements;
 import abstractSyntaxTree.StringLiteral;
 import abstractSyntaxTree.True;
 import abstractSyntaxTree.TypeBoolean;
+import abstractSyntaxTree.TypeChar;
 import abstractSyntaxTree.TypeError;
 import abstractSyntaxTree.TypeFloat;
 import abstractSyntaxTree.TypeInteger;
@@ -394,6 +395,11 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(TypeNull aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public VariableType path(TypeChar aThis) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

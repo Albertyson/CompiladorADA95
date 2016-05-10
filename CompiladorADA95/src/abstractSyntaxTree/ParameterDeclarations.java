@@ -2,15 +2,12 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import visitor.TypeVisitor;
 
 /**
  *
  * @author Albertyson
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 public class ParameterDeclarations {
 
     private ArrayList<Parameter> parameters;
@@ -29,14 +26,6 @@ public class ParameterDeclarations {
 
     public Parameter getAt(int pos) {
         return parameters.get(pos);
-    }
-
-    public ArrayList<Parameter> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(ArrayList<Parameter> parameters) {
-        this.parameters = parameters;
     }
     
     public void accept(ParentPath PP) {

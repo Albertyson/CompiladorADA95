@@ -2,16 +2,12 @@ package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import visitor.TypeVisitor;
 
 /**
  *
  * @author JosuéNoel
  */
-
-@XmlAccessorType(XmlAccessType.FIELD)
 public class WhenOptions {
     
     private ArrayList<WhenOption> options;
@@ -32,15 +28,6 @@ public class WhenOptions {
         return options.get(pos);
     }
 
-    public ArrayList<WhenOption> getOptions() {
-        return options;
-    }
-
-    public void setOptions(ArrayList<WhenOption> options) {
-        this.options = options;
-    }
-    
-    
     public void accept(ParentPath PP) {
         PP.path(this);
     }

@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import visitor.TypeVisitor;
 
 /**
  *
  * @author Albertyson
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 public class WhenList {
     private ArrayList <WhenElement> whenElements;
 
@@ -33,14 +25,6 @@ public class WhenList {
     
     public int size(){
         return whenElements.size();
-    }
-
-    public ArrayList<WhenElement> getWhenElements() {
-        return whenElements;
-    }
-
-    public void setWhenElements(ArrayList<WhenElement> whenElements) {
-        this.whenElements = whenElements;
     }
     
     
