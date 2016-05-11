@@ -12,8 +12,6 @@ import java.util.List;
 
 public class SemanticTable {
     
-    
-       
     public static int SIZE_OF_INTEGER = 4; //BYTES
     public static int SIZE_OF_NUMBER = 8; //BYTES
     public static int SIZE_OF_BOOLEAN = 1; //BYTES
@@ -42,6 +40,7 @@ public class SemanticTable {
         this.symbols = new ArrayList();
     }
 
+    
     public SemanticTableNode findID(String id, String currentScope) {
         for (int i = 0; i < symbols.size(); i++) {
             SemanticTableNode currentSymbolInfo = symbols.get(i);
@@ -49,33 +48,21 @@ public class SemanticTable {
                 return currentSymbolInfo;
             }
         }
-
         return null;
     }
+    
 
-    public SemanticTableNode findID(String id) {
-        for (int i = 0; i < symbols.size(); i++) {
-            SemanticTableNode currentSymbolInfo = symbols.get(i);
-            if (currentSymbolInfo.getName().equals(id)) {
-                return currentSymbolInfo;
-            }
-        }
-
-        return null;
-    }
-
-    public boolean addID(String id, String scope, SemanticTableNode value) {
-        if (findID(id, scope) != null) {
+    public boolean addID(SemanticTableNode value) {
+        if (findID(value.getName(), value.getScope()) != null) {
             return false;
         }
-
         this.symbols.add(value);
         return true;
     }
 
+    
     public List<SemanticVariableTableNode> getAllVariables(String scope) {
         List<SemanticVariableTableNode> ret = new ArrayList();
-
         for (int i = 0; i < symbols.size(); i++) {
             SemanticTableNode currentSymbolInfo = symbols.get(i);
             if (currentSymbolInfo instanceof SemanticVariableTableNode) {
@@ -84,10 +71,8 @@ public class SemanticTable {
                 }
             }
         }
-
         return ret;
     }
-    
     
     
 }

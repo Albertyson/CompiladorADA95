@@ -1,22 +1,22 @@
 package visitor;
 
 import abstractSyntaxTree.VariableType;
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 public class SemanticFunctionTableNode extends SemanticTableNode {
     
     
     private VariableType returnType;
-    private Vector<VariableType> params;
+    private ArrayList<SemanticVariableTableNode> params;
 
-    public SemanticFunctionTableNode(VariableType returnType, Vector<VariableType> params, String name, String scope) {
+    public SemanticFunctionTableNode(VariableType returnType, String name, String scope) {
         super(name, scope);
         this.returnType = returnType;
-        this.params = params;
+        this.params = new ArrayList();
     }
 
-    public Vector<VariableType> getParams() {
+    public ArrayList<SemanticVariableTableNode> getParams() {
         return params;
     }
 
@@ -24,5 +24,8 @@ public class SemanticFunctionTableNode extends SemanticTableNode {
         return returnType;
     }
     
+    public void addParam(SemanticVariableTableNode node) {
+        this.params.add(node);
+    }
     
 }

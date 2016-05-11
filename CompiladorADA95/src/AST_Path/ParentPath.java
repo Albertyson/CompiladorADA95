@@ -68,7 +68,6 @@ import abstractSyntaxTree.While;
 
 
 public interface ParentPath {
-    
     public void path(IntegerNumber h);
     public void path(FloatNumber h);
     public void path(True h);
@@ -131,12 +130,8 @@ public interface ParentPath {
     public void path(IfWithElsIfAndElse h);
     public void path(WhenElement aThis);
     public void path(WhenList aThis);
-
     public void path(TypeError aThis);
-
     public void path(TypeNull aThis);
-
     public void path(TypeChar aThis);
     
-     
 }
