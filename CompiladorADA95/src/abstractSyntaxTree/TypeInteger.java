@@ -21,5 +21,8 @@ public class TypeInteger extends VariableType {
         return PP.path(this);
     }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof TypeInteger;
+    }
 }
