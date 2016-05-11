@@ -12,6 +12,9 @@ public class Loop extends Statement {
     
     public Statements s;
 
+    public Loop() {
+    }
+
     public Loop(Statements s) {
         this.s = s;
     }

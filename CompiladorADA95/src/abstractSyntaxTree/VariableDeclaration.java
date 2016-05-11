@@ -17,6 +17,13 @@ public class VariableDeclaration extends Declaration {
         this.type = type;
     }
 
+    public VariableIDs getVariables() {
+        return variables;
+    }
+
+    public VariableType getType() {
+        return type;
+    }
     
     @Override
     public void accept(ParentPath PP) {

@@ -52,6 +52,7 @@ import abstractSyntaxTree.Statements;
 import abstractSyntaxTree.StringLiteral;
 import abstractSyntaxTree.True;
 import abstractSyntaxTree.TypeBoolean;
+import abstractSyntaxTree.TypeChar;
 import abstractSyntaxTree.TypeError;
 import abstractSyntaxTree.TypeFloat;
 import abstractSyntaxTree.TypeInteger;
@@ -134,5 +135,7 @@ public interface TypeVisitor {
     public VariableType path(TypeError aThis);
 
     public VariableType path(TypeNull aThis);
+
+    public VariableType path(TypeChar aThis);
 
 }

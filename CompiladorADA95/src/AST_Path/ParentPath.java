@@ -52,6 +52,7 @@ import abstractSyntaxTree.Range;
 import abstractSyntaxTree.Return;
 import abstractSyntaxTree.Statements;
 import abstractSyntaxTree.TypeBoolean;
+import abstractSyntaxTree.TypeChar;
 import abstractSyntaxTree.TypeError;
 import abstractSyntaxTree.TypeFloat;
 import abstractSyntaxTree.TypeInteger;
@@ -134,6 +135,8 @@ public interface ParentPath {
     public void path(TypeError aThis);
 
     public void path(TypeNull aThis);
+
+    public void path(TypeChar aThis);
     
      
 }

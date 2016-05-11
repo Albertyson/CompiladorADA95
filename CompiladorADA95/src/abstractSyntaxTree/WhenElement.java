@@ -11,7 +11,17 @@ public class WhenElement {
     private WhenOptions whenOptions;
     private Statements statements;
 
+    public WhenElement() {
+    }
 
+    public WhenOptions getWhenOptions() {
+        return whenOptions;
+    }
+
+    public Statements getStatements() {
+        return statements;
+    }
+    
     public WhenElement(WhenOptions whenOptions, Statements statements) {
         this.whenOptions = whenOptions;
         this.statements = statements;
