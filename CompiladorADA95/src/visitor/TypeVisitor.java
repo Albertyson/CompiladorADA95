@@ -6,6 +6,7 @@ import abstractSyntaxTree.AssignVariableSimple;
 import abstractSyntaxTree.AssignVariableWithDeclaration;
 import abstractSyntaxTree.CaseNotOthers;
 import abstractSyntaxTree.CaseOthers;
+import abstractSyntaxTree.Declaration;
 import abstractSyntaxTree.DeclarationPart;
 import abstractSyntaxTree.Division;
 import abstractSyntaxTree.ElsIf;
@@ -48,6 +49,7 @@ import abstractSyntaxTree.Program;
 import abstractSyntaxTree.PutValue;
 import abstractSyntaxTree.Range;
 import abstractSyntaxTree.Return;
+import abstractSyntaxTree.Statement;
 import abstractSyntaxTree.Statements;
 import abstractSyntaxTree.StringLiteral;
 import abstractSyntaxTree.True;
@@ -130,12 +132,10 @@ public interface TypeVisitor {
     public VariableType path(IfWithElsIF h);
     public VariableType path(IfWithElsIfAndElse h);
     public VariableType path(WhenElement aThis);
-    public VariableType path(WhenList aThis);
-
-    public VariableType path(TypeError aThis);
-
-    public VariableType path(TypeNull aThis);
-
-    public VariableType path(TypeChar aThis);
-
+    public VariableType path(WhenList h);
+    public VariableType path(TypeError h);
+    public VariableType path(TypeNull h);
+    public VariableType path(TypeChar h);
+    public VariableType path(Declaration h);
+    public VariableType path(Statement h);
 }

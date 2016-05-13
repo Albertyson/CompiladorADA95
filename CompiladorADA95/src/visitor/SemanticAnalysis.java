@@ -5,102 +5,61 @@
  */
 package visitor;
 
-import abstractSyntaxTree.Add;
-import abstractSyntaxTree.And;
-import abstractSyntaxTree.AssignVariableSimple;
-import abstractSyntaxTree.AssignVariableWithDeclaration;
-import abstractSyntaxTree.CaseNotOthers;
-import abstractSyntaxTree.CaseOthers;
-import abstractSyntaxTree.DeclarationPart;
-import abstractSyntaxTree.Division;
-import abstractSyntaxTree.ElsIf;
-import abstractSyntaxTree.ElsIfList;
-import abstractSyntaxTree.Equal;
-import abstractSyntaxTree.Exit;
-import abstractSyntaxTree.False;
-import abstractSyntaxTree.FloatNumber;
-import abstractSyntaxTree.For;
-import abstractSyntaxTree.FunctionCall;
-import abstractSyntaxTree.FunctionDeclaration;
-import abstractSyntaxTree.FunctionParameters;
-import abstractSyntaxTree.GetValue;
-import abstractSyntaxTree.Greater;
-import abstractSyntaxTree.GreaterOrEqual;
-import abstractSyntaxTree.Identifier;
-import abstractSyntaxTree.IfSimple;
-import abstractSyntaxTree.IfWithElsIF;
-import abstractSyntaxTree.IfWithElsIfAndElse;
-import abstractSyntaxTree.IfWithElse;
-import abstractSyntaxTree.IntegerNumber;
-import abstractSyntaxTree.Less;
-import abstractSyntaxTree.LessOrEqual;
-import abstractSyntaxTree.Loop;
-import abstractSyntaxTree.Minus;
-import abstractSyntaxTree.ModeIn;
-import abstractSyntaxTree.ModeInOut;
-import abstractSyntaxTree.ModeOut;
-import abstractSyntaxTree.Module;
-import abstractSyntaxTree.Multiplication;
-import abstractSyntaxTree.Negative;
-import abstractSyntaxTree.Not;
-import abstractSyntaxTree.NotEqual;
-import abstractSyntaxTree.Or;
-import abstractSyntaxTree.Parameter;
-import abstractSyntaxTree.ParameterDeclarations;
-import abstractSyntaxTree.Pow;
-import abstractSyntaxTree.ProcedureDeclaration;
-import abstractSyntaxTree.Program;
-import abstractSyntaxTree.PutValue;
-import abstractSyntaxTree.Range;
-import abstractSyntaxTree.Return;
-import abstractSyntaxTree.Statements;
-import abstractSyntaxTree.StringLiteral;
-import abstractSyntaxTree.True;
-import abstractSyntaxTree.TypeBoolean;
-import abstractSyntaxTree.TypeChar;
-import abstractSyntaxTree.TypeError;
-import abstractSyntaxTree.TypeFloat;
-import abstractSyntaxTree.TypeInteger;
-import abstractSyntaxTree.TypeNull;
-import abstractSyntaxTree.TypeString;
-import abstractSyntaxTree.VariableDeclaration;
-import abstractSyntaxTree.VariableIDs;
-import abstractSyntaxTree.VariableType;
-import abstractSyntaxTree.WhenElement;
-import abstractSyntaxTree.WhenList;
-import abstractSyntaxTree.WhenOption;
-import abstractSyntaxTree.WhenOptions;
-import abstractSyntaxTree.While;
+import abstractSyntaxTree.*;
+
 
 /**
  *
  * @author JosuéNoel
  */
 public class SemanticAnalysis implements TypeVisitor {
+    
+    private String scope;
+    private VariableType currentFunctionReturnType;
+    private SemanticTable semanticTable;
+    private int currentDirection;
+    private boolean hasErrors;
+    
+    
+    public SemanticAnalysis(SemanticTable symbolsTable){
+        this.semanticTable = symbolsTable;
+        hasErrors = false;
+    }
+    
+    public void errorComplain(String message, int line, int col) {
+        System.err.println(message + "\nError at line: " + (line + 1) + ", col: " + (col + 1) + ".\n\n");
+        this.hasErrors = true;
+    }
+    
+    public boolean hasErrors() {
+        return this.hasErrors;
+    }
+    
+    
 
     @Override
     public VariableType path(IntegerNumber h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new TypeInteger();
     }
 
     @Override
     public VariableType path(FloatNumber h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new TypeFloat();
     }
 
     @Override
     public VariableType path(True h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new TypeBoolean();
     }
 
     @Override
     public VariableType path(False h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new TypeBoolean();
     }
 
     @Override
     public VariableType path(StringLiteral h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new TypeString();
     }
 
     @Override
@@ -335,7 +294,28 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(Program h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!h.id1.equals(h.id2)){
+            errorComplain("El identificador de inicio y cierre no coinciden.", 0, 0);
+            return new TypeError();
+        }
+        String currentScope = Scope.genNewScope();
+        this.scope = new String(currentScope);
+        if (!semanticTable.addID(new SemanticFunctionTableNode(new TypeNull(), h.id1.id, this.scope))){
+            errorComplain("El identificador: " + h.id1.id + " ya está siendo utilizado.", 0, 0);
+            return new TypeError();
+        }
+        
+        for (int i = 0; i < h.declarations.size(); i++){
+            h.declarations.getAt(i).accept(this);
+        }
+        this.scope = currentScope;
+        
+        for (int i = 0; i < h.statements.size(); i++){
+            h.statements.getAt(i).accept(this);
+        }
+        this.scope = currentScope;
+        
+        return new TypeNull();
     }
 
     @Override
@@ -379,28 +359,72 @@ public class SemanticAnalysis implements TypeVisitor {
     }
 
     @Override
-    public VariableType path(WhenElement aThis) {
+    public VariableType path(WhenElement h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public VariableType path(WhenList aThis) {
+    public VariableType path(WhenList h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public VariableType path(TypeError aThis) {
+    public VariableType path(TypeError h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public VariableType path(TypeNull aThis) {
+    public VariableType path(TypeNull h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public VariableType path(TypeChar aThis) {
+    public VariableType path(TypeChar h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public VariableType path(Declaration h) {
+        if (h instanceof  FunctionDeclaration){
+            return ((FunctionDeclaration) h).accept(this);
+        } else if (h instanceof  VariableDeclaration){
+            return ((VariableDeclaration) h).accept(this);
+        } else if (h instanceof  ProcedureDeclaration){
+            return ((ProcedureDeclaration) h).accept(this);
+        } else {
+            errorComplain("Error en declaracion.", 0, 0);
+            return new TypeError();
+        }
+    }
+
+    @Override
+    public VariableType path(Statement h) {
+        if (h instanceof  AssignVariable){
+            return ((AssignVariable) h).accept(this);
+        } else if (h instanceof  Expression){
+            return ((Expression) h).accept(this);
+        } else if (h instanceof  GetValue){
+            return ((GetValue) h).accept(this);
+        } else if (h instanceof  PutValue){
+            return ((PutValue) h).accept(this);
+        } else if (h instanceof  If){
+            return ((If) h).accept(this);
+        } else if (h instanceof  While){
+            return ((While) h).accept(this);
+        } else if (h instanceof  For){
+            return ((For) h).accept(this);
+        } else if (h instanceof  Exit){
+            return ((Exit) h).accept(this);
+        } else if (h instanceof  Loop){
+            return ((Loop) h).accept(this);
+        } else if (h instanceof  Case){
+            return ((Case) h).accept(this);
+        } else if (h instanceof  Return){
+            return ((Return) h).accept(this);
+        } else {
+            errorComplain("Error en Statement.", 0, 0);
+            return new TypeError();
+        }
     }
     
 }

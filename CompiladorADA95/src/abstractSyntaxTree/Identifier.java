@@ -16,6 +16,10 @@ public class Identifier extends Expression {
         this.id = id;
     }
     
+    public boolean equals(Identifier id2){
+        return id.equals(id2.id);
+    }
+    
     @Override
     public void accept(ParentPath PP) {
         PP.path(this);

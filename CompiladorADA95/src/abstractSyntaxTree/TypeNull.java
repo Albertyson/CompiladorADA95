@@ -9,7 +9,7 @@ import visitor.TypeVisitor;
  */
 public class TypeNull extends VariableType {
     
-    TypeNull() {}
+    public TypeNull() {}
 
     @Override
     public void accept(ParentPath PP) {
@@ -25,4 +25,5 @@ public class TypeNull extends VariableType {
     public boolean equals(Object obj) {
         return obj instanceof TypeNull;
     }
+    
 }
