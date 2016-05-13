@@ -64,11 +64,21 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(Identifier h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SemanticTableNode s = semanticTable.findID(h.id, this.scope);
+        if(s == null){
+            errorComplain("El identificador " + h.id + " no está definido en este ámbito",0,0);
+            return new TypeError();
+        }
+        if(s instanceof SemanticVariableTableNode){
+            return ((SemanticVariableTableNode)s).getType();
+        }else{
+            return new TypeError();
+        }
     }
 
     @Override
     public VariableType path(Add h) {
+        //verificar si ambas expresiones son del mismo tipo
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -320,7 +330,23 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(AssignVariableSimple h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //verificar que el identificador existe en la tabla de símbolos en el scope actual
+        if(semanticTable.findID(h.id.id, this.scope) == null){
+            errorComplain("El identificador " + h.id.id + "no está definido en el ámbito actual",0,0);
+            return new TypeError();
+        }
+        //validar que el tipo del id sea el mismo que la expresion
+        VariableType idType = h.id.accept(this);
+        if(idType instanceof TypeError){
+            return new TypeError();
+        }
+        VariableType expType = h.exp.accept(this);
+        if(expType == idType){
+            return expType;
+        }else{
+            errorComplain("El tipo del identificador " + h.id.id + " no es compatible con el tipo de la expresión",0,0);
+            return new TypeError();
+        }
     }
 
     @Override
