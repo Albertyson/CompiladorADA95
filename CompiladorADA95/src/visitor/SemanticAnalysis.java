@@ -6,6 +6,7 @@
 package visitor;
 
 import abstractSyntaxTree.*;
+import java.util.ArrayList;
 
 
 /**
@@ -78,93 +79,343 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(Add h) {
-        //verificar si ambas expresiones son del mismo tipo
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //verificar los tipos de ambas expresiones
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1 instanceof TypeFloat && typeExp2 instanceof TypeFloat){
+            return new TypeFloat();
+        }
+        if(typeExp1 instanceof TypeInteger && typeExp2 instanceof TypeInteger){
+            return new TypeInteger();
+        }
+        errorComplain("Ambas expresiones deben ser float o ambas deben ser integer",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Minus h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //verificar los tipos de ambas expresiones
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1 instanceof TypeFloat && typeExp2 instanceof TypeFloat){
+            return new TypeFloat();
+        }
+        if(typeExp1 instanceof TypeInteger && typeExp2 instanceof TypeInteger){
+            return new TypeInteger();
+        }
+        errorComplain("Ambas expresiones deben ser float o ambas deben ser integer",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Division h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //verificar los tipos de ambas expresiones
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1 instanceof TypeFloat && typeExp2 instanceof TypeFloat){
+            return new TypeFloat();
+        }
+        if(typeExp1 instanceof TypeInteger && typeExp2 instanceof TypeInteger){
+            return new TypeInteger();
+        }
+        errorComplain("Ambas expresiones deben ser float o ambas deben ser integer",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Multiplication h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //verificar los tipos de ambas expresiones
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1 instanceof TypeFloat && typeExp2 instanceof TypeFloat){
+            return new TypeFloat();
+        }
+        if(typeExp1 instanceof TypeInteger && typeExp2 instanceof TypeInteger){
+            return new TypeInteger();
+        }
+        errorComplain("Ambas expresiones deben ser float o ambas deben ser integer",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Pow h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //verificar los tipos de ambas expresiones
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1 instanceof TypeFloat && typeExp2 instanceof TypeFloat){
+            return new TypeFloat();
+        }
+        if(typeExp1 instanceof TypeInteger && typeExp2 instanceof TypeInteger){
+            return new TypeInteger();
+        }
+        errorComplain("Ambas expresiones deben ser float o ambas deben ser integer",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Negative h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //verificar los tipos de ambas expresiones
+        VariableType typeExp1 = h.exp.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1 instanceof TypeFloat){
+            return new TypeFloat();
+        }
+        if(typeExp1 instanceof TypeInteger){
+            return new TypeInteger();
+        }
+        errorComplain("La expresión no es tipo float o integer",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Module h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //verificar los tipos de ambas expresiones
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1 instanceof TypeFloat && typeExp2 instanceof TypeFloat){
+            return new TypeFloat();
+        }
+        if(typeExp1 instanceof TypeInteger && typeExp2 instanceof TypeInteger){
+            return new TypeInteger();
+        }
+        errorComplain("Ambas expresiones deben ser float o ambas deben ser integer",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Equal h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1.equals(typeExp2)){
+            return new TypeBoolean();
+        }
+        errorComplain("No se pueden comparar los tipos",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(NotEqual h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1.equals(typeExp2)){
+            return new TypeBoolean();
+        }
+        errorComplain("No se pueden comparar los tipos",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Greater h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1.equals(typeExp2)){
+            return new TypeBoolean();
+        }
+        errorComplain("No se pueden comparar los tipos",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Less h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1.equals(typeExp2)){
+            return new TypeBoolean();
+        }
+        errorComplain("No se pueden comparar los tipos",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(GreaterOrEqual h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1.equals(typeExp2)){
+            return new TypeBoolean();
+        }
+        errorComplain("No se pueden comparar los tipos",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(LessOrEqual h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1.equals(typeExp2)){
+            return new TypeBoolean();
+        }
+        errorComplain("No se pueden comparar los tipos",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(And h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1 instanceof TypeBoolean && typeExp2 instanceof TypeBoolean){
+            return new TypeBoolean();
+        }
+        errorComplain("Se esperaban expresiones de tipo Boolean",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Or h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType typeExp1 = h.exp1.accept(this);
+        VariableType typeExp2 = h.exp2.accept(this);
+        if(typeExp1 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp2 instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp1 instanceof TypeBoolean && typeExp2 instanceof TypeBoolean){
+            return new TypeBoolean();
+        }
+        errorComplain("Se esperaban expresiones de tipo Boolean",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(Not h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType typeExp = h.exp.accept(this);
+        if(typeExp instanceof TypeError){
+            return new TypeError();
+        }
+        if(typeExp instanceof TypeBoolean){
+            return new TypeBoolean();
+        }
+        errorComplain("Se esperaba una expresión de tipo Boolean",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(FunctionCall h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //buscarla en la tabla de símbolos
+        SemanticTableNode funcion = semanticTable.findID(h.id.id, this.scope);
+        if(!(funcion instanceof SemanticFunctionTableNode) || funcion==null){
+            errorComplain("La función " + h.id.id + " no está definida en este ámbito",0,0);
+            return new TypeError(); 
+        }
+        ArrayList<SemanticVariableTableNode> args = ((SemanticFunctionTableNode)funcion).getParams();
+        FunctionParameters params = h.fp;
+        if(params == null){
+            //si no se envian parámetros y la función los debe recibir
+            if(args.size()>0){
+                errorComplain("La cantidad de parámetros que debe recibir la función no es la que corresponde", 0,0);
+                return new TypeError();
+            }
+        }else{
+            //verificar la cantidad de parámetros
+            if(args.size()== params.size()){
+                for (int i = 0; i < args.size(); i++) {
+                    //verificar los tipos de los parámetros
+                    if(!args.get(i).getType().equals(params.getAt(i).accept(this))){
+                        errorComplain("Los tipos de los parámetros no son los que corresponden", 0,0);
+                        return new TypeError();
+                    }
+                }
+            }else{
+                errorComplain("La cantidad de parámetros que debe recibir la función no es la que corresponde", 0,0);
+                return new TypeError();
+            }
+        }
+        //llamar al accept de los parámetros de la función
+        h.fp.accept(this);
+        return ((SemanticFunctionTableNode)funcion).getReturnType();
     }
 
     @Override
     public VariableType path(FunctionParameters h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //verificar los parámetros
+        for (int i = 0; i < h.size(); i++) {
+            VariableType paramType = h.getAt(i).accept(this);
+            if(paramType instanceof TypeError){
+                errorComplain("No se esperaba el tipo del parámetro "+i,0,0);
+                return new TypeError();
+            }
+        }
+        return new TypeNull();
     }
 
     @Override
@@ -194,67 +445,199 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(GetValue h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(h.id instanceof Identifier){
+            errorComplain("Se esperaba un identificador",0,0);
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(PutValue h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType expType = h.exp.accept(this);
+        if(expType instanceof TypeError){
+            errorComplain("Se experaba una expresión ",0,0);
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(While h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType expType = h.exp.accept(this);        
+        if(!(expType instanceof TypeBoolean)){
+            errorComplain("Se esperaba una expresión de tipo boolean",0,0);
+            return new TypeError();
+        }
+        VariableType stmntsType = h.est.accept(this);
+        if(stmntsType instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(Statements h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (int i = 0; i < h.size(); i++) {
+            VariableType stmntType = h.getAt(i).accept(this);
+            if(stmntType instanceof TypeError){
+                return new TypeError();
+            }
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(Range h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType exp1Type = h.exp1.accept(this);
+        if(exp1Type instanceof TypeError){
+            errorComplain("Error en el limite inferior del rango",0,0);
+            return new TypeError();
+        }
+        VariableType exp2Type = h.exp2.accept(this);
+        if(exp2Type instanceof TypeError){
+            errorComplain("Error en el limite superior del rango",0,0);
+            return new TypeError();
+        }
+        //validar que son enteros
+        if(!(exp1Type instanceof TypeInteger && exp2Type instanceof TypeInteger)){
+            errorComplain("Ambos límites del rango deben ser de tipo Integer",0,0);
+            return new TypeError();
+        }
+        //validar que el limite inferior sea menor que el superior
+        int inferior = ((IntegerNumber)h.exp1).number;
+        int superior = ((IntegerNumber)h.exp2).number;
+        if(inferior >= superior){
+            errorComplain("El limite inferior debe ser menor al superior",0,0);
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(For h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //validar el iterador
+//        VariableType iteratorType = h.id.accept(this);
+//        if(iteratorType instanceof TypeError){            
+//            return new TypeError();
+//        }
+        VariableType rangeType = h.range.accept(this);
+        if(rangeType instanceof TypeError){
+            errorComplain("Error en el rango",0,0);
+            return new TypeError();
+        }
+        VariableType stmntsType = h.statements.accept(this);
+        if(stmntsType instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(Exit h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType expType = h.exp.accept(this);
+        if(!(expType instanceof TypeBoolean)){
+            errorComplain("Se esperaba una expresión de tipo Boolean",0,0);
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(Loop h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType stmntsType = h.s.accept(this);
+        if(stmntsType instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(Return h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType expType = h.exp.accept(this);
+        if(!expType.equals(currentFunctionReturnType)){
+            errorComplain("El retorno de la función debe ser del tipo " + currentFunctionReturnType.getClass().getSimpleName(),0,0);
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(WhenOption h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(h.exp!=null){
+            return h.exp.accept(this);
+        }else if(h.range !=null){
+            return h.range.accept(this);
+        }
+        errorComplain("La condicion when no tiene una expresión o rango",0,0);
+        return new TypeError();
     }
 
     @Override
     public VariableType path(WhenOptions h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (int i = 0; i < h.size(); i++) {
+            VariableType woType = h.getAt(i).accept(this);
+            if(woType instanceof TypeError){
+                return new TypeError();
+            }
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(CaseOthers h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //validar el tipo de la expresión
+        VariableType expType = h.exp.accept(this);
+        if(expType instanceof TypeError){
+            errorComplain("Expresión erronea para case",0,0);
+            return new TypeError();
+        }
+        //validar lista de when
+        VariableType wlType = h.whenList.accept(this);
+        if(wlType instanceof TypeError){
+            return new TypeError();
+        }
+        //verificar si las expresiones de los when son del mismo tipo del case
+        for (int i = 0; i < h.whenList.size(); i++) {
+            WhenOptions whenOptions = h.whenList.getAt(i).getWhenOptions();
+            for(int j=0;j< whenOptions.size(); j++){
+                VariableType whenExpType = whenOptions.getAt(j).exp.accept(this);
+                if(!whenExpType.equals(expType)){
+                    errorComplain("El tipo de la expresión en el when no es compatible con el tipo del case",0,0);
+                }
+            }
+        }
+        //validar statements de others
+        VariableType soType = h.statementsOthers.accept(this);
+        if(soType instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(CaseNotOthers h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //validar el tipo de la expresión
+        VariableType expType = h.exp.accept(this);
+        if(expType instanceof TypeError){
+            errorComplain("Expresión erronea para case",0,0);
+            return new TypeError();
+        }
+        //validar lista de when
+        VariableType wlType = h.whenList.accept(this);
+        if(wlType instanceof TypeError){
+            return new TypeError();
+        }
+        //verificar si las expresiones de los when son del mismo tipo del case
+        for (int i = 0; i < h.whenList.size(); i++) {
+            WhenOptions whenOptions = h.whenList.getAt(i).getWhenOptions();
+            for(int j=0;j< whenOptions.size(); j++){
+                VariableType whenExpType = whenOptions.getAt(j).exp.accept(this);
+                if(!whenExpType.equals(expType)){
+                    errorComplain("El tipo de la expresión en el when no es compatible con el tipo del case",0,0);
+                }
+            }
+        }
+        return new TypeNull();
     }
 
     @Override
@@ -341,7 +724,7 @@ public class SemanticAnalysis implements TypeVisitor {
             return new TypeError();
         }
         VariableType expType = h.exp.accept(this);
-        if(expType == idType){
+        if(expType.getClass().equals(idType.getClass())){
             return expType;
         }else{
             errorComplain("El tipo del identificador " + h.id.id + " no es compatible con el tipo de la expresión",0,0);
@@ -356,42 +739,126 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(IfSimple h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType expType = h.exp.accept(this);
+        if(!(expType instanceof TypeBoolean)){
+            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            return new TypeError();
+        }
+        //validar statements
+        VariableType stmntsType = h.statements.accept(this);
+        if(stmntsType instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(IfWithElse h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType expType = h.exp.accept(this);
+        if(!(expType instanceof TypeBoolean)){
+            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            return new TypeError();
+        }
+        //validar statements
+        VariableType s1Type = h.s1.accept(this);
+        VariableType s2Type = h.s2.accept(this);
+        if(s1Type instanceof TypeError || s2Type instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(ElsIf h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType expType = h.exp.accept(this);
+        if(!(expType instanceof TypeBoolean)){
+            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            return new TypeError();
+        }
+        //validar statements
+        VariableType stmntsType = h.stms.accept(this);
+        if(stmntsType instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(ElsIfList h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (int i = 0; i < h.size(); i++) {
+            VariableType elsifType = h.getAt(i).accept(this);
+            if(elsifType instanceof TypeError){
+                return new TypeError();
+            }
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(IfWithElsIF h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType expType = h.expression.accept(this);
+        if(!(expType instanceof TypeBoolean)){
+            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            return new TypeError();
+        }
+        //validar statements
+        VariableType stmntsType = h.statements.accept(this);
+        if(stmntsType instanceof TypeError){
+            return new TypeError();
+        }
+        VariableType elsifListType = h.elsIfList.accept(this);
+        if(elsifListType instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(IfWithElsIfAndElse h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType expType = h.expression.accept(this);
+        if(!(expType instanceof TypeBoolean)){
+            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            return new TypeError();
+        }
+        //validar statements
+        VariableType stmntsType = h.statements.accept(this);
+        if(stmntsType instanceof TypeError){
+            return new TypeError();
+        }
+        VariableType elsifListType = h.elsIfList.accept(this);
+        if(elsifListType instanceof TypeError){
+            return new TypeError();
+        }
+        VariableType elseStatementsType = h.elseStatements.accept(this);
+        if(elseStatementsType instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(WhenElement h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType woType = h.getWhenOptions().accept(this);
+        if(woType instanceof TypeError){
+            return new TypeError();
+        }
+        VariableType stmntsType = h.getStatements().accept(this);
+        if(stmntsType instanceof TypeError){
+            return new TypeError();
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(WhenList h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //validar cada when element
+        for (int i = 0; i < h.size(); i++) {
+            VariableType weType = h.getAt(i).accept(this);
+            if(weType instanceof TypeError){
+                return new TypeError();
+            }
+        }
+        return new TypeNull();
     }
 
     @Override
