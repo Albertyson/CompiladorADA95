@@ -159,13 +159,6 @@ program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END
 											Identifier identifier1 = new Identifier(id1);
 											Identifier identifier2 = new Identifier(id2);
 											RESULT = new Program(identifier1,dp,s,identifier2);
-											try {
-												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
-												xmlConverter.toXML();
-												System.out.println("Se ha generado el arbol");
-											} catch(Exception e){
-												System.out.println(e.getMessage());
-											}
 										:}
 									|PROCEDURE error{:parser.report_error("Programa principal: Se esperaba ID","\t");:}  IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA 
 									|PROCEDURE ID:id1 error{:parser.report_error("Programa principal: Se esperaba IS","\t");:} declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA 
