@@ -1,4 +1,4 @@
-package abstractSyntaxTree;
+                   package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;

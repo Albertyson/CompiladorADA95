@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package visitor;
 
 import abstractSyntaxTree.*;
 import java.util.ArrayList;
 
 
-/**
- *
- * @author JosuéNoel
- */
 public class SemanticAnalysis implements TypeVisitor {
     
     private String scope;
@@ -20,6 +11,7 @@ public class SemanticAnalysis implements TypeVisitor {
     private SemanticTable semanticTable;
     private int currentDirection;
     private boolean hasErrors;
+    
     
     
     public SemanticAnalysis(SemanticTable symbolsTable){
@@ -420,27 +412,27 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(VariableIDs h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.  <<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public VariableType path(TypeInteger h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
     public VariableType path(TypeBoolean h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
     public VariableType path(TypeFloat h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
     public VariableType path(TypeString h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
@@ -642,51 +634,95 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(VariableDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VariableType type;
+        
+        if (h.type instanceof TypeBoolean){
+            type = new TypeBoolean();
+        } else if (h.type instanceof TypeChar) {
+            type = new TypeChar();
+        } else if (h.type instanceof TypeFloat) {
+            type = new TypeFloat();
+        } else if (h.type instanceof TypeInteger) {
+            type = new TypeInteger();
+        } else if (h.type instanceof TypeString) {
+            type = new TypeString();
+        } else {
+            return new TypeError();
+        }
+        for(int i = 0; i < h.variables.size(); i++){
+            if (!semanticTable.addID(new SemanticVariableTableNode(type, h.variables.getAt(i).id, this.scope, 4, 0))){
+                errorComplain("El identificador: " + h.variables.getAt(i).id + " ya está siendo utilizado.", 0, 0);
+            }
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(Parameter h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. <<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public VariableType path(ModeIn h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
     public VariableType path(ModeInOut h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
     public VariableType path(ModeOut h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
     public VariableType path(ParameterDeclarations h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. <<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public VariableType path(ProcedureDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. <<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public VariableType path(FunctionDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        
+        
+        return new TypeNull();
+        
+        
+        
+        
+        
+        
     }
 
     @Override
     public VariableType path(DeclarationPart h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(int i = 0; i < h.size(); i++){
+            if (h.getAt(i) instanceof VariableDeclaration){
+                ((VariableDeclaration) h.getAt(i)).accept(this);
+            } else if (h.getAt(i) instanceof FunctionDeclaration){
+                ((FunctionDeclaration) h.getAt(i)).accept(this);
+            } else if (h.getAt(i) instanceof ProcedureDeclaration){
+                ((ProcedureDeclaration) h.getAt(i)).accept(this);
+            } else {
+                return new TypeError();
+            }
+        }
+        return new TypeNull();
     }
 
     @Override
     public VariableType path(Program h) {
+        
+        //      OJO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        
         if (!h.id1.equals(h.id2)){
             errorComplain("El identificador de inicio y cierre no coinciden.", 0, 0);
             return new TypeError();
@@ -734,7 +770,7 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(AssignVariableWithDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. <<<<<<<<<<<<<<<<<
     }
 
     @Override
@@ -863,17 +899,17 @@ public class SemanticAnalysis implements TypeVisitor {
 
     @Override
     public VariableType path(TypeError h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
     public VariableType path(TypeNull h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
     public VariableType path(TypeChar h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
