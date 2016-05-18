@@ -12,17 +12,18 @@ public class SemanticAnalysis implements TypeVisitor {
     private int currentDirection;
     private boolean hasErrors;
     
-    
-    
+      
     public SemanticAnalysis(SemanticTable symbolsTable){
         this.semanticTable = symbolsTable;
         hasErrors = false;
     }
     
+    
     public void errorComplain(String message, int line, int col) {
         System.err.println(message + "\nError at line: " + (line + 1) + ", col: " + (col + 1) + ".\n\n");
         this.hasErrors = true;
     }
+    
     
     public boolean hasErrors() {
         return this.hasErrors;
@@ -35,21 +36,25 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeInteger();
     }
 
+    
     @Override
     public VariableType path(FloatNumber h) {
         return new TypeFloat();
     }
 
+    
     @Override
     public VariableType path(True h) {
         return new TypeBoolean();
     }
 
+    
     @Override
     public VariableType path(False h) {
         return new TypeBoolean();
     }
 
+    
     @Override
     public VariableType path(StringLiteral h) {
         return new TypeString();
@@ -69,6 +74,7 @@ public class SemanticAnalysis implements TypeVisitor {
         }
     }
 
+    
     @Override
     public VariableType path(Add h) {
         //verificar los tipos de ambas expresiones
@@ -90,6 +96,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Minus h) {
         //verificar los tipos de ambas expresiones
@@ -111,6 +118,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Division h) {
         //verificar los tipos de ambas expresiones
@@ -132,6 +140,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Multiplication h) {
         //verificar los tipos de ambas expresiones
@@ -153,6 +162,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Pow h) {
         //verificar los tipos de ambas expresiones
@@ -174,6 +184,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Negative h) {
         //verificar los tipos de ambas expresiones
@@ -191,6 +202,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Module h) {
         //verificar los tipos de ambas expresiones
@@ -212,6 +224,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Equal h) {
         VariableType typeExp1 = h.exp1.accept(this);
@@ -229,6 +242,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(NotEqual h) {
         VariableType typeExp1 = h.exp1.accept(this);
@@ -246,6 +260,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Greater h) {
         VariableType typeExp1 = h.exp1.accept(this);
@@ -263,6 +278,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Less h) {
         VariableType typeExp1 = h.exp1.accept(this);
@@ -280,6 +296,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(GreaterOrEqual h) {
         VariableType typeExp1 = h.exp1.accept(this);
@@ -297,6 +314,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(LessOrEqual h) {
         VariableType typeExp1 = h.exp1.accept(this);
@@ -314,6 +332,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(And h) {
         VariableType typeExp1 = h.exp1.accept(this);
@@ -331,6 +350,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Or h) {
         VariableType typeExp1 = h.exp1.accept(this);
@@ -348,6 +368,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(Not h) {
         VariableType typeExp = h.exp.accept(this);
@@ -361,6 +382,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(FunctionCall h) {
         //buscarla en la tabla de símbolos
@@ -397,6 +419,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return ((SemanticFunctionTableNode)funcion).getReturnType();
     }
 
+    
     @Override
     public VariableType path(FunctionParameters h) {
         //verificar los parámetros
@@ -410,31 +433,37 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(VariableIDs h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.  <<<<<<<<<<<<<<<<<<<
+        throw new UnsupportedOperationException("Not supported yet."); // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(TypeInteger h) {
         throw new UnsupportedOperationException("Not supported yet."); // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(TypeBoolean h) {
         throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(TypeFloat h) {
         throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(TypeString h) {
         throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(GetValue h) {
         if(h.id instanceof Identifier){
@@ -444,6 +473,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(PutValue h) {
         VariableType expType = h.exp.accept(this);
@@ -454,6 +484,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(While h) {
         VariableType expType = h.exp.accept(this);        
@@ -468,6 +499,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(Statements h) {
         for (int i = 0; i < h.size(); i++) {
@@ -479,6 +511,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(Range h) {
         VariableType exp1Type = h.exp1.accept(this);
@@ -506,6 +539,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(For h) {
         //validar el iterador
@@ -525,6 +559,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(Exit h) {
         VariableType expType = h.exp.accept(this);
@@ -535,6 +570,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(Loop h) {
         VariableType stmntsType = h.s.accept(this);
@@ -544,6 +580,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(Return h) {
         VariableType expType = h.exp.accept(this);
@@ -553,6 +590,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(WhenOption h) {
         if(h.exp!=null){
@@ -564,6 +602,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeError();
     }
 
+    
     @Override
     public VariableType path(WhenOptions h) {
         for (int i = 0; i < h.size(); i++) {
@@ -575,6 +614,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(CaseOthers h) {
         //validar el tipo de la expresión
@@ -606,6 +646,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(CaseNotOthers h) {
         //validar el tipo de la expresión
@@ -632,10 +673,10 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(VariableDeclaration h) {
         VariableType type;
-        
         if (h.type instanceof TypeBoolean){
             type = new TypeBoolean();
         } else if (h.type instanceof TypeChar) {
@@ -657,51 +698,143 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(Parameter h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. <<<<<<<<<<<<<<<<<<<<<
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(ModeIn h) {
         throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(ModeInOut h) {
         throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(ModeOut h) {
         throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(ParameterDeclarations h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. <<<<<<<<<<<<<<<<<<<<<
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
+
 
     @Override
     public VariableType path(ProcedureDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. <<<<<<<<<<<<<<<<<<<<<
+        boolean hasErrors = false;
+        if (h.id1.equals(h.id2)) {
+            errorComplain("No se encontró el final de la función " + h.id1, 0, 0);
+            hasErrors = true;
+        }
+
+        String tmpScope = new String(this.scope);
+        String currentScope = new String(this.scope + "." + Scope.genNewScope());
+        this.scope = new String(currentScope);
+
+        SemanticFunctionTableNode f = new SemanticFunctionTableNode(new TypeNull(), h.id1.id, "" + this.scope);
+        for (int i = 0; i < h.parameterDeclarations.size(); i++) {
+            Parameter param = h.parameterDeclarations.getAt(i);
+            int varType;
+            if (param.mode instanceof ModeIn) {
+                varType = 1;
+            } else if (param.mode instanceof ModeOut) {
+                varType = 2;
+            } else if (param.mode instanceof ModeInOut) {
+                varType = 3;
+            } else {
+                varType = 4;
+            }
+            for (int j = 0; j < param.vars.size(); j++) {
+                if (!semanticTable.addID(new SemanticVariableTableNode(param.type, param.vars.getAt(j).id, this.scope, varType, 0))) {
+                    errorComplain("El identificador: " + param.vars.getAt(j).id + " ya está siendo utilizado.", 0, 0);
+                    hasErrors = true;
+                } else {
+                    SemanticVariableTableNode variable = new SemanticVariableTableNode(param.type, param.vars.getAt(j).id, this.scope, varType, 0);
+                    f.addParam(variable);
+                }
+            }
+        }
+        if (!semanticTable.addID(f)) {
+            errorComplain("El identificador: " + h.id1.id + " ya está siendo utilizado.", 0, 0);
+            return new TypeError();
+        }
+
+        h.declarations.accept(this);
+        this.scope = currentScope;
+        h.statements.accept(this);
+        this.scope = tmpScope;
+
+        if (hasErrors) {
+            return new TypeError();
+        } else {
+            return new TypeNull();
+        }
     }
+
 
     @Override
     public VariableType path(FunctionDeclaration h) {
+        boolean hasErrors = false;
+        if (h.id1.equals(h.id2)){
+            errorComplain("No se encontró el final de la función " + h.id1, 0, 0);
+            hasErrors = true;
+        }
         
+        String tmpScope = new String(this.scope);
+        String currentScope = new String(this.scope + "." + Scope.genNewScope());
+        this.scope = new String(currentScope);
         
+        SemanticFunctionTableNode f = new SemanticFunctionTableNode(h.returnType, h.id1.id, "" + this.scope);
+        for (int i = 0; i < h.parameterDeclarations.size(); i++){
+            Parameter param = h.parameterDeclarations.getAt(i);
+            int varType;
+            if (param.mode instanceof ModeIn){
+                varType = 1;
+            } else if(param.mode instanceof ModeOut){
+                varType = 2;
+            } else if(param.mode instanceof ModeInOut){
+                varType = 3;
+            } else {
+                varType = 4;
+            }
+            for (int j = 0; j < param.vars.size(); j++){
+                if (!semanticTable.addID(new SemanticVariableTableNode(param.type, param.vars.getAt(j).id, this.scope, varType, 0))) {
+                    errorComplain("El identificador: " + param.vars.getAt(j).id + " ya está siendo utilizado.", 0, 0);
+                    hasErrors = true;
+                } else {
+                    SemanticVariableTableNode variable = new SemanticVariableTableNode(param.type, param.vars.getAt(j).id, this.scope, varType, 0);
+                    f.addParam(variable);
+                }
+            }
+        }        
+        if (!semanticTable.addID(f)){
+            errorComplain("El identificador: " + h.id1.id + " ya está siendo utilizado.", 0, 0);
+            return new TypeError();
+        }
         
+        h.declarations.accept(this);
+        this.scope = currentScope;
+        h.statements.accept(this);
+        this.scope = tmpScope;
         
-        return new TypeNull();
-        
-        
-        
-        
-        
-        
+        if (hasErrors){
+            return new TypeError();
+        } else {
+            return new TypeNull();
+        }
     }
 
+    
     @Override
     public VariableType path(DeclarationPart h) {
         for(int i = 0; i < h.size(); i++){
@@ -718,6 +851,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(Program h) {
         
@@ -747,6 +881,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(AssignVariableSimple h) {
         //verificar que el identificador existe en la tabla de símbolos en el scope actual
@@ -768,11 +903,13 @@ public class SemanticAnalysis implements TypeVisitor {
         }
     }
 
+    
     @Override
     public VariableType path(AssignVariableWithDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. <<<<<<<<<<<<<<<<<
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(IfSimple h) {
         VariableType expType = h.exp.accept(this);
@@ -788,6 +925,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(IfWithElse h) {
         VariableType expType = h.exp.accept(this);
@@ -804,6 +942,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(ElsIf h) {
         VariableType expType = h.exp.accept(this);
@@ -819,6 +958,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(ElsIfList h) {
         for (int i = 0; i < h.size(); i++) {
@@ -830,6 +970,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(IfWithElsIF h) {
         VariableType expType = h.expression.accept(this);
@@ -849,6 +990,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(IfWithElsIfAndElse h) {
         VariableType expType = h.expression.accept(this);
@@ -872,6 +1014,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(WhenElement h) {
         VariableType woType = h.getWhenOptions().accept(this);
@@ -885,6 +1028,7 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(WhenList h) {
         //validar cada when element
@@ -897,21 +1041,25 @@ public class SemanticAnalysis implements TypeVisitor {
         return new TypeNull();
     }
 
+    
     @Override
     public VariableType path(TypeError h) {
         throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(TypeNull h) {
         throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
+    
 
     @Override
     public VariableType path(TypeChar h) {
         throw new UnsupportedOperationException("Not supported yet."); // NUNCA SE MANDA A LLAMAR
     }
 
+    
     @Override
     public VariableType path(Declaration h) {
         if (h instanceof  FunctionDeclaration){
@@ -926,6 +1074,7 @@ public class SemanticAnalysis implements TypeVisitor {
         }
     }
 
+    
     @Override
     public VariableType path(Statement h) {
         if (h instanceof  AssignVariable){

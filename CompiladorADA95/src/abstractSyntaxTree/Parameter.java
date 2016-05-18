@@ -10,10 +10,10 @@ import visitor.TypeVisitor;
  */
 public class Parameter {
     
-    private VariableIDs vars;
-    private Mode mode;
-    private VariableType type;
-    private Expression exp;
+    public VariableIDs vars;
+    public Mode mode;
+    public VariableType type;
+    public Expression exp;
 
     public Parameter(VariableIDs vars, VariableType type) {
         this.vars = vars;

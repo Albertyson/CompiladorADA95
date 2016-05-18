@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class SemanticFunctionTableNode extends SemanticTableNode {
     
-    
     private VariableType returnType;
     private ArrayList<SemanticVariableTableNode> params;
 
