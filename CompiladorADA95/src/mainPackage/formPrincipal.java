@@ -229,9 +229,9 @@ public class formPrincipal extends javax.swing.JFrame {
                 SemanticAnalysis analysis =new SemanticAnalysis(tablaSimbolos);
                 programa.accept(analysis);
                 if(analysis.hasErrors()){
-                    System.out.println("Errores semánticos");
+                    System.out.println("Errores semanticos");
                 }else{
-                    System.out.println("Pasa el análisis semántico");
+                    System.out.println("Pasa el analisis semantico");
                 }                
             }
             btnShowTree.setEnabled(true);

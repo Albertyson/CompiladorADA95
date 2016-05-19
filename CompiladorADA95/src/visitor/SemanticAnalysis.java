@@ -415,7 +415,9 @@ public class SemanticAnalysis implements TypeVisitor {
             }
         }
         //llamar al accept de los parametros de la funcion
-        h.fp.accept(this);
+        if(h.fp != null){
+            h.fp.accept(this);
+        }        
         return ((SemanticFunctionTableNode)funcion).getReturnType();
     }
 
@@ -771,7 +773,7 @@ public class SemanticAnalysis implements TypeVisitor {
         String currentScope = new String(this.scope + "." + Scope.genNewScope());
         this.scope = new String(currentScope);
 
-        SemanticFunctionTableNode f = new SemanticFunctionTableNode(new TypeNull(), h.id1.id, "" + this.scope);
+        SemanticFunctionTableNode f = new SemanticFunctionTableNode(new TypeNull(), h.id1.id, "" + tmpScope);
         for (int i = 0; i < h.parameterDeclarations.size(); i++) {
             Parameter param = h.parameterDeclarations.getAt(i);
             int varType;
@@ -827,7 +829,7 @@ public class SemanticAnalysis implements TypeVisitor {
         String currentScope = new String(this.scope + "." + Scope.genNewScope());
         this.scope = new String(currentScope);
         
-        SemanticFunctionTableNode f = new SemanticFunctionTableNode(h.returnType, h.id1.id, "" + this.scope);
+        SemanticFunctionTableNode f = new SemanticFunctionTableNode(h.returnType, h.id1.id, "" + tmpScope);
         for (int i = 0; i < h.parameterDeclarations.size(); i++){
             Parameter param = h.parameterDeclarations.getAt(i);
             int varType;
@@ -850,6 +852,7 @@ public class SemanticAnalysis implements TypeVisitor {
                 }
             }
         }        
+        
         if (!semanticTable.addID(f)){
             errorComplain("El identificador: " + h.id1.id + " ya esta siendo utilizado.", 0, 0);
             return new TypeError();

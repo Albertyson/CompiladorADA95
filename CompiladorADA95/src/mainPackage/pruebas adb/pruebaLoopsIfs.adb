@@ -1,20 +1,20 @@
 procedure A_Test is
-    procedure A_Test (A, B, C : Float; R1, R2  : out Float)is begin
+    procedure A_Test1 (A, B, C : Float; R1, R2  : out Float)is begin
         while (A > B) loop
             ABC := 3 + 90 and JK;
             while A > B loop
                 ABC := 3 + 90 and JK;
             end loop;
         end loop;
-    end A_Test;
-    procedure A_Test (A, B, C : Float; R1, R2  : out Float) is begin
+    end A_Test1;
+    procedure A_Test2 (A, B, C : Float; R1, R2  : out Float) is begin
         while (A > B) loop
             ABC := 3 + 90 and JK;
             while A > B loop
                 ABC := 3 + 90 and JK;
             end loop;
         end loop;
-    end A_Test;
+    end A_Test2;
 begin
     ABC := True;
     BCF := False;
