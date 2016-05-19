@@ -1,18 +1,20 @@
 procedure f4 is
 
    procedure MM(Width: Integer) is
+      I:integer;
    begin
       for I in 1..Width loop
          Put(Width);
       end loop;
       New_Line;
    end MM;
-   procedure MM(Height: Integer) is
+   procedure MM2(Height: Integer) is
+      I:integer;
    begin
       for I in 1..Height loop
          Put_Line("X");
       end loop;
-   end MM;
+   end MM2;
 
    function QQ2(Str: String) return Integer is
    begin

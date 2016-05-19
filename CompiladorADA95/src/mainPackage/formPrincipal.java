@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import abstractSyntaxTree.Program;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,6 +19,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import jdk.nashorn.internal.parser.Scanner;
+import visitor.SemanticAnalysis;
+import visitor.SemanticTable;
 
 /**
  *
@@ -220,6 +223,17 @@ public class formPrincipal extends javax.swing.JFrame {
             System.setErr(printStream);
             parser p = new parser(new Lexer2(new FileReader(currentFile.getPath())));
             Object result = p.parse().value;
+            if(result instanceof Program){
+                Program programa = (Program)result;
+                SemanticTable tablaSimbolos = new SemanticTable();
+                SemanticAnalysis analysis =new SemanticAnalysis(tablaSimbolos);
+                programa.accept(analysis);
+                if(analysis.hasErrors()){
+                    System.out.println("Errores semánticos");
+                }else{
+                    System.out.println("Pasa el análisis semántico");
+                }                
+            }
             btnShowTree.setEnabled(true);
         } catch (Exception e) {
             e.printStackTrace();

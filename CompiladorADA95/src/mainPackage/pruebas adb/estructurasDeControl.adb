@@ -3,6 +3,7 @@ procedure EstructurasDeControl is
 	inicioWhile:Integer;
 	limiteWhile : Integer;
 	limiteLoop : Integer;
+	i: Integer;
 begin
 	limiteFor := 10;
 	inicioWhile := 0;

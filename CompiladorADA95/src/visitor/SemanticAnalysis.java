@@ -64,7 +64,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(Identifier h) {
         SemanticTableNode s = semanticTable.findID(h.id, this.scope);
         if(s == null){
-            errorComplain("El identificador " + h.id + " no está definido en este ámbito",0,0);
+            errorComplain("El identificador " + h.id + " no esta definido en este ambito",0,0);
             return new TypeError();
         }
         if(s instanceof SemanticVariableTableNode){
@@ -198,7 +198,7 @@ public class SemanticAnalysis implements TypeVisitor {
         if(typeExp1 instanceof TypeInteger){
             return new TypeInteger();
         }
-        errorComplain("La expresión no es tipo float o integer",0,0);
+        errorComplain("La expresion no es tipo float o integer",0,0);
         return new TypeError();
     }
 
@@ -378,43 +378,43 @@ public class SemanticAnalysis implements TypeVisitor {
         if(typeExp instanceof TypeBoolean){
             return new TypeBoolean();
         }
-        errorComplain("Se esperaba una expresión de tipo Boolean",0,0);
+        errorComplain("Se esperaba una expresion de tipo Boolean",0,0);
         return new TypeError();
     }
 
     
     @Override
     public VariableType path(FunctionCall h) {
-        //buscarla en la tabla de símbolos
+        //buscarla en la tabla de simbolos
         SemanticTableNode funcion = semanticTable.findID(h.id.id, this.scope);
         if(!(funcion instanceof SemanticFunctionTableNode) || funcion==null){
-            errorComplain("La función " + h.id.id + " no está definida en este ámbito",0,0);
+            errorComplain("La funcion " + h.id.id + " no esta definida en este ambito",0,0);
             return new TypeError(); 
         }
         ArrayList<SemanticVariableTableNode> args = ((SemanticFunctionTableNode)funcion).getParams();
         FunctionParameters params = h.fp;
         if(params == null){
-            //si no se envian parámetros y la función los debe recibir
+            //si no se envian parametros y la funcion los debe recibir
             if(args.size()>0){
-                errorComplain("La cantidad de parámetros que debe recibir la función no es la que corresponde", 0,0);
+                errorComplain("La cantidad de parametros que debe recibir la funcion no es la que corresponde", 0,0);
                 return new TypeError();
             }
         }else{
-            //verificar la cantidad de parámetros
+            //verificar la cantidad de parametros
             if(args.size()== params.size()){
                 for (int i = 0; i < args.size(); i++) {
-                    //verificar los tipos de los parámetros
+                    //verificar los tipos de los parametros
                     if(!args.get(i).getType().equals(params.getAt(i).accept(this))){
-                        errorComplain("Los tipos de los parámetros no son los que corresponden", 0,0);
+                        errorComplain("Los tipos de los parametros no son los que corresponden", 0,0);
                         return new TypeError();
                     }
                 }
             }else{
-                errorComplain("La cantidad de parámetros que debe recibir la función no es la que corresponde", 0,0);
+                errorComplain("La cantidad de parametros que debe recibir la funcion no es la que corresponde", 0,0);
                 return new TypeError();
             }
         }
-        //llamar al accept de los parámetros de la función
+        //llamar al accept de los parametros de la funcion
         h.fp.accept(this);
         return ((SemanticFunctionTableNode)funcion).getReturnType();
     }
@@ -422,11 +422,11 @@ public class SemanticAnalysis implements TypeVisitor {
     
     @Override
     public VariableType path(FunctionParameters h) {
-        //verificar los parámetros
+        //verificar los parametros
         for (int i = 0; i < h.size(); i++) {
             VariableType paramType = h.getAt(i).accept(this);
             if(paramType instanceof TypeError){
-                errorComplain("No se esperaba el tipo del parámetro "+i,0,0);
+                errorComplain("No se esperaba el tipo del parametro "+i,0,0);
                 return new TypeError();
             }
         }
@@ -466,10 +466,11 @@ public class SemanticAnalysis implements TypeVisitor {
     
     @Override
     public VariableType path(GetValue h) {
-        if(h.id instanceof Identifier){
+        if(!(h.id instanceof Identifier)){
             errorComplain("Se esperaba un identificador",0,0);
             return new TypeError();
         }
+        
         return new TypeNull();
     }
 
@@ -477,8 +478,8 @@ public class SemanticAnalysis implements TypeVisitor {
     @Override
     public VariableType path(PutValue h) {
         VariableType expType = h.exp.accept(this);
-        if(expType instanceof TypeError){
-            errorComplain("Se experaba una expresión ",0,0);
+        if((expType instanceof TypeError)){
+            errorComplain("Se experaba una expresion ",0,0);
             return new TypeError();
         }
         return new TypeNull();
@@ -489,7 +490,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(While h) {
         VariableType expType = h.exp.accept(this);        
         if(!(expType instanceof TypeBoolean)){
-            errorComplain("Se esperaba una expresión de tipo boolean",0,0);
+            errorComplain("Se esperaba una expresion de tipo boolean",0,0);
             return new TypeError();
         }
         VariableType stmntsType = h.est.accept(this);
@@ -526,12 +527,41 @@ public class SemanticAnalysis implements TypeVisitor {
         }
         //validar que son enteros
         if(!(exp1Type instanceof TypeInteger && exp2Type instanceof TypeInteger)){
-            errorComplain("Ambos límites del rango deben ser de tipo Integer",0,0);
+            errorComplain("Ambos limites del rango deben ser de tipo Integer",0,0);
             return new TypeError();
         }
         //validar que el limite inferior sea menor que el superior
-        int inferior = ((IntegerNumber)h.exp1).number;
-        int superior = ((IntegerNumber)h.exp2).number;
+        int inferior = 0;
+        int superior = 0;
+        boolean infIdentifier = false;
+        boolean supIdentifier = false;
+        //busca exp1
+        if(h.exp1 instanceof Identifier){
+            SemanticTableNode x = semanticTable.findID(((Identifier)h.exp1).id,this.scope);
+            if(((SemanticVariableTableNode)x).getType() instanceof TypeInteger){
+                infIdentifier = true;
+            }
+        }else if(h.exp1 instanceof IntegerNumber){
+            inferior = ((IntegerNumber)h.exp1).number;
+        }else{
+            errorComplain("Se esperaba una expresion de tipo Integer para el limite inferior del Range",0,0);
+            return new TypeError();
+        }
+        //busca exp2
+        if(h.exp2 instanceof Identifier){
+            SemanticTableNode x = semanticTable.findID(((Identifier)h.exp2).id,this.scope);
+            if(((SemanticVariableTableNode)x).getType() instanceof TypeInteger){
+                supIdentifier = true;
+            }
+        }else if(h.exp2 instanceof IntegerNumber){
+            inferior = ((IntegerNumber)h.exp2).number;
+        }else{
+            errorComplain("Se esperaba una expresion de tipo Integer para el limite superior del Range",0,0);
+            return new TypeError();
+        }
+        if(supIdentifier || infIdentifier){
+            return new TypeNull();
+        }
         if(inferior >= superior){
             errorComplain("El limite inferior debe ser menor al superior",0,0);
             return new TypeError();
@@ -564,7 +594,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(Exit h) {
         VariableType expType = h.exp.accept(this);
         if(!(expType instanceof TypeBoolean)){
-            errorComplain("Se esperaba una expresión de tipo Boolean",0,0);
+            errorComplain("Se esperaba una expresion de tipo Boolean",0,0);
             return new TypeError();
         }
         return new TypeNull();
@@ -585,7 +615,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(Return h) {
         VariableType expType = h.exp.accept(this);
         if(!expType.equals(currentFunctionReturnType)){
-            errorComplain("El retorno de la función debe ser del tipo " + currentFunctionReturnType.getClass().getSimpleName(),0,0);
+            errorComplain("El retorno de la funcion debe ser del tipo " + currentFunctionReturnType.getClass().getSimpleName(),0,0);
         }
         return new TypeNull();
     }
@@ -598,7 +628,7 @@ public class SemanticAnalysis implements TypeVisitor {
         }else if(h.range !=null){
             return h.range.accept(this);
         }
-        errorComplain("La condicion when no tiene una expresión o rango",0,0);
+        errorComplain("La condicion when no tiene una expresion o rango",0,0);
         return new TypeError();
     }
 
@@ -617,10 +647,10 @@ public class SemanticAnalysis implements TypeVisitor {
     
     @Override
     public VariableType path(CaseOthers h) {
-        //validar el tipo de la expresión
+        //validar el tipo de la expresion
         VariableType expType = h.exp.accept(this);
         if(expType instanceof TypeError){
-            errorComplain("Expresión erronea para case",0,0);
+            errorComplain("Expresion erronea para case",0,0);
             return new TypeError();
         }
         //validar lista de when
@@ -634,7 +664,7 @@ public class SemanticAnalysis implements TypeVisitor {
             for(int j=0;j< whenOptions.size(); j++){
                 VariableType whenExpType = whenOptions.getAt(j).exp.accept(this);
                 if(!whenExpType.equals(expType)){
-                    errorComplain("El tipo de la expresión en el when no es compatible con el tipo del case",0,0);
+                    errorComplain("El tipo de la expresion en el when no es compatible con el tipo del case",0,0);
                 }
             }
         }
@@ -649,10 +679,10 @@ public class SemanticAnalysis implements TypeVisitor {
     
     @Override
     public VariableType path(CaseNotOthers h) {
-        //validar el tipo de la expresión
+        //validar el tipo de la expresion
         VariableType expType = h.exp.accept(this);
         if(expType instanceof TypeError){
-            errorComplain("Expresión erronea para case",0,0);
+            errorComplain("Expresion erronea para case",0,0);
             return new TypeError();
         }
         //validar lista de when
@@ -666,7 +696,7 @@ public class SemanticAnalysis implements TypeVisitor {
             for(int j=0;j< whenOptions.size(); j++){
                 VariableType whenExpType = whenOptions.getAt(j).exp.accept(this);
                 if(!whenExpType.equals(expType)){
-                    errorComplain("El tipo de la expresión en el when no es compatible con el tipo del case",0,0);
+                    errorComplain("El tipo de la expresion en el when no es compatible con el tipo del case",0,0);
                 }
             }
         }
@@ -692,7 +722,7 @@ public class SemanticAnalysis implements TypeVisitor {
         }
         for(int i = 0; i < h.variables.size(); i++){
             if (!semanticTable.addID(new SemanticVariableTableNode(type, h.variables.getAt(i).id, this.scope, 4, 0))){
-                errorComplain("El identificador: " + h.variables.getAt(i).id + " ya está siendo utilizado.", 0, 0);
+                errorComplain("El identificador: " + h.variables.getAt(i).id + " ya esta siendo utilizado.", 0, 0);
             }
         }
         return new TypeNull();
@@ -732,8 +762,8 @@ public class SemanticAnalysis implements TypeVisitor {
     @Override
     public VariableType path(ProcedureDeclaration h) {
         boolean hasErrors = false;
-        if (h.id1.equals(h.id2)) {
-            errorComplain("No se encontró el final de la función " + h.id1, 0, 0);
+        if (!h.id1.id.equals(h.id2.id)) {
+            errorComplain("No se encontro el final de la funcion " + h.id1.id, 0, 0);
             hasErrors = true;
         }
 
@@ -756,7 +786,7 @@ public class SemanticAnalysis implements TypeVisitor {
             }
             for (int j = 0; j < param.vars.size(); j++) {
                 if (!semanticTable.addID(new SemanticVariableTableNode(param.type, param.vars.getAt(j).id, this.scope, varType, 0))) {
-                    errorComplain("El identificador: " + param.vars.getAt(j).id + " ya está siendo utilizado.", 0, 0);
+                    errorComplain("El identificador: " + param.vars.getAt(j).id + " ya esta siendo utilizado.", 0, 0);
                     hasErrors = true;
                 } else {
                     SemanticVariableTableNode variable = new SemanticVariableTableNode(param.type, param.vars.getAt(j).id, this.scope, varType, 0);
@@ -765,13 +795,16 @@ public class SemanticAnalysis implements TypeVisitor {
             }
         }
         if (!semanticTable.addID(f)) {
-            errorComplain("El identificador: " + h.id1.id + " ya está siendo utilizado.", 0, 0);
+            errorComplain("El identificador: " + h.id1.id + " ya esta siendo utilizado.", 0, 0);
             return new TypeError();
         }
-
-        h.declarations.accept(this);
+        if(h.declarations != null){
+            h.declarations.accept(this);
+        }        
         this.scope = currentScope;
-        h.statements.accept(this);
+        if(h.statements !=null){
+            h.statements.accept(this);
+        }        
         this.scope = tmpScope;
 
         if (hasErrors) {
@@ -785,8 +818,8 @@ public class SemanticAnalysis implements TypeVisitor {
     @Override
     public VariableType path(FunctionDeclaration h) {
         boolean hasErrors = false;
-        if (h.id1.equals(h.id2)){
-            errorComplain("No se encontró el final de la función " + h.id1, 0, 0);
+        if (!h.id1.id.equals(h.id2.id)){
+            errorComplain("No se encontro el final de la funcion " + h.id1.id, 0, 0);
             hasErrors = true;
         }
         
@@ -809,7 +842,7 @@ public class SemanticAnalysis implements TypeVisitor {
             }
             for (int j = 0; j < param.vars.size(); j++){
                 if (!semanticTable.addID(new SemanticVariableTableNode(param.type, param.vars.getAt(j).id, this.scope, varType, 0))) {
-                    errorComplain("El identificador: " + param.vars.getAt(j).id + " ya está siendo utilizado.", 0, 0);
+                    errorComplain("El identificador: " + param.vars.getAt(j).id + " ya esta siendo utilizado.", 0, 0);
                     hasErrors = true;
                 } else {
                     SemanticVariableTableNode variable = new SemanticVariableTableNode(param.type, param.vars.getAt(j).id, this.scope, varType, 0);
@@ -818,10 +851,10 @@ public class SemanticAnalysis implements TypeVisitor {
             }
         }        
         if (!semanticTable.addID(f)){
-            errorComplain("El identificador: " + h.id1.id + " ya está siendo utilizado.", 0, 0);
+            errorComplain("El identificador: " + h.id1.id + " ya esta siendo utilizado.", 0, 0);
             return new TypeError();
         }
-        
+        currentFunctionReturnType = h.returnType;
         h.declarations.accept(this);
         this.scope = currentScope;
         h.statements.accept(this);
@@ -864,19 +897,23 @@ public class SemanticAnalysis implements TypeVisitor {
         String currentScope = Scope.genNewScope();
         this.scope = new String(currentScope);
         if (!semanticTable.addID(new SemanticFunctionTableNode(new TypeNull(), h.id1.id, this.scope))){
-            errorComplain("El identificador: " + h.id1.id + " ya está siendo utilizado.", 0, 0);
+            errorComplain("El identificador: " + h.id1.id + " ya esta siendo utilizado.", 0, 0);
             return new TypeError();
         }
-        
-        for (int i = 0; i < h.declarations.size(); i++){
-            h.declarations.getAt(i).accept(this);
+        if(h.declarations!=null){
+            for (int i = 0; i < h.declarations.size(); i++){
+                h.declarations.getAt(i).accept(this);
+            }
+            this.scope = currentScope;
         }
-        this.scope = currentScope;
         
-        for (int i = 0; i < h.statements.size(); i++){
-            h.statements.getAt(i).accept(this);
+        if(h.statements!=null){
+            for (int i = 0; i < h.statements.size(); i++){
+                h.statements.getAt(i).accept(this);
+            }
+            this.scope = currentScope;
         }
-        this.scope = currentScope;
+        
         
         return new TypeNull();
     }
@@ -884,9 +921,9 @@ public class SemanticAnalysis implements TypeVisitor {
     
     @Override
     public VariableType path(AssignVariableSimple h) {
-        //verificar que el identificador existe en la tabla de símbolos en el scope actual
+        //verificar que el identificador existe en la tabla de simbolos en el scope actual
         if(semanticTable.findID(h.id.id, this.scope) == null){
-            errorComplain("El identificador " + h.id.id + "no está definido en el ámbito actual",0,0);
+            errorComplain("El identificador " + h.id.id + "no esta definido en el ambito actual",0,0);
             return new TypeError();
         }
         //validar que el tipo del id sea el mismo que la expresion
@@ -898,7 +935,7 @@ public class SemanticAnalysis implements TypeVisitor {
         if(expType.getClass().equals(idType.getClass())){
             return expType;
         }else{
-            errorComplain("El tipo del identificador " + h.id.id + " no es compatible con el tipo de la expresión",0,0);
+            errorComplain("El tipo del identificador " + h.id.id + " no es compatible con el tipo de la expresion",0,0);
             return new TypeError();
         }
     }
@@ -914,7 +951,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(IfSimple h) {
         VariableType expType = h.exp.accept(this);
         if(!(expType instanceof TypeBoolean)){
-            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            errorComplain("Se experaba una expresion de tipo Boolean1",0,0);
             return new TypeError();
         }
         //validar statements
@@ -930,7 +967,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(IfWithElse h) {
         VariableType expType = h.exp.accept(this);
         if(!(expType instanceof TypeBoolean)){
-            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            errorComplain("Se experaba una expresion de tipo Boolean2",0,0);
             return new TypeError();
         }
         //validar statements
@@ -947,7 +984,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(ElsIf h) {
         VariableType expType = h.exp.accept(this);
         if(!(expType instanceof TypeBoolean)){
-            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            errorComplain("Se experaba una expresion de tipo Boolean3",0,0);
             return new TypeError();
         }
         //validar statements
@@ -975,7 +1012,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(IfWithElsIF h) {
         VariableType expType = h.expression.accept(this);
         if(!(expType instanceof TypeBoolean)){
-            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            errorComplain("Se experaba una expresion de tipo Boolean4",0,0);
             return new TypeError();
         }
         //validar statements
@@ -995,7 +1032,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(IfWithElsIfAndElse h) {
         VariableType expType = h.expression.accept(this);
         if(!(expType instanceof TypeBoolean)){
-            errorComplain("Se experaba una expresión de tipo Boolean",0,0);
+            errorComplain("Se experaba una expresion de tipo Boolean",0,0);
             return new TypeError();
         }
         //validar statements
