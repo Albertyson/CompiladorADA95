@@ -70,9 +70,7 @@
                       <Component id="txtFileName" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnParse" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnShowTree" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
                       <Component id="btnClean" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -87,7 +85,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtFileName" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnParse" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnShowTree" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnClean" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -113,15 +110,6 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnParseMouseClicked"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnShowTree">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Mostrar &#xc1;rbol"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnShowTreeMouseClicked"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">

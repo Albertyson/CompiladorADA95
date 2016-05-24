@@ -20,7 +20,8 @@ public class SemanticAnalysis implements TypeVisitor {
     
     
     public void errorComplain(String message, int line, int col) {
-        System.err.println(message + "\nError at line: " + (line + 1) + ", col: " + (col + 1) + ".\n\n");
+        // System.err.println(message + "\nError at line: " + (line + 1) + ", col: " + (col + 1) + ".\n\n");
+        System.err.println(message + ".\n\n");
         this.hasErrors = true;
     }
     

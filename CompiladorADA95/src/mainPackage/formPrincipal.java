@@ -47,7 +47,6 @@ public class formPrincipal extends javax.swing.JFrame {
 
         txtFileName = new javax.swing.JTextField();
         btnParse = new javax.swing.JButton();
-        btnShowTree = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtOutput = new javax.swing.JTextArea();
         btnClean = new javax.swing.JButton();
@@ -68,14 +67,6 @@ public class formPrincipal extends javax.swing.JFrame {
         btnParse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnParseMouseClicked(evt);
-            }
-        });
-
-        btnShowTree.setText("Mostrar Árbol");
-        btnShowTree.setEnabled(false);
-        btnShowTree.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnShowTreeMouseClicked(evt);
             }
         });
 
@@ -136,9 +127,7 @@ public class formPrincipal extends javax.swing.JFrame {
                         .addComponent(txtFileName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnParse)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnShowTree)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(117, 117, 117)
                         .addComponent(btnClean)))
                 .addContainerGap())
         );
@@ -149,7 +138,6 @@ public class formPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnParse)
-                    .addComponent(btnShowTree)
                     .addComponent(btnClean))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,12 +217,12 @@ public class formPrincipal extends javax.swing.JFrame {
                 SemanticAnalysis analysis =new SemanticAnalysis(tablaSimbolos);
                 programa.accept(analysis);
                 if(analysis.hasErrors()){
-                    System.out.println("Errores semanticos");
+                    System.out.println("Errores Semanticos, se descontrola: aiuda");
                 }else{
-                    System.out.println("Pasa el analisis semantico");
+                    System.out.println("Listo para generar codigo intermedio");
                 }                
             }
-            btnShowTree.setEnabled(true);
+//            btnShowTree.setEnabled(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,16 +232,6 @@ public class formPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtOutput.setText("");
     }//GEN-LAST:event_btnCleanMouseClicked
-
-    private void btnShowTreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowTreeMouseClicked
-        // TODO add your handling code here:
-        try{
-            File htmlFile = new File("src/mainPackage/ast.xml");
-            Desktop.getDesktop().browse(htmlFile.toURI());
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }        
-    }//GEN-LAST:event_btnShowTreeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -299,7 +277,6 @@ public class formPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;
     private javax.swing.JButton btnParse;
-    private javax.swing.JButton btnShowTree;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
