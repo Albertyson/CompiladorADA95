@@ -6,9 +6,12 @@ import visitor.TypeVisitor;
 public class IntegerNumber extends LiteralExpression{
     
     public Integer number;
+    public int line, colunm;
 
-    public IntegerNumber(Integer number) {
+    public IntegerNumber(Integer number, int l, int c) {
         this.number = number;
+        this.line = l;
+        this.colunm = c;
     }
     
     

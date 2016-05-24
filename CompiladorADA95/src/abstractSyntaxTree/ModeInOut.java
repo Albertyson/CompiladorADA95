@@ -3,10 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author JosuéNoel
- */
+
 public class ModeInOut extends Mode {
 
     public ModeInOut() {}

@@ -4,10 +4,7 @@ import AST_Path.ParentPath;
 import java.util.ArrayList;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author Albertyson
- */
+
 public class ParameterDeclarations {
 
     private ArrayList<Parameter> parameters;

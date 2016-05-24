@@ -11,9 +11,16 @@ import visitor.TypeVisitor;
 public class FloatNumber extends LiteralExpression {
     
     public Double number;
+    public int line, colunm;
 
     public FloatNumber(Double number) {
         this.number = number;
+    }
+    
+    public FloatNumber(Double number, int l, int c) {
+        this.number = number;
+        this.line = l;
+        this.colunm = c;
     }
     
     @Override

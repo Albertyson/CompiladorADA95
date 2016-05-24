@@ -11,9 +11,12 @@ import visitor.TypeVisitor;
 public class GetValue extends Statement {
     
     public Identifier id;
+    public int line, colunm;
 
-    public GetValue(Identifier id) {
+    public GetValue(Identifier id, int l, int c) {
         this.id = id;
+        this.line = l;
+        this.colunm = c;
     }
     
     @Override

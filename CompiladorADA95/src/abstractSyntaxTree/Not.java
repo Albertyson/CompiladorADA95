@@ -3,16 +3,16 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author JosuéNoel
- */
+
 public class Not extends LogicalExpression {
     
     public Expression exp;
+    public int line, colunm;
 
-    public Not(Expression exp) {
+    public Not(Expression exp, int l, int c) {
         this.exp = exp;
+        this.line = l;
+        this.colunm = c;
     }
     
     @Override

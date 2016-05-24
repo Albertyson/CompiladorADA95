@@ -3,37 +3,43 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author Albertyson
- */
+
 public class WhenElement {
-    private WhenOptions whenOptions;
-    private Statements statements;
+    public WhenOptions whenOptions;
+    public Statements statements;
+    public int line, colunm;
 
-    public WhenElement() {
+    public WhenElement(int l, int c) {
+        this.line = l;
+        this.colunm = c;
     }
-
+    
+    public WhenElement(WhenOptions whenOptions, Statements statements, int l, int c) {
+        this.whenOptions = whenOptions;
+        this.statements = statements;
+        this.line = l;
+        this.colunm = c;
+    }
+    
+    public WhenElement(WhenOptions whenOptions, int l, int c) {
+        this.whenOptions = whenOptions;
+        this.line = l;
+        this.colunm = c;
+    }
+    
+    // Caso que usa OTHERS
+    public WhenElement(Statements statements, int l, int c) {
+        this.statements = statements;
+        this.line = l;
+        this.colunm = c;
+    }
+    
     public WhenOptions getWhenOptions() {
         return whenOptions;
     }
 
     public Statements getStatements() {
         return statements;
-    }
-    
-    public WhenElement(WhenOptions whenOptions, Statements statements) {
-        this.whenOptions = whenOptions;
-        this.statements = statements;
-    }
-    
-    public WhenElement(WhenOptions whenOptions) {
-        this.whenOptions = whenOptions;
-    }
-    
-    // Caso que usa OTHERS
-    public WhenElement(Statements statements) {
-        this.statements = statements;
     }
     
     

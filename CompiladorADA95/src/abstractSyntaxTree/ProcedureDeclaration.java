@@ -4,10 +4,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author Albertyson
- */
+
 public class ProcedureDeclaration extends Declaration {
     
     public Identifier id1;
@@ -15,34 +12,43 @@ public class ProcedureDeclaration extends Declaration {
     public DeclarationPart declarations;
     public Statements statements;
     public Identifier id2;
+    public int line, colunm;
 
 
-    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, DeclarationPart declarations, Statements statements, Identifier id2) {
+    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, DeclarationPart declarations, Statements statements, Identifier id2, int l, int c) {
         this.id1 = id1;
         this.parameterDeclarations = parameterDeclarations;
         this.declarations = declarations;
         this.statements = statements;
         this.id2 = id2;
+        this.line = l;
+        this.colunm = c;
     }
 
-    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, Statements statements, Identifier id2) {
+    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, Statements statements, Identifier id2, int l, int c) {
         this.id1 = id1;
         this.parameterDeclarations = parameterDeclarations;
         this.statements = statements;
         this.id2 = id2;
+        this.line = l;
+        this.colunm = c;
     }
 
-    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, DeclarationPart declarations, Identifier id2) {
+    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, DeclarationPart declarations, Identifier id2, int l, int c) {
         this.id1 = id1;
         this.parameterDeclarations = parameterDeclarations;
         this.declarations = declarations;
         this.id2 = id2;
+        this.line = l;
+        this.colunm = c;
     }
 
-    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, Identifier id2) {
+    public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, Identifier id2, int l, int c) {
         this.id1 = id1;
         this.parameterDeclarations = parameterDeclarations;
         this.id2 = id2;
+        this.line = l;
+        this.colunm = c;
     }
     
     

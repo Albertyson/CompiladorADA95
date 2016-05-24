@@ -11,10 +11,18 @@ public class AssignVariableSimple extends AssignVariable {
     
     public Identifier id;
     public Expression exp;
+    public int line, colunm;
     
     public AssignVariableSimple(Identifier id, Expression exp) {
         this.id = id;
         this.exp = exp;
+    }
+    
+    public AssignVariableSimple(Identifier id, Expression exp, int l, int c) {
+        this.id = id;
+        this.exp = exp;
+        this.line = l;
+        this.colunm = c;
     }
 
     @Override
