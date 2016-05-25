@@ -2,12 +2,15 @@ package visitor;
 
 import abstractSyntaxTree.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 
 public class SemanticAnalysis implements TypeVisitor {
     
     private String scope;
     private VariableType currentFunctionReturnType;
+    private Stack functionReturnStack = new Stack();
+    private Stack insideLoop = new Stack();
     private SemanticTable semanticTable;
     private int currentDirection;
     private boolean hasErrors;
@@ -445,25 +448,25 @@ public class SemanticAnalysis implements TypeVisitor {
     
     @Override
     public VariableType path(TypeInteger h) {
-        throw new UnsupportedOperationException("Not supported yet."); // NUNCA SE MANDA A LLAMAR
+        return new TypeNull();
     }
 
     
     @Override
     public VariableType path(TypeBoolean h) {
-        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
+        return new TypeNull();
     }
 
     
     @Override
     public VariableType path(TypeFloat h) {
-        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
+        return new TypeNull();
     }
 
     
     @Override
     public VariableType path(TypeString h) {
-        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
+        return new TypeNull();
     }
 
     
@@ -496,10 +499,12 @@ public class SemanticAnalysis implements TypeVisitor {
             errorComplain("Se esperaba una expresion de tipo boolean",0,0);
             return new TypeError();
         }
+        insideLoop.push(true);
         VariableType stmntsType = h.est.accept(this);
         if(stmntsType instanceof TypeError){
             return new TypeError();
         }
+        insideLoop.pop();
         return new TypeNull();
     }
 
@@ -585,16 +590,22 @@ public class SemanticAnalysis implements TypeVisitor {
             errorComplain("Error en el rango",0,0);
             return new TypeError();
         }
+        insideLoop.push(true);
         VariableType stmntsType = h.statements.accept(this);
         if(stmntsType instanceof TypeError){
             return new TypeError();
         }
+        insideLoop.pop();
         return new TypeNull();
     }
 
     
     @Override
     public VariableType path(Exit h) {
+        if(insideLoop.empty()){
+            errorComplain("Uso inadecuado de Exit",0,0);
+            return new TypeError();
+        }
         VariableType expType = h.exp.accept(this);
         if(!(expType instanceof TypeBoolean)){
             errorComplain("Se esperaba una expresion de tipo Boolean",0,0);
@@ -606,20 +617,29 @@ public class SemanticAnalysis implements TypeVisitor {
     
     @Override
     public VariableType path(Loop h) {
+        insideLoop.push(true);
         VariableType stmntsType = h.s.accept(this);
         if(stmntsType instanceof TypeError){
             return new TypeError();
         }
+        insideLoop.pop();
         return new TypeNull();
     }
 
     
     @Override
     public VariableType path(Return h) {
+        //verificar si estoy dentro de una funcion
+        if(functionReturnStack.empty()){
+            errorComplain("Solo se puede usar return dentro del cuerpo de una funcion", 0, 0);
+            return new TypeError();
+        }
         VariableType expType = h.exp.accept(this);
         if(!expType.equals(currentFunctionReturnType)){
             errorComplain("El retorno de la funcion debe ser del tipo " + currentFunctionReturnType.getClass().getSimpleName(),0,0);
         }
+        //se asigna null porque el retorno ya fue usado
+//        currentFunctionReturnType = null;
         return new TypeNull();
     }
 
@@ -807,7 +827,7 @@ public class SemanticAnalysis implements TypeVisitor {
         this.scope = currentScope;
         if(h.statements !=null){
             h.statements.accept(this);
-        }        
+        }
         this.scope = tmpScope;
 
         if (hasErrors) {
@@ -859,11 +879,24 @@ public class SemanticAnalysis implements TypeVisitor {
             return new TypeError();
         }
         currentFunctionReturnType = h.returnType;
-        h.declarations.accept(this);
+        functionReturnStack.push(currentFunctionReturnType);
+        if(h.declarations != null){
+            h.declarations.accept(this);
+        }        
         this.scope = currentScope;
         h.statements.accept(this);
+        boolean hasReturn = false;
+        for (int i = 0; i < h.statements.size(); i++) {
+            if(h.statements.getAt(i) instanceof Return){
+                hasReturn = true;
+            }
+        }
+        functionReturnStack.pop();
+        if(!hasReturn){
+            errorComplain("La funcin no tiene return",0,0);
+            return new TypeError();
+        }
         this.scope = tmpScope;
-        
         if (hasErrors){
             return new TypeError();
         } else {
@@ -910,14 +943,12 @@ public class SemanticAnalysis implements TypeVisitor {
             }
             this.scope = currentScope;
         }
-        
         if(h.statements!=null){
             for (int i = 0; i < h.statements.size(); i++){
                 h.statements.getAt(i).accept(this);
             }
             this.scope = currentScope;
         }
-        
         
         return new TypeNull();
     }
@@ -927,7 +958,7 @@ public class SemanticAnalysis implements TypeVisitor {
     public VariableType path(AssignVariableSimple h) {
         //verificar que el identificador existe en la tabla de simbolos en el scope actual
         if(semanticTable.findID(h.id.id, this.scope) == null){
-            errorComplain("El identificador " + h.id.id + "no esta definido en el ambito actual",0,0);
+            errorComplain("El identificador " + h.id.id + " no esta definido en el ambito actual",0,0);
             return new TypeError();
         }
         //validar que el tipo del id sea el mismo que la expresion

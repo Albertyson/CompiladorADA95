@@ -25,5 +25,10 @@ begin
 		exit when (inicioWhile < limiteLoop) ;
 		put("dentro de loop");
 		inicioWhile:= inicioWhile + 3;
+		loop
+			exit when true;
+		end loop;
+		exit when true;
 	end loop;
+
 end EstructurasDeControl ;

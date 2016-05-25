@@ -1828,6 +1828,7 @@ class CUP$parser$actions {
 											Identifier identifier1 = new Identifier(id1);
 											Identifier identifier2 = new Identifier(id2);
 											RESULT = new Program(identifier1,dp,s,identifier2);
+											
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("program",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2154,13 +2155,13 @@ parser.report_error("Programa principal: Se esperaba ID","\t");
 											Identifier identifier1 = new Identifier(id1);
 											Identifier identifier2 = new Identifier(id2);
 											RESULT = new Program(identifier1,dp,identifier2);
-											try {
-												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
-												xmlConverter.toXML();
-												System.out.println("Se ha generado el arbol");
-											} catch(Exception e){
-												System.out.println(e.getMessage());
-											}
+											// try {
+											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
+											// 	xmlConverter.toXML();
+											// 	System.out.println("Se ha generado el arbol");
+											// } catch(Exception e){
+											// 	System.out.println(e.getMessage());
+											// }
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("program",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2286,13 +2287,13 @@ parser.report_error("Programa principal: Se esperaba ID","\t");
 											Identifier identifier1 = new Identifier(id1);
 											Identifier identifier2 = new Identifier(id2);
 											RESULT = new Program(identifier1,s,identifier2);
-											try {
-												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
-												xmlConverter.toXML();
-												System.out.println("Se ha generado el arbol");
-											} catch(Exception e){
-												System.out.println(e.getMessage());
-											}
+											// try {
+											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
+											// 	xmlConverter.toXML();
+											// 	System.out.println("Se ha generado el arbol");
+											// } catch(Exception e){
+											// 	System.out.println(e.getMessage());
+											// }
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("program",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2429,13 +2430,13 @@ parser.report_error("Programa principal sin declaraciones: Se esperaba ID","\t")
 											Identifier identifier1 = new Identifier(id1);
 											Identifier identifier2 = new Identifier(id2);
 											RESULT = new Program(identifier1,identifier2);
-											try {
-												ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
-												xmlConverter.toXML();
-												System.out.println("Se ha generado el arbol");
-											} catch(Exception e){
-												System.out.println(e.getMessage());
-											}
+											// try {
+											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
+											// 	xmlConverter.toXML();
+											// 	System.out.println("Se ha generado el arbol");
+											// } catch(Exception e){
+											// 	System.out.println(e.getMessage());
+											// }
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("program",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

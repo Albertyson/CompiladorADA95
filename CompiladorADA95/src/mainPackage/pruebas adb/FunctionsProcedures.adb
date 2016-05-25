@@ -11,6 +11,13 @@ procedure FunctionsProcedures is
 		begin
 			put("hola");
 		end innerProc;
+		Function innerFunc() return float is
+		begin
+			if(true) then
+				return 3.0;
+			end if;
+			return 0.0;
+		End innerFunc;
 	begin
 		put("la cadena es: ");
 		put(s);
