@@ -16,7 +16,7 @@ procedure FunctionsProcedures is
 			if(true) then
 				return 3.0;
 			end if;
-			return 0.0;
+			return 0;
 		End innerFunc;
 	begin
 		put("la cadena es: ");
@@ -28,4 +28,5 @@ begin
 	calculo := calcular(2);
 	imprimirCadena("Hey");
 	put(calculo);
+	x:=1;
 end FunctionsProcedures;

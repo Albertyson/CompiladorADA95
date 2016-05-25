@@ -12,7 +12,7 @@ public class ProcedureDeclaration extends Declaration {
     public DeclarationPart declarations;
     public Statements statements;
     public Identifier id2;
-    public int line, colunm;
+    public int line, column;
 
 
     public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, DeclarationPart declarations, Statements statements, Identifier id2, int l, int c) {
@@ -22,7 +22,7 @@ public class ProcedureDeclaration extends Declaration {
         this.statements = statements;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, Statements statements, Identifier id2, int l, int c) {
@@ -31,7 +31,7 @@ public class ProcedureDeclaration extends Declaration {
         this.statements = statements;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, DeclarationPart declarations, Identifier id2, int l, int c) {
@@ -40,7 +40,7 @@ public class ProcedureDeclaration extends Declaration {
         this.declarations = declarations;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public ProcedureDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, Identifier id2, int l, int c) {
@@ -48,7 +48,7 @@ public class ProcedureDeclaration extends Declaration {
         this.parameterDeclarations = parameterDeclarations;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     

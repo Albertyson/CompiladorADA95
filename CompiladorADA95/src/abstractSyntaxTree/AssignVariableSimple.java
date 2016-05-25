@@ -11,7 +11,7 @@ public class AssignVariableSimple extends AssignVariable {
     
     public Identifier id;
     public Expression exp;
-    public int line, colunm;
+    public int line, column;
     
     public AssignVariableSimple(Identifier id, Expression exp) {
         this.id = id;
@@ -22,7 +22,7 @@ public class AssignVariableSimple extends AssignVariable {
         this.id = id;
         this.exp = exp;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     @Override

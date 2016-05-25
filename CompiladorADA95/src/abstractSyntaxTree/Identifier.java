@@ -11,12 +11,12 @@ import visitor.TypeVisitor;
 public class Identifier extends Expression {
     
     public String id;
-    public int line, colunm;
+    public int line, column;
     
     public Identifier(String id, int l, int c) {
         this.id = id;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     public boolean equals(Identifier id2){

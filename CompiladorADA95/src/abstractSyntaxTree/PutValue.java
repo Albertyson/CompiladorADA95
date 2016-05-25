@@ -7,12 +7,12 @@ import visitor.TypeVisitor;
 public class PutValue extends Statement {
     
     public Expression exp;
-    public int line, colunm;
+    public int line, column;
 
     public PutValue(Expression exp, int l, int c) {
         this.exp = exp;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     

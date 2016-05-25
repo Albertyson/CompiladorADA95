@@ -11,7 +11,7 @@ public class AssignVariableWithDeclaration extends AssignVariable {
     
     public VariableDeclaration vd;
     public Expression exp;
-    public int line, colunm;
+    public int line, column;
     
 
     public AssignVariableWithDeclaration(VariableDeclaration vd, Expression exp) {
@@ -23,7 +23,7 @@ public class AssignVariableWithDeclaration extends AssignVariable {
         this.vd = vd;
         this.exp = exp;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }  
 
     @Override

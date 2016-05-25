@@ -9,7 +9,7 @@ public class Program {
     public DeclarationPart declarations;
     public Statements statements;
     public Identifier id2;
-    public int line, colunm;
+    public int line, column;
 
     
     public Program(Identifier id1, DeclarationPart declarations, Statements statements, Identifier id2, int l, int c) {
@@ -18,14 +18,14 @@ public class Program {
         this.statements = statements;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     public Program(Identifier id1, Identifier id2, int l, int c) {
         this.id1 = id1;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     public Program(Identifier id1, DeclarationPart declarations, Identifier id2, int l, int c) {
@@ -33,7 +33,7 @@ public class Program {
         this.declarations = declarations;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public Program(Identifier id1, Statements statements, Identifier id2, int l, int c) {
@@ -41,7 +41,7 @@ public class Program {
         this.statements = statements;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     

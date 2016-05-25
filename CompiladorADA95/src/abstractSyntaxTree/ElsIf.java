@@ -11,7 +11,7 @@ public class ElsIf {
     
     public Expression exp;
     public Statements stms;
-    public int line, colunm;
+    public int line, column;
 
     public ElsIf(Expression exp, Statements stms) {
         this.exp = exp;
@@ -22,7 +22,7 @@ public class ElsIf {
         this.exp = exp;
         this.stms = stms;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     public void accept(ParentPath PP) {

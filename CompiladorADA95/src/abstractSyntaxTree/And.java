@@ -11,7 +11,7 @@ import visitor.TypeVisitor;
 public class And extends LogicalExpression {
     
     public Expression exp1, exp2;
-    public int line, colunm;
+    public int line, column;
     
     public And(Expression exp1, Expression exp2) {
         this.exp1 = exp1;
@@ -22,7 +22,7 @@ public class And extends LogicalExpression {
         this.exp1 = exp1;
         this.exp2 = exp2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
  
     @Override

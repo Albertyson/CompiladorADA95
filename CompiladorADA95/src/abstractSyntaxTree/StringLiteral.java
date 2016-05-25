@@ -7,12 +7,12 @@ import visitor.TypeVisitor;
 public class StringLiteral extends LiteralExpression {
     
     public String string;
-    public int line, colunm;
+    public int line, column;
 
     public StringLiteral(String string, int l, int c) {
         this.string = string;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     

@@ -10,7 +10,7 @@ import visitor.TypeVisitor;
 public class Equal extends BooleanExpression {
     
     public Expression exp1, exp2;
-    public int line, colunm;
+    public int line, column;
 
     public Equal(Expression exp1, Expression exp2) {
         this.exp1 = exp1;
@@ -21,7 +21,7 @@ public class Equal extends BooleanExpression {
         this.exp1 = exp1;
         this.exp2 = exp2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     @Override

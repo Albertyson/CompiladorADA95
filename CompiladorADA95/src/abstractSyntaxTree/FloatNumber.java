@@ -11,7 +11,7 @@ import visitor.TypeVisitor;
 public class FloatNumber extends LiteralExpression {
     
     public Double number;
-    public int line, colunm;
+    public int line, column;
 
     public FloatNumber(Double number) {
         this.number = number;
@@ -20,7 +20,7 @@ public class FloatNumber extends LiteralExpression {
     public FloatNumber(Double number, int l, int c) {
         this.number = number;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     @Override

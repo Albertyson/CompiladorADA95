@@ -7,7 +7,7 @@ import visitor.TypeVisitor;
 public class Exit extends Statement {
     
     public Expression exp;
-    public int line, colunm;
+    public int line, column;
 
     public Exit(Expression exp) {
         this.exp = exp;
@@ -16,7 +16,7 @@ public class Exit extends Statement {
     public Exit(Expression exp, int l, int c) {
         this.exp = exp;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     @Override

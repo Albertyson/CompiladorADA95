@@ -7,18 +7,18 @@ import visitor.TypeVisitor;
 public class Loop extends Statement {
     
     public Statements s;
-    public int line, colunm;
+    public int line, column;
 
     public Loop(int l, int c) {
         this.s = null;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     public Loop(Statements s, int l, int c) {
         this.s = s;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     @Override

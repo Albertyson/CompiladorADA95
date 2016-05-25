@@ -9,7 +9,7 @@ public class IfWithElsIfAndElse extends If {
     public Statements statements;
     public ElsIfList elsIfList;
     public Statements elseStatements;
-    public int line, colunm;
+    public int line, column;
 
     public IfWithElsIfAndElse(Expression expression, Statements statements, ElsIfList elsIfList, Statements elseStatements, int l, int c) {
         this.expression = expression;
@@ -17,7 +17,7 @@ public class IfWithElsIfAndElse extends If {
         this.elsIfList = elsIfList;
         this.elseStatements = elseStatements;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     @Override

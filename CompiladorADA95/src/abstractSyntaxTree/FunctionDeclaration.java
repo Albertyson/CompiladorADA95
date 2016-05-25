@@ -15,7 +15,7 @@ public class FunctionDeclaration extends Declaration {
     public DeclarationPart declarations;
     public Statements statements;
     public Identifier id2;
-    public int line, colunm;
+    public int line, column;
 
 
     public FunctionDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, VariableType returnType, DeclarationPart declarations, Statements statements, Identifier id2, int l, int c) {
@@ -26,7 +26,7 @@ public class FunctionDeclaration extends Declaration {
         this.statements = statements;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public FunctionDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, VariableType returnType, Statements statements, Identifier id2, int l, int c) {
@@ -36,7 +36,7 @@ public class FunctionDeclaration extends Declaration {
         this.statements = statements;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public FunctionDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, VariableType returnType, DeclarationPart declarations, Identifier id2, int l, int c) {
@@ -46,7 +46,7 @@ public class FunctionDeclaration extends Declaration {
         this.declarations = declarations;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public FunctionDeclaration(Identifier id1, ParameterDeclarations parameterDeclarations, VariableType returnType, Identifier id2, int l, int c) {
@@ -55,7 +55,7 @@ public class FunctionDeclaration extends Declaration {
         this.returnType = returnType;
         this.id2 = id2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
         

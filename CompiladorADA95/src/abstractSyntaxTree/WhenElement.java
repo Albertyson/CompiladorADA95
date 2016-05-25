@@ -7,31 +7,31 @@ import visitor.TypeVisitor;
 public class WhenElement {
     public WhenOptions whenOptions;
     public Statements statements;
-    public int line, colunm;
+    public int line, column;
 
     public WhenElement(int l, int c) {
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     public WhenElement(WhenOptions whenOptions, Statements statements, int l, int c) {
         this.whenOptions = whenOptions;
         this.statements = statements;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     public WhenElement(WhenOptions whenOptions, int l, int c) {
         this.whenOptions = whenOptions;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     // Caso que usa OTHERS
     public WhenElement(Statements statements, int l, int c) {
         this.statements = statements;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     public WhenOptions getWhenOptions() {

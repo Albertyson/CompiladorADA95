@@ -7,18 +7,18 @@ public class WhenOption {
     
     public Expression exp;
     public Range range;
-    public int line, colunm;
+    public int line, column;
 
     public WhenOption(Expression exp, int l, int c) {
         this.exp = exp;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public WhenOption(Range range, int l, int c) {
         this.range = range;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
 

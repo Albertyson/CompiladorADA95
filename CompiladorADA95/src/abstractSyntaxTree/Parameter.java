@@ -11,13 +11,13 @@ public class Parameter {
     public Mode mode;
     public VariableType type;
     public Expression exp;
-    public int line, colunm;
+    public int line, column;
 
     public Parameter(VariableIDs vars, VariableType type, int l, int c) {
         this.vars = vars;
         this.type = type;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public Parameter(VariableIDs vars, Mode mode, VariableType type, int l, int c) {
@@ -25,7 +25,7 @@ public class Parameter {
         this.mode = mode;
         this.type = type;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public Parameter(VariableIDs vars, VariableType type, Expression exp, int l, int c) {
@@ -33,7 +33,7 @@ public class Parameter {
         this.type = type;
         this.exp = exp;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     public Parameter(VariableIDs vars, Mode mode, VariableType type, Expression exp, int l, int c) {
@@ -42,7 +42,7 @@ public class Parameter {
         this.type = type;
         this.exp = exp;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     public void accept(ParentPath PP) {

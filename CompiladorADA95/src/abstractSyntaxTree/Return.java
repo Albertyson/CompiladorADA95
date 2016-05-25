@@ -7,12 +7,12 @@ import visitor.TypeVisitor;
 public class Return extends Statement {
 
     public Expression exp;
-    public int line, colunm;
+    public int line, column;
 
     public Return(Expression exp, int l, int c) {
         this.exp = exp;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
 
     

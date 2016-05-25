@@ -7,13 +7,13 @@ import visitor.TypeVisitor;
 public class Or extends LogicalExpression {
     
     public Expression exp1, exp2;
-    public int line, colunm;
+    public int line, column;
 
     public Or(Expression exp1, Expression exp2, int l, int c) {
         this.exp1 = exp1;
         this.exp2 = exp2;
         this.line = l;
-        this.colunm = c;
+        this.column = c;
     }
     
     @Override
