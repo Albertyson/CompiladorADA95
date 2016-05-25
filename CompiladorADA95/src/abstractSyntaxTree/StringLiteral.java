@@ -3,17 +3,16 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author JosuéNoel
- */
+
 public class StringLiteral extends LiteralExpression {
     
     public String string;
+    public int line, colunm;
 
-
-    public StringLiteral(String string) {
+    public StringLiteral(String string, int l, int c) {
         this.string = string;
+        this.line = l;
+        this.colunm = c;
     }
     
     

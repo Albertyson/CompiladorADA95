@@ -3,19 +3,21 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author JosuéNoel
- */
 
 public class Exit extends Statement {
     
     public Expression exp;
+    public int line, colunm;
 
     public Exit(Expression exp) {
         this.exp = exp;
     }
-
+    
+    public Exit(Expression exp, int l, int c) {
+        this.exp = exp;
+        this.line = l;
+        this.colunm = c;
+    }
     
     @Override
     public void accept(ParentPath PP) {

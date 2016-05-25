@@ -12,11 +12,19 @@ public class CaseNotOthers extends Case {
     
     public Expression exp;
     public WhenList whenList;
+    public int line, colunm;
 
     
     public CaseNotOthers(Expression exp, WhenList wl) {
         this.exp = exp;
         this.whenList = wl;
+    }
+    
+    public CaseNotOthers(Expression exp, WhenList wl, int l, int c) {
+        this.exp = exp;
+        this.whenList = wl;
+        this.line = l;
+        this.colunm = c;
     }
     
     @Override

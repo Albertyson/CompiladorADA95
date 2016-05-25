@@ -4,10 +4,7 @@ import AST_Path.ParentPath;
 import java.util.ArrayList;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author JosuéNoel
- */
+
 public class WhenOptions {
     
     private ArrayList<WhenOption> options;

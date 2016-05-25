@@ -1825,9 +1825,9 @@ class CUP$parser$actions {
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		 
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new Program(identifier1,dp,s,identifier2);
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new Program(identifier1, dp, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("program",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2152,9 +2152,9 @@ parser.report_error("Programa principal: Se esperaba ID","\t");
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		 
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new Program(identifier1,dp,identifier2);
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new Program(identifier1, dp, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											// try {
 											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
 											// 	xmlConverter.toXML();
@@ -2284,9 +2284,9 @@ parser.report_error("Programa principal: Se esperaba ID","\t");
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		 
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new Program(identifier1,s,identifier2);
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new Program(identifier1, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											// try {
 											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
 											// 	xmlConverter.toXML();
@@ -2427,9 +2427,9 @@ parser.report_error("Programa principal sin declaraciones: Se esperaba ID","\t")
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		 
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new Program(identifier1,identifier2);
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new Program(identifier1, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											// try {
 											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
 											// 	xmlConverter.toXML();
@@ -2684,9 +2684,9 @@ parser.report_error("Programa principal sin declaraciones: Se esperaba ID","\t")
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new FunctionDeclaration(identifier1,pds,vtype,dp,s,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new FunctionDeclaration(identifier1, pds, vtype, dp, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_declaration",30, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-13)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -3150,9 +3150,9 @@ parser.report_error("Declaracion de funcion: Se esperaba ID","\t");
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new FunctionDeclaration(identifier1,pds,vtype,dp,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new FunctionDeclaration(identifier1, pds, vtype, dp, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_declaration",30, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-12)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -3293,9 +3293,9 @@ parser.report_error("Declaracion de funcion: Se esperaba ID","\t");
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new FunctionDeclaration(identifier1,pds,vtype,s,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new FunctionDeclaration(identifier1, pds, vtype, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_declaration",30, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-12)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -3600,9 +3600,9 @@ parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba ID","
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new FunctionDeclaration(identifier1,pds,vtype,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new FunctionDeclaration(identifier1, pds, vtype, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_declaration",30, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-11)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -3769,9 +3769,9 @@ parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba ID","
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new ProcedureDeclaration(identifier1,pds,dp,s,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new ProcedureDeclaration(identifier1, pds, dp, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("procedure_declaration",31, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-11)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -4146,9 +4146,9 @@ parser.report_error("Declaracion de Procedimiento: Se esperaba ID","\t");
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new ProcedureDeclaration(identifier1,pds,dp,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new ProcedureDeclaration(identifier1, pds, dp, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("procedure_declaration",31, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -4312,9 +4312,9 @@ parser.report_error("Declaracion de Procedimiento: Se esperaba ID","\t");
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new ProcedureDeclaration(identifier1,pds,s,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new ProcedureDeclaration(identifier1, pds, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("procedure_declaration",31, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -4545,9 +4545,9 @@ parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba
 		int id2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String id2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new ProcedureDeclaration(identifier1,pds,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new ProcedureDeclaration(identifier1, pds, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("procedure_declaration",31, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -4728,7 +4728,7 @@ parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Parameter(vids,m,vtype,e); 
+		 RESULT = new Parameter(vids, m, vtype, e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("parameter",33, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -4831,7 +4831,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int vtypeleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vtyperight = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		VariableType vtype = (VariableType)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Parameter(vids,m,vtype); 
+		 RESULT = new Parameter(vids, m, vtype, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("parameter",33, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -4858,7 +4858,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int vdleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vdright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		VariableDeclaration vd = (VariableDeclaration)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Parameter(vd.getVariables(),vd.getType()); 
+		 RESULT = new Parameter(vd.getVariables(), vd.getType(), parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("parameter",33, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -4873,7 +4873,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Parameter(vd.getVariables(),vd.getType(),e); 
+		 RESULT = new Parameter(vd.getVariables(), vd.getType(), e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("parameter",33, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -4924,7 +4924,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Identifier(id); 
+		 RESULT = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expression",1, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -4996,7 +4996,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int numleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int numright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Integer num = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new IntegerNumber(num); 
+		 RESULT = new IntegerNumber(num, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("literal_expression",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5008,7 +5008,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int numleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int numright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Double num = (Double)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new FloatNumber(num); 
+		 RESULT = new FloatNumber(num, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("literal_expression",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5038,7 +5038,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int cadleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int cadright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String cad = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new StringLiteral(cad); 
+		 RESULT = new StringLiteral(cad, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("literal_expression",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5053,7 +5053,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Add(e1,e2); 
+		 RESULT = new Add(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmetic_expression",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5068,7 +5068,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new  Minus(e1,e2); 
+		 RESULT = new  Minus(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmetic_expression",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5083,7 +5083,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Division(e1,e2); 
+		 RESULT = new Division(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmetic_expression",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5098,7 +5098,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Multiplication(e1,e2); 
+		 RESULT = new Multiplication(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmetic_expression",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5113,7 +5113,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Pow(e1,e2); 
+		 RESULT = new Pow(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmetic_expression",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5125,7 +5125,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Negative(e); 
+		 RESULT = new Negative(e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmetic_expression",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5140,7 +5140,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Module(e1,e2); 
+		 RESULT = new Module(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmetic_expression",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5155,7 +5155,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Equal(e1,e2); 
+		 RESULT = new Equal(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5170,7 +5170,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new NotEqual(e1,e2); 
+		 RESULT = new NotEqual(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5185,7 +5185,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Greater(e1,e2); 
+		 RESULT = new Greater(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5200,7 +5200,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Less(e1,e2); 
+		 RESULT = new Less(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5215,7 +5215,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new GreaterOrEqual(e1,e2); 
+		 RESULT = new GreaterOrEqual(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5230,7 +5230,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new LessOrEqual(e1,e2); 
+		 RESULT = new LessOrEqual(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("boolean_expression",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5245,7 +5245,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new And(e1,e2); 
+		 RESULT = new And(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5260,7 +5260,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Or(e1,e2); 
+		 RESULT = new Or(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5272,7 +5272,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Not(e); 
+		 RESULT = new Not(e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("logical_expression",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5321,8 +5321,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int fpright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		FunctionParameters fp = (FunctionParameters)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		 
-											Identifier identifier = new Identifier(id); 
-											RESULT = new FunctionCall(identifier,fp); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1); 
+											RESULT = new FunctionCall(identifier, fp, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_call",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5336,8 +5336,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		 
-											Identifier identifier = new Identifier(id);  
-											RESULT = new FunctionCall(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);  
+											RESULT = new FunctionCall(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("function_call",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5512,7 +5512,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Range(e1, e2); 
+		 RESULT = new Range(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("range",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5525,7 +5525,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
-											Identifier identifier = new Identifier(id);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											RESULT = new VariableIDs();
 											RESULT.add(identifier);
 										
@@ -5544,7 +5544,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int vidsright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		VariableIDs vids = (VariableIDs)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 
-											Identifier identifier = new Identifier(id);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											vids.add(identifier);
 											RESULT = vids;
 										
@@ -5561,7 +5561,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
 											parser.report_error("Se esperaba una variable después de la coma.", "Error en variables: ");
-											Identifier identifier = new Identifier(id);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											RESULT = new VariableIDs();
 											RESULT.add(identifier);
 										
@@ -5616,8 +5616,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		 
-											Identifier identifier = new Identifier(id); 
-											RESULT = new AssignVariableSimple(identifier, e); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1); 
+											RESULT = new AssignVariableSimple(identifier, e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("assign_variable",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5661,8 +5661,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
 											parser.report_error("Se esperaba \";\"","Error en asignación: ");	// OJO
-											Identifier identifier = new Identifier(id); 
-											RESULT = new AssignVariableSimple(identifier, e); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1); 
+											RESULT = new AssignVariableSimple(identifier, e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("assign_variable",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5678,7 +5678,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int typesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int typesright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		VariableType types = (VariableType)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new VariableDeclaration(vids,types); 
+		 RESULT = new VariableDeclaration(vids, types, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declaration",14, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5692,7 +5692,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		VariableIDs vids = (VariableIDs)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
 										parser.report_error("variable_declaration: Se esperaba un tipo ","\t");
-										RESULT = new VariableDeclaration(vids, null); 
+										RESULT = new VariableDeclaration(vids, null, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 									
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable_declaration",14, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5706,8 +5706,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		 
-											Identifier identifier = new Identifier(id);
-											RESULT = new GetValue(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new GetValue(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("get_value",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5722,8 +5722,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
 											parser.report_error("Se esperaba \"(\" ","Error en Get: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new GetValue(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new GetValue(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("get_value",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5760,8 +5760,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
 											parser.report_error("Se esperaba \")\" ","Error en Get: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new GetValue(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new GetValue(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$58",94, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5790,8 +5790,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en Get: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new GetValue(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new GetValue(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("get_value",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5804,7 +5804,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		 RESULT = new PutValue(e); 
+		 RESULT = new PutValue(e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("put_value",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5818,7 +5818,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
 											parser.report_error("Se esperaba \"(\" ","Error en Put: ");
-											RESULT = new PutValue(e);
+											RESULT = new PutValue(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("put_value",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5855,7 +5855,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
 											parser.report_error("Se esperaba \")\" ","Error en Put: ");
-											RESULT = new PutValue(e);
+											RESULT = new PutValue(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$60",96, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5884,7 +5884,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en Put: ");
-											RESULT = new PutValue(e);
+											RESULT = new PutValue(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("put_value",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -5933,7 +5933,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new ElsIf(e, s); 
+		 RESULT = new ElsIf(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("elsif_statement",18, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -5975,7 +5975,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
 											parser.report_error("Se esperaba \"then\" ","Error en ElsIf: ");
-											RESULT = new ElsIf(e, s);
+											RESULT = new ElsIf(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("elsif_statement",18, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6005,7 +6005,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 RESULT = new IfSimple(e,s); 
+		 RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -6022,7 +6022,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \"then\" ","Error en If: ");
-											RESULT = new IfSimple(e, s);
+											RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6068,7 +6068,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfSimple(e, s);
+											RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$63",99, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6103,7 +6103,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfSimple(e, s);
+											RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$64",100, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6138,7 +6138,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en If: ");
-											RESULT = new IfSimple(e, s);
+											RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6157,7 +6157,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int s2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int s2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Statements s2 = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 RESULT = new  IfWithElse(e,s1,s2); 
+		 RESULT = new  IfWithElse(e, s1, s2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -6211,7 +6211,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s2 = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new  IfWithElse(e,s1,s2);
+											RESULT = new  IfWithElse(e, s1, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$66",102, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6252,7 +6252,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s2 = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new  IfWithElse(e,s1,s2);
+											RESULT = new  IfWithElse(e, s1, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$67",103, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6293,7 +6293,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s2 = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en If: ");
-											RESULT = new  IfWithElse(e,s1,s2);
+											RESULT = new  IfWithElse(e, s1, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6312,7 +6312,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int esleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int esright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		ElsIfList es = (ElsIfList)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 RESULT = new IfWithElsIF(e,s,es); 
+		 RESULT = new IfWithElsIF(e, s, es, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -6332,7 +6332,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		ElsIfList es = (ElsIfList)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfWithElsIF(e,s,es);
+											RESULT = new IfWithElsIF(e, s, es, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$68",104, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6373,7 +6373,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		ElsIfList es = (ElsIfList)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfWithElsIF(e,s,es);
+											RESULT = new IfWithElsIF(e, s, es, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$69",105, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6414,7 +6414,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		ElsIfList es = (ElsIfList)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en If: ");
-											RESULT = new IfWithElsIF(e,s,es);
+											RESULT = new IfWithElsIF(e, s, es, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6436,7 +6436,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int s2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int s2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Statements s2 = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 RESULT = new IfWithElsIfAndElse(e,s1,es,s2); 
+		 RESULT = new IfWithElsIfAndElse(e, s1, es, s2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -6500,7 +6500,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s2 = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+											RESULT = new IfWithElsIfAndElse(e, s1, es, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$71",107, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6547,7 +6547,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s2 = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+											RESULT = new IfWithElsIfAndElse(e, s1, es, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$72",108, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6594,7 +6594,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s2 = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en If: ");
-											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+											RESULT = new IfWithElsIfAndElse(e, s1, es, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("if_statement",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6610,7 +6610,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 RESULT = new While(e,s); 
+		 RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("while_statemet",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -6627,7 +6627,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \"loop\" ","Error en while: ");
-											RESULT = new While(e, s);
+											RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("while_statemet",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6642,7 +6642,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
 		
 											parser.report_error("Se esperaba \"Statements\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("while_statemet",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6660,7 +6660,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
-											RESULT = new While(e, s);
+											RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$73",109, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6695,7 +6695,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
-											RESULT = new While(e, s);
+											RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$74",110, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6730,7 +6730,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en while: ");
-											RESULT = new While(e, s);
+											RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("while_statemet",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6743,7 +6743,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
-		 RESULT = new While(e); 
+		 RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("while_statemet",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -6757,7 +6757,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		
 											parser.report_error("Se esperaba \"loop\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("while_statemet",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6772,7 +6772,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$75",111, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6801,7 +6801,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$76",112, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6830,7 +6830,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("while_statemet",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6850,8 +6850,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		 
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6872,8 +6872,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \"in\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6894,8 +6894,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \"loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6913,8 +6913,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Range r = (Range)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
 		
 											parser.report_error("Se esperaba \"statements\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6935,8 +6935,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$77",113, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -6977,8 +6977,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$78",114, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7019,8 +7019,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7037,8 +7037,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int rright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
 		Range r = (Range)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		 
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7056,8 +7056,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Range r = (Range)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		
 											parser.report_error("Se esperaba \"in\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7075,8 +7075,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Range r = (Range)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		
 											parser.report_error("Se esperaba \"loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7094,8 +7094,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Range r = (Range)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$79",115, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7130,8 +7130,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Range r = (Range)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$80",116, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7187,8 +7187,8 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Range r = (Range)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("for_statement",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7201,7 +7201,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 RESULT = new Exit(e); 
+		 RESULT = new Exit(e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exit_statement",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -7215,7 +7215,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
 											parser.report_error("Se esperaba \"when\" ","Error: ");
-											RESULT = new Exit(e);
+											RESULT = new Exit(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exit_statement",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7230,7 +7230,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
 											parser.report_error("Se esperaba \";\" ","Error: ");
-											RESULT = new Exit(e);
+											RESULT = new Exit(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exit_statement",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7243,7 +7243,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 RESULT = new Loop(s); 
+		 RESULT = new Loop(s, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("loop_statement",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -7257,7 +7257,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
-											RESULT = new Loop(s);
+											RESULT = new Loop(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$81",117, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7286,7 +7286,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
-											RESULT = new Loop(s);
+											RESULT = new Loop(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$82",118, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7315,7 +7315,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 
 											parser.report_error("Se esperaba \";\" ","Error en loop: ");
-											RESULT = new Loop(s);
+											RESULT = new Loop(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$83",119, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7330,7 +7330,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)).right;
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-8)).value;
-		 RESULT = new Loop(); 
+		 RESULT = new Loop(parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("loop_statement",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -7341,7 +7341,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
               Loop RESULT =null;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
-											RESULT = new Loop();
+											RESULT = new Loop(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$84",120, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7364,7 +7364,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
               Loop RESULT =null;
 
 											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
-											RESULT = new Loop();
+											RESULT = new Loop(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$85",121, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7387,7 +7387,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
               Loop RESULT =null;
 		
 											parser.report_error("Se esperaba \";\" ","Error en loop: ");
-											RESULT = new Loop();
+											RESULT = new Loop(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("loop_statement",23, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7422,9 +7422,9 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("case_statement",24, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -7460,9 +7460,9 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("case_statement",24, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -7498,9 +7498,9 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$86",122, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -7553,9 +7553,9 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$87",123, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -7608,9 +7608,9 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("case_statement",24, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -7657,7 +7657,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new WhenElement(w,s); 
+		 RESULT = new WhenElement(w, s, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -7674,7 +7674,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
-											RESULT = new WhenElement(w,s);
+											RESULT = new WhenElement(w, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7687,7 +7687,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int wleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int wright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		WhenOptions w = (WhenOptions)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 RESULT = new WhenElement(w); 
+		 RESULT = new WhenElement(w, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -7701,7 +7701,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		WhenOptions w = (WhenOptions)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
-											RESULT = new WhenElement(w);
+											RESULT = new WhenElement(w, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7714,7 +7714,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new WhenElement(s); 
+		 RESULT = new WhenElement(s, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -7728,7 +7728,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
 											parser.report_error("Se esperaba \"others\" ","Error: ");
-											RESULT = new WhenElement(s);
+											RESULT = new WhenElement(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7743,7 +7743,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
-											RESULT = new WhenElement(s);
+											RESULT = new WhenElement(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7753,7 +7753,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
           case 333: // when_element ::= WHEN OTHERS OPERPUNTERO 
             {
               WhenElement RESULT =null;
-		 RESULT = new WhenElement(); 
+		 RESULT = new WhenElement(parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -7764,7 +7764,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
               WhenElement RESULT =null;
 		
 											parser.report_error("Se esperaba \"others\" ","Error: ");
-											RESULT = new WhenElement();
+											RESULT = new WhenElement(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7776,7 +7776,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
               WhenElement RESULT =null;
 		
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
-											RESULT = new WhenElement();
+											RESULT = new WhenElement(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										
               CUP$parser$result = parser.getSymbolFactory().newSymbol("when_element",25, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -7822,7 +7822,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new WhenOption(e); 
+		 RESULT = new WhenOption(e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("option_when",28, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -7834,7 +7834,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int rleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int rright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Range r = (Range)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new WhenOption(r); 
+		 RESULT = new WhenOption(r, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("option_when",28, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -7846,7 +7846,7 @@ parser.report_error("parameter: Se esperaba un tipo","\t");
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 RESULT = new Return(e); 
+		 RESULT = new Return(e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("return_statement",35, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

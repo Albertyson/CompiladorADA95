@@ -3,23 +3,22 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author JosuéNoel
- */
-public class While extends Statement {
-    
+public class While extends Statement {    
     public Expression exp;
     public Statements est;
+    public int line, colunm;
 
-
-    public While(Expression exp) {
+    public While(Expression exp, int l, int c) {
         this.exp = exp;
+        this.line = l;
+        this.colunm = c;
     }
     
-    public While(Expression exp, Statements est) {
+    public While(Expression exp, Statements est, int l, int c) {
         this.exp = exp;
         this.est = est;
+        this.line = l;
+        this.colunm = c;
     }
 
     @Override

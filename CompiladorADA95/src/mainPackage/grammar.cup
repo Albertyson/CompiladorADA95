@@ -156,9 +156,9 @@ precedence nonassoc	ELSE;
 
 program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA 
 										{: 
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new Program(identifier1,dp,s,identifier2);
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new Program(identifier1, dp, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											
 										:}
 									|PROCEDURE error{:parser.report_error("Programa principal: Se esperaba ID","\t");:}  IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA 
@@ -173,9 +173,9 @@ program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END
 									//la regla anterior sin statements
 									|PROCEDURE ID:id1 IS declaration_part:dp BEGIN END ID:id2 PUNTOCOMA 
 										{: 
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new Program(identifier1,dp,identifier2);
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new Program(identifier1, dp, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											// try {
 											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
 											// 	xmlConverter.toXML();
@@ -194,9 +194,9 @@ program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END
 									//regla sin declaraciones
 									|PROCEDURE ID:id1 IS BEGIN statements:s END ID:id2 PUNTOCOMA 
 										{: 
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new Program(identifier1,s,identifier2);
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new Program(identifier1, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											// try {
 											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
 											// 	xmlConverter.toXML();
@@ -214,9 +214,9 @@ program						::=		PROCEDURE ID:id1 IS declaration_part:dp BEGIN statements:s END
 									//regla anterior sin statements
 									|PROCEDURE ID:id1 IS BEGIN END ID:id2 PUNTOCOMA 
 										{: 
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new Program(identifier1,identifier2);
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new Program(identifier1, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											// try {
 											// 	ObjectToXMLConverter xmlConverter = new ObjectToXMLConverter(new File("./src/mainPackage/ast.xml"), RESULT);
 											// 	xmlConverter.toXML();
@@ -272,9 +272,9 @@ declaration_part 			::=		variable_declaration:vd PUNTOCOMA declaration_part:dp
 
 function_declaration		::=		FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
 										{:
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new FunctionDeclaration(identifier1,pds,vtype,dp,s,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new FunctionDeclaration(identifier1, pds, vtype, dp, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 										//errores para la producción
 									| FUNCTION error{:parser.report_error("Declaracion de funcion: Se esperaba ID","\t"); :} PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
@@ -292,9 +292,9 @@ function_declaration		::=		FUNCTION ID:id1 PARIZQ parameter_declarations:pds PAR
 									//regla anterior sin statements
 									|FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp BEGIN END ID:id2 PUNTOCOMA
 										{:
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new FunctionDeclaration(identifier1,pds,vtype,dp,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new FunctionDeclaration(identifier1, pds, vtype, dp, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 										//errores para la producción
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS declaration_part:dp error{:parser.report_error("Declaracion de funcion: Se esperaba Begin","\t"); :} END ID:id2 PUNTOCOMA
@@ -304,9 +304,9 @@ function_declaration		::=		FUNCTION ID:id1 PARIZQ parameter_declarations:pds PAR
 									//regla sin declaration part
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN statements:s END ID:id2 PUNTOCOMA
 										{:
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new FunctionDeclaration(identifier1,pds,vtype,s,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new FunctionDeclaration(identifier1, pds, vtype, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 										//errores para la producción
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba un tipo ","\t"); :} IS BEGIN statements:s END ID:id2 PUNTOCOMA
@@ -320,9 +320,9 @@ function_declaration		::=		FUNCTION ID:id1 PARIZQ parameter_declarations:pds PAR
 									//regla anterior sin statements
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS BEGIN END ID:id2 PUNTOCOMA
 										{:
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new FunctionDeclaration(identifier1,pds,vtype,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new FunctionDeclaration(identifier1, pds, vtype, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 										//errores para la producción
 									| FUNCTION ID:id1 PARIZQ parameter_declarations:pds PARDER RETURN variable_type:vtype IS error{:parser.report_error("Declaracion de funcion sin declaraciones: Se esperaba Begin","\t"); :} END ID:id2 PUNTOCOMA
@@ -334,9 +334,9 @@ function_declaration		::=		FUNCTION ID:id1 PARIZQ parameter_declarations:pds PAR
 
 procedure_declaration 		::=		PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
 										{:
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new ProcedureDeclaration(identifier1,pds,dp,s,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new ProcedureDeclaration(identifier1, pds, dp, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 									|PROCEDURE error{:parser.report_error("Declaracion de Procedimiento: Se esperaba ID","\t"); :} PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 error{:parser.report_error("Declaracion de Procedimiento: Se esperaba  \"(\"","\t"); :} parameter_declarations:pds PARDER IS declaration_part:dp BEGIN statements:s END ID:id2 PUNTOCOMA
@@ -351,9 +351,9 @@ procedure_declaration 		::=		PROCEDURE ID:id1 PARIZQ parameter_declarations:pds 
 									//regla anterior sin statements
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN END ID:id2 PUNTOCOMA
 										{:
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new ProcedureDeclaration(identifier1,pds,dp,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new ProcedureDeclaration(identifier1, pds, dp, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp error{:parser.report_error("Declaracion de Procedimiento: Se esperaba Begin","\t");:}  END ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS declaration_part:dp BEGIN error{:parser.report_error("Declaracion de Procedimiento: Se esperaba End","\t");:}  ID:id2 PUNTOCOMA
@@ -363,9 +363,9 @@ procedure_declaration 		::=		PROCEDURE ID:id1 PARIZQ parameter_declarations:pds 
 									//regla sin declaration part
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN statements:s END ID:id2 PUNTOCOMA
 										{:
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new ProcedureDeclaration(identifier1,pds,s,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new ProcedureDeclaration(identifier1, pds, s, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba IS","\t"); :} BEGIN statements:s END ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba Begin","\t"); :} statements:s END ID:id2 PUNTOCOMA
@@ -377,9 +377,9 @@ procedure_declaration 		::=		PROCEDURE ID:id1 PARIZQ parameter_declarations:pds 
 									//regla anterior sin  statements
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN END ID:id2 PUNTOCOMA
 										{:
-											Identifier identifier1 = new Identifier(id1);
-											Identifier identifier2 = new Identifier(id2);
-											RESULT = new ProcedureDeclaration(identifier1,pds,identifier2); 
+											Identifier identifier1 = new Identifier(id1, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											Identifier identifier2 = new Identifier(id2, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new ProcedureDeclaration(identifier1, pds, identifier2, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba Begin","\t"); :} END ID:id2 PUNTOCOMA
 									|PROCEDURE ID:id1 PARIZQ parameter_declarations:pds PARDER IS BEGIN error{:parser.report_error("Declaracion de Procedimiento sin declaraciones: Se esperaba End","\t"); :} ID:id2 PUNTOCOMA
@@ -400,7 +400,7 @@ parameter_declarations 		::=		parameter:p
 
 
 parameter 					::=	 	variable_ids:vids DOSPUNTOS mode:m variable_type:vtype OPERASIG expression:e
-										{: RESULT = new Parameter(vids,m,vtype,e); :}
+										{: RESULT = new Parameter(vids, m, vtype, e, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 										//errores para esta producción:
 									//| variable_ids:vids error{:parser.report_error("Se esperaba \":\" ","\t"); :} mode:m variable_type:vtype OPERASIG expression:e
 									| variable_ids:vids DOSPUNTOS error{:parser.report_error("parameter: Se esperaba un modo: IN,OUT,IN OUT ","\t"); :} variable_type:vtype OPERASIG expression:e
@@ -409,17 +409,17 @@ parameter 					::=	 	variable_ids:vids DOSPUNTOS mode:m variable_type:vtype OPER
 
 
 									| variable_ids:vids DOSPUNTOS mode:m variable_type:vtype
-										{: RESULT = new Parameter(vids,m,vtype); :}
+										{: RESULT = new Parameter(vids, m, vtype, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 										//errores para esta producción:
 									| variable_ids:vids DOSPUNTOS mode:m error{:parser.report_error("parameter: Se esperaba un tipo","\t"); :}
 
 
 									| variable_declaration:vd
-										{: RESULT = new Parameter(vd.getVariables(),vd.getType()); :}
+										{: RESULT = new Parameter(vd.getVariables(), vd.getType(), parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 										//errores para esta producción
 
 									| variable_declaration:vd OPERASIG expression:e
-										{: RESULT = new Parameter(vd.getVariables(),vd.getType(),e); :}
+										{: RESULT = new Parameter(vd.getVariables(), vd.getType(), e, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 										//errores para esta producción:
  									;
 
@@ -439,7 +439,7 @@ mode              			::= 	  IN
 expression					::=		literal_expression:le
 										{: RESULT = le; :}
 									| ID:id
-										{: RESULT = new Identifier(id); :}
+										{: RESULT = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| arithmetic_expression:ae
 										{: RESULT = ae; :}
 									| PARIZQ expression:e PARDER
@@ -454,57 +454,57 @@ expression					::=		literal_expression:le
 
 
 literal_expression			::=		  NUMEROENTERO:num
-										{: RESULT = new IntegerNumber(num); :}
+										{: RESULT = new IntegerNumber(num, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| NUMEROFLOAT:num
-										{: RESULT = new FloatNumber(num); :}
+										{: RESULT = new FloatNumber(num, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| TRUE
 										{: RESULT = new True(); :}
 									| FALSE
 										{: RESULT = new False(); :}
 									| CADENA:cad
-										{: RESULT = new StringLiteral(cad); :}
+										{: RESULT = new StringLiteral(cad, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									;
 
 
 arithmetic_expression		::=		expression:e1 OPERSUMA expression:e2
-										{: RESULT = new Add(e1,e2); :}
+										{: RESULT = new Add(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OPERRESTA expression:e2
-										{: RESULT = new  Minus(e1,e2); :}
+										{: RESULT = new  Minus(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OPERDIVISION expression : e2
-										{: RESULT = new Division(e1,e2); :}
+										{: RESULT = new Division(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OPERMULTIPLICACION expression:e2
-										{: RESULT = new Multiplication(e1,e2); :}
+										{: RESULT = new Multiplication(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OPERPOTENCIA expression:e2
-										{: RESULT = new Pow(e1,e2); :}
+										{: RESULT = new Pow(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| OPERRESTA expression:e
-										{: RESULT = new Negative(e); :}
+										{: RESULT = new Negative(e, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 										%prec NEGATIVO
 									| expression:e1 MOD expression:e2
-										{: RESULT = new Module(e1,e2); :}										
+										{: RESULT = new Module(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}										
 									;
 
 
 boolean_expression			::=		  expression:e1 OPERIGUAL expression:e2
-										{: RESULT = new Equal(e1,e2); :}
+										{: RESULT = new Equal(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OPERDISTINTO expression:e2
-										{: RESULT = new NotEqual(e1,e2); :}
+										{: RESULT = new NotEqual(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OPERMAYOR expression:e2
-										{: RESULT = new Greater(e1,e2); :}
+										{: RESULT = new Greater(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OPERMENOR expression:e2
-										{: RESULT = new Less(e1,e2); :}
+										{: RESULT = new Less(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OPERMAYORIGUAL expression:e2
-										{: RESULT = new GreaterOrEqual(e1,e2); :}
+										{: RESULT = new GreaterOrEqual(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OPERMENORIGUAL expression:e2
-										{: RESULT = new LessOrEqual(e1,e2); :}
+										{: RESULT = new LessOrEqual(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									;
 
 
 logical_expression			::=		expression:e1 AND expression:e2
-										{: RESULT = new And(e1,e2); :}
+										{: RESULT = new And(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| expression:e1 OR expression:e2
-										{: RESULT = new Or(e1,e2); :}
+										{: RESULT = new Or(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| NOT expression:e
-										{: RESULT = new Not(e); :}
+										{: RESULT = new Not(e, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									;
 
 
@@ -522,13 +522,13 @@ function_parameters			::=		expression:e
 
 function_call				::=		ID:id PARIZQ function_parameters:fp PARDER
 										{: 
-											Identifier identifier = new Identifier(id); 
-											RESULT = new FunctionCall(identifier,fp); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1); 
+											RESULT = new FunctionCall(identifier, fp, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 									| ID:id PARIZQ PARDER
 										{: 
-											Identifier identifier = new Identifier(id);  
-											RESULT = new FunctionCall(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);  
+											RESULT = new FunctionCall(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									;
 
@@ -571,19 +571,19 @@ statement					::=		assign_variable:av
 
 
 range						::=		  expression:e1 DOBLEPUNTO expression:e2
-										{: RESULT = new Range(e1, e2); :}
+										{: RESULT = new Range(e1, e2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									;
 
 
 variable_ids				::=		  ID:id
 										{:
-											Identifier identifier = new Identifier(id);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											RESULT = new VariableIDs();
 											RESULT.add(identifier);
 										:}
 									| ID:id COMA variable_ids:vids
 										{: 
-											Identifier identifier = new Identifier(id);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											vids.add(identifier);
 											RESULT = vids;
 										:}
@@ -596,7 +596,7 @@ variable_ids				::=		  ID:id
 										:} variable_ids:vids*/
 									| ID:id COMA error {:
 											parser.report_error("Se esperaba una variable después de la coma.", "Error en variables: ");
-											Identifier identifier = new Identifier(id);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
 											RESULT = new VariableIDs();
 											RESULT.add(identifier);
 										:}
@@ -616,8 +616,8 @@ variable_type				::=		  INTEGER
 
 assign_variable				::=		ID:id OPERASIG expression:e PUNTOCOMA
 										{: 
-											Identifier identifier = new Identifier(id); 
-											RESULT = new AssignVariableSimple(identifier, e); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1); 
+											RESULT = new AssignVariableSimple(identifier, e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 									/*| variable_declaration OPERASIG expression PUNTOCOMA
 										{: System.out.println("declaracion y Asignacion de variable"); :}*/
@@ -626,65 +626,65 @@ assign_variable				::=		ID:id OPERASIG expression:e PUNTOCOMA
 									| ID:id OPERASIG error {: parser.report_error("Se esperaba el valor a asignar.","Error en asignación: "); :} PUNTOCOMA
 									| ID:id OPERASIG expression:e error {:
 											parser.report_error("Se esperaba \";\"","Error en asignación: ");	// OJO
-											Identifier identifier = new Identifier(id); 
-											RESULT = new AssignVariableSimple(identifier, e); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1); 
+											RESULT = new AssignVariableSimple(identifier, e, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 									;
 
 
 variable_declaration		::=		variable_ids:vids DOSPUNTOS variable_type:types
-										{: RESULT = new VariableDeclaration(vids,types); :}
+										{: RESULT = new VariableDeclaration(vids, types, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 										//errores para esta producción:
 									//|variable_ids:vids error{:parser.report_error("Se esperaba \":\" ","\t");:} variable_type:types
 									|variable_ids:vids DOSPUNTOS error{:
 										parser.report_error("variable_declaration: Se esperaba un tipo ","\t");
-										RESULT = new VariableDeclaration(vids, null); 
+										RESULT = new VariableDeclaration(vids, null, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 									:}
 									;
 
 
 get_value					::=		GET PARIZQ ID:id PARDER PUNTOCOMA
 										{: 
-											Identifier identifier = new Identifier(id);
-											RESULT = new GetValue(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new GetValue(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| GET error ID:id PARDER PUNTOCOMA {:
 											parser.report_error("Se esperaba \"(\" ","Error en Get: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new GetValue(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new GetValue(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| GET PARIZQ error {:
 											parser.report_error("Se esperaba una variable","Error en Get: ");
 										:} PARDER PUNTOCOMA
 									| GET PARIZQ ID:id error {:
 											parser.report_error("Se esperaba \")\" ","Error en Get: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new GetValue(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new GetValue(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| GET PARIZQ ID:id PARDER error {:
 											parser.report_error("Se esperaba \";\" ","Error en Get: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new GetValue(identifier);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new GetValue(identifier, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									;
 
 
 put_value					::=		  PUT PARIZQ expression:e PARDER PUNTOCOMA
-										{: RESULT = new PutValue(e); :}
+										{: RESULT = new PutValue(e, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| PUT error expression:e PARDER PUNTOCOMA {:
 											parser.report_error("Se esperaba \"(\" ","Error en Put: ");
-											RESULT = new PutValue(e);
+											RESULT = new PutValue(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| PUT PARIZQ error {:
 											parser.report_error("Se esperaba valor a imprimir.","Error en Put: ");
 										:} PARDER PUNTOCOMA
 									| PUT PARIZQ expression:e error {:
 											parser.report_error("Se esperaba \")\" ","Error en Put: ");
-											RESULT = new PutValue(e);
+											RESULT = new PutValue(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| PUT PARIZQ expression:e PARDER error {:
 											parser.report_error("Se esperaba \";\" ","Error en Put: ");
-											RESULT = new PutValue(e);
+											RESULT = new PutValue(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									;
 
@@ -703,13 +703,13 @@ elsif_statements			::=		  elsif_statement:es elsif_statements:ess
 
 
 elsif_statement				::=		  ELSIF expression:e THEN statements:s
-										{: RESULT = new ElsIf(e, s); :}
+										{: RESULT = new ElsIf(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| ELSIF error {:
 											parser.report_error("Se esperaba un valor a evaluar.","Error en ElsIf: ");
 										:} THEN statements:s
 									| ELSIF expression:e error statements:s {:
 											parser.report_error("Se esperaba \"then\" ","Error en ElsIf: ");
-											RESULT = new ElsIf(e, s);
+											RESULT = new ElsIf(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| ELSIF expression:e THEN error {:
 											parser.report_error("Se esperaba \"statements\" ","Error en ElsIf: ");
@@ -718,30 +718,30 @@ elsif_statement				::=		  ELSIF expression:e THEN statements:s
 
 
 if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
-										{: RESULT = new IfSimple(e,s); :}
+										{: RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Errores
 									| IF expression:e error statements:s END IF PUNTOCOMA {:
 											parser.report_error("Se esperaba \"then\" ","Error en If: ");
-											RESULT = new IfSimple(e, s);
+											RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| IF expression:e THEN error {:
 											parser.report_error("Se esperaba \"statements\" ","Error en If: ");
 										:}	END IF PUNTOCOMA
 									| IF expression:e THEN statements:s error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfSimple(e, s);
+											RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} IF PUNTOCOMA
 									| IF expression:e THEN statements:s END error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfSimple(e, s);
+											RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| IF expression:e THEN statements:s END IF error {:
 											parser.report_error("Se esperaba \";\" ","Error en If: ");
-											RESULT = new IfSimple(e, s);
+											RESULT = new IfSimple(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									
 									| IF expression:e THEN statements:s1 ELSE statements:s2 END IF PUNTOCOMA
-										{: RESULT = new  IfWithElse(e,s1,s2); :}
+										{: RESULT = new  IfWithElse(e, s1, s2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Errores
 									/*| IF expression:e error {:
 											parser.report_error("Se esperaba \"then\" ","Error en If: ");
@@ -756,19 +756,19 @@ if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
 										:} END IF PUNTOCOMA
 									| IF expression:e THEN statements:s1 ELSE statements:s2 error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new  IfWithElse(e,s1,s2);
+											RESULT = new  IfWithElse(e, s1, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} IF PUNTOCOMA
 									| IF expression:e THEN statements:s1 ELSE statements:s2 END error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new  IfWithElse(e,s1,s2);
+											RESULT = new  IfWithElse(e, s1, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| IF expression:e THEN statements:s1 ELSE statements:s2 END IF error {:
 											parser.report_error("Se esperaba \";\" ","Error en If: ");
-											RESULT = new  IfWithElse(e,s1,s2);
+											RESULT = new  IfWithElse(e, s1, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 
 									| IF expression:e THEN statements:s elsif_statements:es END IF PUNTOCOMA
-										{: RESULT = new IfWithElsIF(e,s,es); :}
+										{: RESULT = new IfWithElsIF(e, s, es, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									//	Errores
 									/*| error {:
 											parser.report_error("Se esperaba \"if\" ","Error en If: ");
@@ -780,19 +780,19 @@ if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
 										:} statements:s elsif_statements:es END IF PUNTOCOMA*/
 									| IF expression:e THEN statements:s elsif_statements:es error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfWithElsIF(e,s,es);
+											RESULT = new IfWithElsIF(e, s, es, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} IF PUNTOCOMA
 									| IF expression:e THEN statements:s elsif_statements:es END error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfWithElsIF(e,s,es);
+											RESULT = new IfWithElsIF(e, s, es, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| IF expression:e THEN statements:s elsif_statements:es END IF error {:
 											parser.report_error("Se esperaba \";\" ","Error en If: ");
-											RESULT = new IfWithElsIF(e,s,es);
+											RESULT = new IfWithElsIF(e, s, es, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 
 									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 END IF PUNTOCOMA
-										{: RESULT = new IfWithElsIfAndElse(e,s1,es,s2); :}
+										{: RESULT = new IfWithElsIfAndElse(e, s1, es, s2, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Errores
 									/*| IF expression:e error {:
 											parser.report_error("Se esperaba \"then\" ","Error en If: ");
@@ -808,182 +808,182 @@ if_statement				::=		  IF expression:e THEN statements:s END IF PUNTOCOMA
 										:}END IF PUNTOCOMA
 									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+											RESULT = new IfWithElsIfAndElse(e, s1, es, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} IF PUNTOCOMA
 									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 END error {:
 											parser.report_error("Se esperaba \"end if\" ","Error en If: ");
-											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+											RESULT = new IfWithElsIfAndElse(e, s1, es, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| IF expression:e THEN statements:s1 elsif_statements:es ELSE statements:s2 END IF error {:
 											parser.report_error("Se esperaba \";\" ","Error en If: ");
-											RESULT = new IfWithElsIfAndElse(e,s1,es,s2);
+											RESULT = new IfWithElsIfAndElse(e, s1, es, s2, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} 
 									;
 
 
 while_statemet				::=		WHILE expression:e LOOP statements:s END LOOP PUNTOCOMA
-										{: RESULT = new While(e,s); :}
+										{: RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Error
 									| WHILE expression:e error statements:s END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"loop\" ","Error en while: ");
-											RESULT = new While(e, s);
+											RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| WHILE expression:e LOOP error END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"Statements\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| WHILE expression:e LOOP statements:s error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
-											RESULT = new While(e, s);
+											RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} LOOP PUNTOCOMA
 									| WHILE expression:e LOOP statements:s END error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
-											RESULT = new While(e, s);
+											RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| WHILE expression:e LOOP statements:s END LOOP error {:
 											parser.report_error("Se esperaba \";\" ","Error en while: ");
-											RESULT = new While(e, s);
+											RESULT = new While(e, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									//regla sin statements
 									| WHILE expression:e LOOP END LOOP PUNTOCOMA
-										{: RESULT = new While(e); :}
+										{: RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Error
 									| WHILE expression:e error END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"loop\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| WHILE expression:e LOOP error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} LOOP PUNTOCOMA
 									| WHILE expression:e LOOP END error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| WHILE expression:e LOOP END LOOP error {:
 											parser.report_error("Se esperaba \";\" ","Error en while: ");
-											RESULT = new While(e);
+											RESULT = new While(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									;
 
 
 for_statement				::=		  FOR ID:id IN range:r LOOP statements:s END LOOP PUNTOCOMA
 										{: 
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 									// Errores
 									| FOR ID:id error range:r LOOP statements:s END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"in\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| FOR ID:id IN range:r error statements:s END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| FOR ID:id IN range:r LOOP error END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"statements\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| FOR ID:id IN range:r LOOP statements:s error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} LOOP PUNTOCOMA
 									| FOR ID:id IN range:r LOOP statements:s END error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| FOR ID:id IN range:r LOOP statements:s END LOOP error {:
 											parser.report_error("Se esperaba \";\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r,s);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 
 									//Regla anterior sin statements
 									| FOR ID:id IN range:r LOOP END LOOP PUNTOCOMA
 										{: 
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r); 
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1); 
 										:}
 									// Errores
 									| FOR ID:id error range:r LOOP END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"in\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| FOR ID:id IN range:r error END LOOP PUNTOCOMA {:
 											parser.report_error("Se esperaba \"loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| FOR ID:id IN range:r LOOP error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} LOOP PUNTOCOMA
 									| FOR ID:id IN range:r LOOP END error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| FOR ID:id IN range:r LOOP END LOOP error {:
 											parser.report_error("Se esperaba \";\" ","Error en for: ");
-											Identifier identifier = new Identifier(id);
-											RESULT = new For(identifier,r);
+											Identifier identifier = new Identifier(id, parser.cur_token.left + 1, parser.cur_token.right + 1);
+											RESULT = new For(identifier, r, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									;
 
 
 exit_statement				::=		EXIT WHEN expression:e PUNTOCOMA
-										{: RESULT = new Exit(e); :}
+										{: RESULT = new Exit(e, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Errores
 									| EXIT error expression:e PUNTOCOMA {:
 											parser.report_error("Se esperaba \"when\" ","Error: ");
-											RESULT = new Exit(e);
+											RESULT = new Exit(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| EXIT WHEN expression:e error {:
 											parser.report_error("Se esperaba \";\" ","Error: ");
-											RESULT = new Exit(e);
+											RESULT = new Exit(e, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									;
 
 
 loop_statement				::=		LOOP statements:s END LOOP PUNTOCOMA
-										{: RESULT = new Loop(s); :}
+										{: RESULT = new Loop(s, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Errores
 									| LOOP statements:s error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
-											RESULT = new Loop(s);
+											RESULT = new Loop(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} LOOP PUNTOCOMA
 									| LOOP statements:s END error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
-											RESULT = new Loop(s);
+											RESULT = new Loop(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| LOOP statements:s END LOOP error {:
 											parser.report_error("Se esperaba \";\" ","Error en loop: ");
-											RESULT = new Loop(s);
+											RESULT = new Loop(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 
 									//regla anterior sin statements
 									LOOP END LOOP PUNTOCOMA
-										{: RESULT = new Loop(); :}
+										{: RESULT = new Loop(parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Errores
 									| LOOP error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
-											RESULT = new Loop();
+											RESULT = new Loop(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} LOOP PUNTOCOMA
 									| LOOP END error {:
 											parser.report_error("Se esperaba \"end loop\" ","Error en loop: ");
-											RESULT = new Loop();
+											RESULT = new Loop(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:} PUNTOCOMA
 									| LOOP END LOOP error {:
 											parser.report_error("Se esperaba \";\" ","Error en loop: ");
-											RESULT = new Loop();
+											RESULT = new Loop(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									;
 
@@ -1008,9 +1008,9 @@ case_statement				::=		  CASE expression:e IS when_list:wl END CASE PUNTOCOMA
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										:}
 									// | CASE expression:e IS when_list:wl WHEN OTHERS OPERPUNTERO statements:s END CASE PUNTOCOMA
@@ -1037,9 +1037,9 @@ case_statement				::=		  CASE expression:e IS when_list:wl END CASE PUNTOCOMA
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										:}
 									| CASE expression:e IS when_list:wl error {:
@@ -1061,9 +1061,9 @@ case_statement				::=		  CASE expression:e IS when_list:wl END CASE PUNTOCOMA
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										:} CASE PUNTOCOMA
 									| CASE expression:e IS when_list:wl END error {:
@@ -1085,9 +1085,9 @@ case_statement				::=		  CASE expression:e IS when_list:wl END CASE PUNTOCOMA
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										:} PUNTOCOMA
 									| CASE expression:e IS when_list:wl END CASE error {:
@@ -1109,9 +1109,9 @@ case_statement				::=		  CASE expression:e IS when_list:wl END CASE PUNTOCOMA
 												if(othersCount > 1){
 													parser.report_error("Case no puede traer mas de 1 opcion others","ERROR");
 												}
-												RESULT = new CaseOthers(e,wl,othersStatements);													
+												RESULT = new CaseOthers(e, wl, othersStatements, parser.cur_token.left + 1, parser.cur_token.right + 1);													
 											} else {
-												RESULT = new CaseNotOthers(e,wl);												
+												RESULT = new CaseNotOthers(e, wl, parser.cur_token.left + 1, parser.cur_token.right + 1);												
 											}
 										:}
 									;
@@ -1126,43 +1126,43 @@ when_list 					::=		  when_element:we
 									;
 
 when_element 				::=		  WHEN when_options:w OPERPUNTERO statements:s
-										{: RESULT = new WhenElement(w,s); :}
+										{: RESULT = new WhenElement(w, s, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Error
 									| WHEN when_options:w error statements:s {:
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
-											RESULT = new WhenElement(w,s);
+											RESULT = new WhenElement(w, s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									//regla anterior sin statements
 									| WHEN when_options:w OPERPUNTERO
-										{: RESULT = new WhenElement(w); :}
+										{: RESULT = new WhenElement(w, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Error
 									| WHEN when_options:w error {:
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
-											RESULT = new WhenElement(w);
+											RESULT = new WhenElement(w, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 
 									| WHEN OTHERS OPERPUNTERO statements:s
-										{: RESULT = new WhenElement(s); :}
+										{: RESULT = new WhenElement(s, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Error
 									| WHEN error OPERPUNTERO statements:s {:
 											parser.report_error("Se esperaba \"others\" ","Error: ");
-											RESULT = new WhenElement(s);
+											RESULT = new WhenElement(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| WHEN OTHERS error statements:s {:
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
-											RESULT = new WhenElement(s);
+											RESULT = new WhenElement(s, parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									//regla anterior sin statements
 									| WHEN OTHERS OPERPUNTERO
-										{: RESULT = new WhenElement(); :}
+										{: RESULT = new WhenElement(parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Error
 									| WHEN error OPERPUNTERO {:
 											parser.report_error("Se esperaba \"others\" ","Error: ");
-											RESULT = new WhenElement();
+											RESULT = new WhenElement(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									| WHEN OTHERS error {:
 											parser.report_error("Se esperaba \"=>\" ","Error: ");
-											RESULT = new WhenElement();
+											RESULT = new WhenElement(parser.cur_token.left + 1, parser.cur_token.right + 1);
 										:}
 									;
 
@@ -1180,14 +1180,14 @@ when_options  				::= 	  option_when:opt
 
 
 option_when					::=		  expression:e 
-										{: RESULT = new WhenOption(e); :}
+										{: RESULT = new WhenOption(e, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									| range:r
-										{: RESULT = new WhenOption(r); :}
+										{: RESULT = new WhenOption(r, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									;
 
 
 return_statement			::=		  RETURN expression:e PUNTOCOMA
-										{: RESULT = new Return(e); :}
+										{: RESULT = new Return(e, parser.cur_token.left + 1, parser.cur_token.right + 1); :}
 									// Errores
 									| RETURN error
 										{: parser.report_error("Se esperaba un valor de retorno", "ERROR: "); :}

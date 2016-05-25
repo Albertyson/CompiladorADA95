@@ -3,16 +3,15 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author JosuéNoel
- */
-public class Negative extends ArithmeticExpression {
-    
-    public Expression exp;
 
-    public Negative(Expression exp) {
+public class Negative extends ArithmeticExpression {
+    public Expression exp;
+    public int line, colunm;
+
+    public Negative(Expression exp, int l, int c) {
         this.exp = exp;
+        this.line = l;
+        this.colunm = c;
     }
 
 

@@ -3,16 +3,16 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author JosuéNoel
- */
+
 public class PutValue extends Statement {
     
     public Expression exp;
+    public int line, colunm;
 
-    public PutValue(Expression exp) {
+    public PutValue(Expression exp, int l, int c) {
         this.exp = exp;
+        this.line = l;
+        this.colunm = c;
     }
     
     

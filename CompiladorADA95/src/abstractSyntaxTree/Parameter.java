@@ -4,39 +4,45 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author Albertyson
- */
+
 public class Parameter {
     
     public VariableIDs vars;
     public Mode mode;
     public VariableType type;
     public Expression exp;
+    public int line, colunm;
 
-    public Parameter(VariableIDs vars, VariableType type) {
+    public Parameter(VariableIDs vars, VariableType type, int l, int c) {
         this.vars = vars;
         this.type = type;
+        this.line = l;
+        this.colunm = c;
     }
 
-    public Parameter(VariableIDs vars, Mode mode, VariableType type) {
+    public Parameter(VariableIDs vars, Mode mode, VariableType type, int l, int c) {
         this.vars = vars;
         this.mode = mode;
         this.type = type;
+        this.line = l;
+        this.colunm = c;
     }
 
-    public Parameter(VariableIDs vars, VariableType type, Expression exp) {
+    public Parameter(VariableIDs vars, VariableType type, Expression exp, int l, int c) {
         this.vars = vars;
         this.type = type;
         this.exp = exp;
+        this.line = l;
+        this.colunm = c;
     }
 
-    public Parameter(VariableIDs vars, Mode mode, VariableType type, Expression exp) {
+    public Parameter(VariableIDs vars, Mode mode, VariableType type, Expression exp, int l, int c) {
         this.vars = vars;
         this.mode = mode;
         this.type = type;
         this.exp = exp;
+        this.line = l;
+        this.colunm = c;
     }
     
     public void accept(ParentPath PP) {

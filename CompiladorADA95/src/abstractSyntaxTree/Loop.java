@@ -3,20 +3,22 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import visitor.TypeVisitor;
 
-/**
- *
- * @author JosuéNoel
- */
 
 public class Loop extends Statement {
     
     public Statements s;
+    public int line, colunm;
 
-    public Loop() {
+    public Loop(int l, int c) {
+        this.s = null;
+        this.line = l;
+        this.colunm = c;
     }
-
-    public Loop(Statements s) {
+    
+    public Loop(Statements s, int l, int c) {
         this.s = s;
+        this.line = l;
+        this.colunm = c;
     }
 
     @Override

@@ -12,12 +12,15 @@ public class IfWithElsIF extends If {
     public Expression expression;
     public Statements statements;
     public ElsIfList elsIfList;
+    public int line, colunm;
 
 
-    public IfWithElsIF(Expression expression, Statements statements, ElsIfList elsIfList) {
+    public IfWithElsIF(Expression expression, Statements statements, ElsIfList elsIfList, int l, int c) {
         this.expression = expression;
         this.statements = statements;
         this.elsIfList = elsIfList;
+        this.line = l;
+        this.colunm = c;
     }
     
 
