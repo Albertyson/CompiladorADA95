@@ -12,4 +12,6 @@ import abstractSyntaxTree.*;
  * @author Albertyson
  */
 public interface IntermediateGenerable {
+
+    
 }

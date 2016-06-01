@@ -1,6 +1,8 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import intermediateCode.Cuadruplo;
+import intermediateCode.IntermediateGenerable;
 import visitor.TypeVisitor;
 
 
@@ -49,6 +51,10 @@ public class WhenElement {
     
     public VariableType accept(TypeVisitor PP) {
         return PP.path(this);
+    }
+    
+    public Cuadruplo generate(IntermediateGenerable IG) {
+        return IG.visit(this);
     }
 
     

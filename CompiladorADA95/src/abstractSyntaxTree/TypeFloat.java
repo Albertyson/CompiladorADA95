@@ -1,6 +1,8 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import intermediateCode.Cuadruplo;
+import intermediateCode.IntermediateGenerable;
 import visitor.TypeVisitor;
 
 /**
@@ -25,4 +27,10 @@ public class TypeFloat extends VariableType {
     public boolean equals(Object obj) {
         return obj instanceof TypeFloat;
     }
+
+    @Override
+    public Cuadruplo generate(IntermediateGenerable IG) {
+        return IG.visit(this);
+    }
+    
 }

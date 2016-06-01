@@ -1,6 +1,8 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import intermediateCode.Cuadruplo;
+import intermediateCode.IntermediateGenerable;
 import visitor.TypeVisitor;
 
 
@@ -21,5 +23,10 @@ public class TypeBoolean extends VariableType {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof TypeBoolean;
+    }
+
+    @Override
+    public Cuadruplo generate(IntermediateGenerable IG) {
+        return IG.visit(this);
     }
 }
