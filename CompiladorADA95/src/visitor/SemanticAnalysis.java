@@ -23,7 +23,7 @@ public class SemanticAnalysis implements TypeVisitor {
     
     
     public void errorComplain(String message, int line, int col) {
-         System.err.println(message + "\nError at line: " + (line - 1) + ", col: " + (col - 1) + ".\n\n");
+         System.err.println("Error: (linea: " + (line - 1) + ", columna: " + (col - 1) + ") : " + message + ".\n\n");
 //        System.err.println(message + ".\n\n");
         this.hasErrors = true;
     }
@@ -893,7 +893,7 @@ public class SemanticAnalysis implements TypeVisitor {
         }
         functionReturnStack.pop();
         if(!hasReturn){
-            errorComplain("La funcin no tiene return",h.line,h.column);
+            errorComplain("La funcion no tiene return",h.line,h.column);
             return new TypeError();
         }
         this.scope = tmpScope;

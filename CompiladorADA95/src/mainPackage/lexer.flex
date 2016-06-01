@@ -30,7 +30,7 @@ import java_cup.runtime.*;
 FinLinea = \r|\n|\r\n
 InputCaracter = [^\r\n]
 EspacioBlanco = {FinLinea} | [ \t\f]
-Identificador = [:jletter:] [:jletterdigit:]*
+Identificador = [a-zA-Z_]+[0-9]*[a-zA-Z_]*
 NumeroEntero = 0 | [1-9](_?[0-9])*
 NumeroFloat = 0 | [0-9]+.[0-9](_?[0-9])*
 Caracter    = '\w'
