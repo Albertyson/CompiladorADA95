@@ -40,5 +40,5 @@ public class Equal extends BooleanExpression {
     public Cuadruplo generate(IntermediateGenerable IG) {
         return IG.visit(this);
     }
-
+    
 }

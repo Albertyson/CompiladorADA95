@@ -1,6 +1,8 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
+import intermediateCode.Cuadruplo;
+import intermediateCode.IntermediateGenerable;
 import visitor.TypeVisitor;
 
 
@@ -25,5 +27,8 @@ public class Not extends LogicalExpression {
         return PP.path(this);
     }
 
-    
+    @Override
+    public Cuadruplo generate(IntermediateGenerable IG) {
+        return IG.visit(this);
+    }
 }

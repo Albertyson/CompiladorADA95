@@ -36,7 +36,6 @@ public class Division extends ArithmeticExpression {
     public VariableType accept(TypeVisitor PP) {
         return PP.path(this);
     }
-
     @Override
     public Cuadruplo generate(IntermediateGenerable IG) {
         return IG.visit(this);
