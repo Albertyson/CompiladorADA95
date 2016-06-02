@@ -14,6 +14,7 @@ public class Cuadruplo {
     private String oper1;
     private String oper2;
     private String oper3;
+    private Etiqueta etiq;
 
     public Cuadruplo() {
     }
@@ -23,6 +24,14 @@ public class Cuadruplo {
         this.oper1 = oper1;
         this.oper2 = oper2;
         this.oper3 = oper3;
+    }
+    
+    public Cuadruplo(String operacion, String oper1, String oper2, String oper3, Etiqueta e) {
+        this.operacion = operacion;
+        this.oper1 = oper1;
+        this.oper2 = oper2;
+        this.oper3 = oper3;
+        this.etiq = e;
     }
 
     public String getOperacion() {
