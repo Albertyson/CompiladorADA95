@@ -15,6 +15,6 @@ public abstract class LogicalExpression extends Expression {
     public abstract VariableType accept(TypeVisitor PP);
     
     @Override
-    public abstract Cuadruplo generate(IntermediateGenerable IG);
+    public abstract String generate(IntermediateGenerable IG);
     
 }

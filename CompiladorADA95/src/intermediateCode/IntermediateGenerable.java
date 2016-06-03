@@ -13,134 +13,134 @@ import abstractSyntaxTree.*;
  */
 public interface IntermediateGenerable {
 
-    public Cuadruplo visit(Add aThis);
+    public String visit(Add h);
     
-    public Cuadruplo visit(And aThis);
+    public String visit(And h);
 
-    public Cuadruplo visit(AssignVariableSimple aThis);
+    public String visit(AssignVariableSimple h);
 
-    public Cuadruplo visit(AssignVariableWithDeclaration aThis);
+    public String visit(AssignVariableWithDeclaration h);
 
-    public Cuadruplo visit(IntegerNumber aThis);
+    public String visit(IntegerNumber h);
 
-    public Cuadruplo visit(CaseNotOthers aThis);
+    public String visit(CaseNotOthers h);
 
-    public Cuadruplo visit(CaseOthers aThis);
+    public String visit(CaseOthers h);
 
-    public Cuadruplo visit(Division aThis);
+    public String visit(Division h);
 
-    public Cuadruplo visit(Equal aThis);
+    public String visit(Equal h);
 
-    public Cuadruplo visit(Exit aThis);
+    public String visit(Exit h);
 
-    public Cuadruplo visit(False aThis);
+    public String visit(False h);
 
-    public Cuadruplo visit(FloatNumber aThis);
+    public String visit(FloatNumber h);
 
-    public Cuadruplo visit(For aThis);
+    public String visit(For h);
 
-    public Cuadruplo visit(FunctionCall aThis);
+    public String visit(FunctionCall h);
 
-    public Cuadruplo visit(GetValue aThis);
+    public String visit(GetValue h);
 
-    public Cuadruplo visit(Greater aThis);
+    public String visit(Greater h);
 
-    public Cuadruplo visit(GreaterOrEqual aThis);
+    public String visit(GreaterOrEqual h);
 
-    public Cuadruplo visit(Identifier aThis);
+    public String visit(Identifier h);
 
-    public Cuadruplo visit(IfSimple aThis);
+    public String visit(IfSimple h);
 
-    public Cuadruplo visit(IfWithElsIF aThis);
+    public String visit(IfWithElsIF h);
 
-    public Cuadruplo visit(IfWithElsIfAndElse aThis);
+    public String visit(IfWithElsIfAndElse h);
 
-    public Cuadruplo visit(IfWithElse aThis);
+    public String visit(IfWithElse h);
 
-    public Cuadruplo visit(Less aThis);
+    public String visit(Less h);
 
-    public Cuadruplo visit(LessOrEqual aThis);
+    public String visit(LessOrEqual h);
 
-    public Cuadruplo visit(Loop aThis);
+    public String visit(Loop h);
 
-    public Cuadruplo visit(Minus aThis);
+    public String visit(Minus h);
 
-    public Cuadruplo visit(Module aThis);
+    public String visit(Module h);
 
-    public Cuadruplo visit(Multiplication aThis);
+    public String visit(Multiplication h);
 
-    public Cuadruplo visit(Negative aThis);
+    public String visit(Negative h);
 
-    public Cuadruplo visit(Not aThis);
+    public String visit(Not h);
 
-    public Cuadruplo visit(NotEqual aThis);
+    public String visit(NotEqual h);
 
-    public Cuadruplo visit(Or aThis);
+    public String visit(Or h);
 
-    public Cuadruplo visit(Pow aThis);
+    public String visit(Pow h);
 
-    public Cuadruplo visit(PutValue aThis);
+    public String visit(PutValue h);
 
-    public Cuadruplo visit(Return aThis);
+    public String visit(Return h);
 
-    public Cuadruplo visit(StringLiteral aThis);
+    public String visit(StringLiteral h);
 
-    public Cuadruplo visit(True aThis);
+    public String visit(True h);
 
-    public Cuadruplo visit(While aThis);
+    public String visit(While h);
     
-    public Cuadruplo visit(FunctionDeclaration aThis);
+    public String visit(FunctionDeclaration h);
 
-    public Cuadruplo visit(ProcedureDeclaration aThis);
+    public String visit(ProcedureDeclaration h);
 
-    public Cuadruplo visit(VariableDeclaration aThis);
+    public String visit(VariableDeclaration h);
 
-    public Cuadruplo visit(ModeIn aThis);
+    public String visit(ModeIn h);
 
-    public Cuadruplo visit(ModeInOut aThis);
+    public String visit(ModeInOut h);
 
-    public Cuadruplo visit(ModeOut aThis);
+    public String visit(ModeOut h);
 
-    public Cuadruplo visit(TypeChar aThis);
+    public String visit(TypeChar h);
 
-    public Cuadruplo visit(TypeBoolean aThis);
+    public String visit(TypeBoolean h);
 
-    public Cuadruplo visit(TypeError aThis);
+    public String visit(TypeError h);
 
-    public Cuadruplo visit(TypeFloat aThis);
+    public String visit(TypeFloat h);
 
-    public Cuadruplo visit(TypeInteger aThis);
+    public String visit(TypeInteger h);
 
-    public Cuadruplo visit(TypeNull aThis);
+    public String visit(TypeNull h);
 
-    public Cuadruplo visit(TypeString aThis);
+    public String visit(TypeString h);
 
-    public Cuadruplo visit(DeclarationPart aThis);
+    public String visit(DeclarationPart h);
 
-    public Cuadruplo visit(ElsIf aThis);
+    public String visit(ElsIf h);
 
-    public Cuadruplo visit(ElsIfList aThis);
+    public String visit(ElsIfList h);
 
-    public Cuadruplo visit(FunctionParameters aThis);
+    public String visit(FunctionParameters h);
 
-    public Cuadruplo visit(Parameter aThis);
+    public String visit(Parameter h);
 
-    public Cuadruplo visit(ParameterDeclarations aThis);
+    public String visit(ParameterDeclarations h);
 
-    public Cuadruplo visit(Program aThis);
+    public String visit(Program h);
 
-    public Cuadruplo visit(Range aThis);
+    public String visit(Range h);
 
-    public Cuadruplo visit(Statements aThis);
+    public String visit(Statements h);
 
-    public Cuadruplo visit(WhenOptions aThis);
+    public String visit(WhenOptions h);
 
-    public Cuadruplo visit(WhenOption aThis);
+    public String visit(WhenOption h);
 
-    public Cuadruplo visit(WhenList aThis);
+    public String visit(WhenList h);
 
-    public Cuadruplo visit(WhenElement aThis);
+    public String visit(WhenElement h);
 
-    public Cuadruplo visit(VariableIDs aThis);
+    public String visit(VariableIDs h);
 
 }

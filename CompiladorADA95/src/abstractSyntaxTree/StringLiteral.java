@@ -29,7 +29,7 @@ public class StringLiteral extends LiteralExpression {
     }
 
     @Override
-    public Cuadruplo generate(IntermediateGenerable IG) {
+    public String generate(IntermediateGenerable IG) {
         return IG.visit(this);
     }
 }

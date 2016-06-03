@@ -40,7 +40,7 @@ public class CaseNotOthers extends Case {
     }
     
     @Override
-    public Cuadruplo generate(IntermediateGenerable IG) {
+    public String generate(IntermediateGenerable IG) {
         return IG.visit(this);
     }
 }

@@ -16,6 +16,6 @@ public abstract class Declaration {
     
     public abstract VariableType accept(TypeVisitor PP);
     
-    public abstract Cuadruplo generate(IntermediateGenerable IG);
+    public abstract String generate(IntermediateGenerable IG);
     
 }

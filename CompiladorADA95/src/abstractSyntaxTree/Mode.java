@@ -12,6 +12,6 @@ public abstract class Mode {
     
     public abstract VariableType accept(TypeVisitor PP);
     
-    public abstract Cuadruplo generate(IntermediateGenerable IG);
+    public abstract String generate(IntermediateGenerable IG);
     
 }

@@ -6,6 +6,8 @@
 package mainPackage;
 
 import abstractSyntaxTree.Program;
+import intermediateCode.Cuadruplo;
+import intermediateCode.IntermediateCodeGenerator;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -220,6 +223,9 @@ public class formPrincipal extends javax.swing.JFrame {
                     System.out.println("Errores Semanticos, se descontrola: aiuda");
                 }else{
                     System.out.println("Listo para generar codigo intermedio");
+                    ArrayList<Cuadruplo> cuadruplos = new ArrayList();
+                    IntermediateCodeGenerator icg = new IntermediateCodeGenerator(programa,cuadruplos);
+                    programa.generate(icg);
                 }                
             }
 //            btnShowTree.setEnabled(true);

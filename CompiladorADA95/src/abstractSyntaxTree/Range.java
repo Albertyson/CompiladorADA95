@@ -27,7 +27,7 @@ public class Range {
         return PP.path(this);
     }
     
-    public Cuadruplo generate(IntermediateGenerable IG) {
+    public String generate(IntermediateGenerable IG) {
         return IG.visit(this);
     }
 

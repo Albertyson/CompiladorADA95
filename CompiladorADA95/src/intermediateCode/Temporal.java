@@ -14,5 +14,9 @@ public class Temporal {
 
     public String nuevoTemporal(){
         return String.format("t%d", cont++);
-    }    
+    }
+    
+    public int getCurrentCont(){
+        return cont;
+    }
 }

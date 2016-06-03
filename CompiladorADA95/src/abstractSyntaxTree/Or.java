@@ -29,7 +29,7 @@ public class Or extends LogicalExpression {
     }
 
     @Override
-    public Cuadruplo generate(IntermediateGenerable IG) {
+    public String generate(IntermediateGenerable IG) {
         return IG.visit(this);
     }
 }

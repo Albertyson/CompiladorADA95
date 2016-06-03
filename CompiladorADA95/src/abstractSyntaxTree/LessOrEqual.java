@@ -27,7 +27,7 @@ public class LessOrEqual extends BooleanExpression {
         return PP.path(this);
     }
     @Override
-    public Cuadruplo generate(IntermediateGenerable IG) {
+    public String generate(IntermediateGenerable IG) {
         return IG.visit(this);
     }
 }

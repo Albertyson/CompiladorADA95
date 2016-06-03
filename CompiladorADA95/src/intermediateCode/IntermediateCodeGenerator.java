@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class IntermediateCodeGenerator implements IntermediateGenerable{
     private Program program;
     private ArrayList<Cuadruplo> cuadruplos;
+    private Temporal t = new Temporal();
 
     public IntermediateCodeGenerator(Program program, ArrayList<Cuadruplo> cuadruplos) {
         this.program = program;
@@ -30,327 +31,350 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     }
 
     @Override
-    public Cuadruplo visit(Add aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String visit(Add h) {
+        String t1=h.exp1.generate(this);
+        String t2=h.exp2.generate(this);
+        String temp=t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("+",t1,t2,temp));
+        return temp;
     }
 
     @Override
-    public Cuadruplo visit(And aThis) {
+    public String visit(And h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(AssignVariableSimple aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String visit(AssignVariableSimple h) {
+        String exp = h.exp.generate(this);
+        String destino = h.id.generate(this);
+        cuadruplos.add(new Cuadruplo("=",exp,destino));
+        return h.id.id;
     }
 
     @Override
-    public Cuadruplo visit(AssignVariableWithDeclaration aThis) {
+    public String visit(AssignVariableWithDeclaration h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(IntegerNumber aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String visit(IntegerNumber h) {
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("=",h.number+"",temp));
+        return temp;
     }
 
     @Override
-    public Cuadruplo visit(CaseNotOthers aThis) {
+    public String visit(CaseNotOthers h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(CaseOthers aThis) {
+    public String visit(CaseOthers h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Division aThis) {
+    public String visit(Division h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Equal aThis) {
+    public String visit(Equal h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Exit aThis) {
+    public String visit(Exit h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(False aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String visit(False h) {
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("=","false",temp));
+        return temp;
     }
 
     @Override
-    public Cuadruplo visit(FloatNumber aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String visit(FloatNumber h) {
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("=",h.number+"",temp));
+        return temp;
     }
 
     @Override
-    public Cuadruplo visit(For aThis) {
+    public String visit(For h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(FunctionCall aThis) {
+    public String visit(FunctionCall h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(GetValue aThis) {
+    public String visit(GetValue h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Greater aThis) {
+    public String visit(Greater h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(GreaterOrEqual aThis) {
+    public String visit(GreaterOrEqual h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Identifier aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String visit(Identifier h) {
+        return h.id;
     }
 
     @Override
-    public Cuadruplo visit(IfSimple aThis) {
+    public String visit(IfSimple h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(IfWithElsIF aThis) {
+    public String visit(IfWithElsIF h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(IfWithElsIfAndElse aThis) {
+    public String visit(IfWithElsIfAndElse h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(IfWithElse aThis) {
+    public String visit(IfWithElse h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Less aThis) {
+    public String visit(Less h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(LessOrEqual aThis) {
+    public String visit(LessOrEqual h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Loop aThis) {
+    public String visit(Loop h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Minus aThis) {
+    public String visit(Minus h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Module aThis) {
+    public String visit(Module h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Multiplication aThis) {
+    public String visit(Multiplication h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Negative aThis) {
+    public String visit(Negative h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Not aThis) {
+    public String visit(Not h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(NotEqual aThis) {
+    public String visit(NotEqual h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Or aThis) {
+    public String visit(Or h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Pow aThis) {
+    public String visit(Pow h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(PutValue aThis) {
+    public String visit(PutValue h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Return aThis) {
+    public String visit(Return h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(StringLiteral aThis) {
+    public String visit(StringLiteral h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(True aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String visit(True h) {
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("=","true",temp));
+        return temp;
     }
 
     @Override
-    public Cuadruplo visit(While aThis) {
+    public String visit(While h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(FunctionDeclaration aThis) {
+    public String visit(FunctionDeclaration h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(ProcedureDeclaration aThis) {
+    public String visit(ProcedureDeclaration h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(VariableDeclaration aThis) {
+    public String visit(VariableDeclaration h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(ModeIn aThis) {
+    public String visit(ModeIn h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(ModeInOut aThis) {
+    public String visit(ModeInOut h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(ModeOut aThis) {
+    public String visit(ModeOut h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(TypeChar aThis) {
+    public String visit(TypeChar h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(TypeBoolean aThis) {
+    public String visit(TypeBoolean h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(TypeError aThis) {
+    public String visit(TypeError h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(TypeFloat aThis) {
+    public String visit(TypeFloat h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(TypeInteger aThis) {
+    public String visit(TypeInteger h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(TypeNull aThis) {
+    public String visit(TypeNull h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(TypeString aThis) {
+    public String visit(TypeString h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(DeclarationPart aThis) {
+    public String visit(DeclarationPart h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(ElsIf aThis) {
+    public String visit(ElsIf h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(ElsIfList aThis) {
+    public String visit(ElsIfList h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(FunctionParameters aThis) {
+    public String visit(FunctionParameters h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Parameter aThis) {
+    public String visit(Parameter h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(ParameterDeclarations aThis) {
+    public String visit(ParameterDeclarations h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Program aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String visit(Program h) {
+        for(int i = 0; i < h.statements.size(); i++){
+            if(h.statements.getAt(i) instanceof AssignVariableSimple){
+                ((AssignVariableSimple)h.statements.getAt(i)).generate(this);                
+            }
+        }
+        for (int i = 0; i < cuadruplos.size(); i++) {
+            System.out.println(cuadruplos.get(i).toString());
+        }
+        return"";
     }
 
     @Override
-    public Cuadruplo visit(Range aThis) {
+    public String visit(Range h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(Statements aThis) {
+    public String visit(Statements h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(WhenOptions aThis) {
+    public String visit(WhenOptions h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(WhenOption aThis) {
+    public String visit(WhenOption h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(WhenList aThis) {
+    public String visit(WhenList h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(WhenElement aThis) {
+    public String visit(WhenElement h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Cuadruplo visit(VariableIDs aThis) {
+    public String visit(VariableIDs h) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

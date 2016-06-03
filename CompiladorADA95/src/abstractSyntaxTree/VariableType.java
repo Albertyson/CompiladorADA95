@@ -13,6 +13,6 @@ public abstract class VariableType {
     
     public abstract void accept(ParentPath PP);
     public abstract VariableType accept(TypeVisitor PP);
-    public abstract Cuadruplo generate(IntermediateGenerable IG);
+    public abstract String generate(IntermediateGenerable IG);
     
 }
