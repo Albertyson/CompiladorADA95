@@ -76,7 +76,11 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Division h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1=h.exp1.generate(this);
+        String t2=h.exp2.generate(this);
+        String temp=t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("/",t1,t2,temp));
+        return temp;
     }
 
     @Override
@@ -170,7 +174,11 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Minus h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1=h.exp1.generate(this);
+        String t2=h.exp2.generate(this);
+        String temp=t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("-",t1,t2,temp));
+        return temp;
     }
 
     @Override
@@ -180,12 +188,19 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Multiplication h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1=h.exp1.generate(this);
+        String t2=h.exp2.generate(this);
+        String temp=t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("*",t1,t2,temp));
+        return temp;
     }
 
     @Override
     public String visit(Negative h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String exp = h.exp.generate(this);
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("=","-"+exp,temp));
+        return temp;
     }
 
     @Override

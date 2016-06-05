@@ -3,4 +3,5 @@ procedure pruebaSuma is
 begin
    --test := 0;
    b:= 2 + 3;
+   a:= (b - 3 * 2) / 3 - 5;
 end pruebaSuma;
