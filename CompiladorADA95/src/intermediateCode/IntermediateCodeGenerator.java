@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package intermediateCode;
 
 import abstractSyntaxTree.*;
@@ -31,17 +26,21 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     }
 
     @Override
-    public String visit(Add h) {
-        String t1=h.exp1.generate(this);
-        String t2=h.exp2.generate(this);
-        String temp=t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("+",t1,t2,temp));
+    public String visit(Add h) {  
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("+", t1, t2, temp));
         return temp;
     }
 
     @Override
     public String visit(And h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("and", t1, t2, temp));
+        return temp;
     }
 
     @Override
@@ -54,82 +53,95 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(AssignVariableWithDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
     public String visit(IntegerNumber h) {
         String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("=",h.number+"",temp));
+        cuadruplos.add(new Cuadruplo("=", h.number + "", temp));
         return temp;
     }
 
     @Override
     public String visit(CaseNotOthers h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(CaseOthers h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(Division h) {
-        String t1=h.exp1.generate(this);
-        String t2=h.exp2.generate(this);
-        String temp=t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("/",t1,t2,temp));
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("/", t1, t2, temp));
         return temp;
     }
 
     @Override
     public String visit(Equal h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        cuadruplos.add(new Cuadruplo("if=", t1, t2, -1));
+        cuadruplos.add(new Cuadruplo("goto", -1));
+        return "";
     }
 
     @Override
     public String visit(Exit h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(False h) {
         String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("=","false",temp));
+        cuadruplos.add(new Cuadruplo("=", "false", temp));
         return temp;
     }
 
     @Override
     public String visit(FloatNumber h) {
         String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("=",h.number+"",temp));
+        cuadruplos.add(new Cuadruplo("=", h.number + "", temp));
         return temp;
     }
 
     @Override
     public String visit(For h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(FunctionCall h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(GetValue h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cuadruplos.add(new Cuadruplo("get", h.id.id, ""));
+        return h.id.id;
     }
 
     @Override
     public String visit(Greater h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        cuadruplos.add(new Cuadruplo("if>", t1, t2, -1));
+        cuadruplos.add(new Cuadruplo("goto", -1));
+        return "";
     }
 
     @Override
     public String visit(GreaterOrEqual h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        cuadruplos.add(new Cuadruplo("if>=", t1, t2, -1));
+        cuadruplos.add(new Cuadruplo("goto", -1));
+        return "";
     }
 
     @Override
@@ -139,37 +151,51 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(IfSimple h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        
+        
+        
+        
+        
     }
 
     @Override
     public String visit(IfWithElsIF h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(IfWithElsIfAndElse h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(IfWithElse h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(Less h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        cuadruplos.add(new Cuadruplo("if<", t1, t2, -1));
+        cuadruplos.add(new Cuadruplo("goto", -1));
+        return "";
     }
 
     @Override
     public String visit(LessOrEqual h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        cuadruplos.add(new Cuadruplo("if<=", t1, t2, -1));
+        cuadruplos.add(new Cuadruplo("goto", -1));
+        return "";
     }
 
     @Override
     public String visit(Loop h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
@@ -183,7 +209,11 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Module h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("%", t1, t2, temp));
+        return temp;
     }
 
     @Override
@@ -199,120 +229,137 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public String visit(Negative h) {
         String exp = h.exp.generate(this);
         String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("=","-"+exp,temp));
+        cuadruplos.add(new Cuadruplo("=", "-" + exp, temp));
         return temp;
     }
 
     @Override
     public String visit(Not h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp.generate(this);
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("not", t1, temp));
+        return temp;
     }
 
     @Override
     public String visit(NotEqual h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        cuadruplos.add(new Cuadruplo("if!=", t1, t2, -1));
+        cuadruplos.add(new Cuadruplo("goto", -1));
+        return "";
     }
 
     @Override
     public String visit(Or h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("or", t1, t2, temp));
+        return temp;
     }
 
     @Override
     public String visit(Pow h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp1.generate(this);
+        String t2 = h.exp2.generate(this);
+        String temp = t.nuevoTemporal();
+        cuadruplos.add(new Cuadruplo("^", t1, t2, temp));
+        return temp;
     }
 
     @Override
     public String visit(PutValue h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String t1 = h.exp.generate(this);
+        cuadruplos.add(new Cuadruplo("put", t1, ""));
+        return "";
     }
 
     @Override
     public String visit(Return h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(StringLiteral h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ""; //NO APLICA
     }
 
     @Override
     public String visit(True h) {
         String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("=","true",temp));
+        cuadruplos.add(new Cuadruplo("=", "true", temp));
         return temp;
     }
 
     @Override
     public String visit(While h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(FunctionDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(ProcedureDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     @Override
     public String visit(VariableDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");//   OJOOOOO
     }
 
     @Override
     public String visit(ModeIn h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String visit(ModeInOut h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String visit(ModeOut h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String visit(TypeChar h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String visit(TypeBoolean h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String visit(TypeError h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String visit(TypeFloat h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String visit(TypeInteger h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String visit(TypeNull h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String visit(TypeString h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
@@ -342,7 +389,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(ParameterDeclarations h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
 
     @Override
@@ -390,7 +437,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(VariableIDs h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");  // NUNCA SE MANDA A LLAMAR
     }
     
 }

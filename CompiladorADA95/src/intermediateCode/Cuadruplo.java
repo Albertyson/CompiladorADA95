@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package intermediateCode;
 
 /**
@@ -10,11 +5,11 @@ package intermediateCode;
  * @author Albertyson
  */
 public class Cuadruplo {
-    private String operacion="";
-    private String oper1="";
-    private String oper2="";
-    private String oper3="";
-    public int gt=-1;
+    private String operacion = "";
+    private String oper1 = "";
+    private String oper2 = "";
+    private String oper3 = "";
+    public int gt = -1;
 
     public Cuadruplo() {
     }
@@ -26,6 +21,7 @@ public class Cuadruplo {
         this.oper2 = oper2;
         this.oper3 = oper3;
     }
+    
     //para if
     public Cuadruplo(String operacion, String oper1, String oper2, int gt) {
         this.operacion = operacion;
@@ -33,12 +29,14 @@ public class Cuadruplo {
         this.oper2 = oper2;
         this.gt = gt;
     }
+    
     //para asignacion
     public Cuadruplo(String operacion, String oper1, String oper2) {
         this.operacion = operacion;
         this.oper1 = oper1;
         this.oper2 = oper2;
     }
+    
     //para el goto
     public Cuadruplo(String operacion, int gt) {
         this.operacion = operacion;
@@ -79,15 +77,15 @@ public class Cuadruplo {
 
     @Override
     public String toString() {
-        if(this.oper3.length()>0){
+        if(this.oper3.length() > 0){
             //aritmeticas, logicas, booleanas
             return oper3 + " = " + oper1 + " " + operacion + " " + oper2;
         }
-        if(gt>-1){
-            if(oper2.length()>0){
+        if(gt > -1){
+            if(oper2.length() > 0){
                 //if
                 return "if " + oper1 + " " + operacion.replace("if","") + " " + oper2 + " goto "+gt;
-            }else{
+            } else {
                 return "goto " + gt;
             }
         }
