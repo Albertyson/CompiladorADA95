@@ -13,8 +13,8 @@ import visitor.TypeVisitor;
 
 public abstract class Expression extends Statement {
     
-    public ArrayList<Integer> listaVerdadero=new ArrayList();
-    public ArrayList<Integer> listaFalso=new ArrayList();
+    public ArrayList<Integer> listaVerdadero = new ArrayList();
+    public ArrayList<Integer> listaFalso = new ArrayList();
     
     @Override
     public abstract void accept(ParentPath PP);

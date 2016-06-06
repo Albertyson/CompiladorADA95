@@ -23,8 +23,8 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         }
     }
     
-    public ArrayList<Cuadruplo> fusionar(ArrayList<Cuadruplo> l1,ArrayList<Cuadruplo> l2){
-        ArrayList<Cuadruplo> retList = new ArrayList();
+    public ArrayList<Integer> fusionar(ArrayList<Integer> l1, ArrayList<Integer> l2){
+        ArrayList<Integer> retList = new ArrayList();
         for (int i = 0; i < l1.size(); i++) {
             retList.add(l1.get(i));
         }
@@ -53,11 +53,19 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(And h) {
-        String t1 = h.exp1.generate(this);
-        String t2 = h.exp2.generate(this);
-        String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("and", t1, t2, temp));
-        return temp;
+        
+        for (int i = 0; i < h.exp1.listaVerdadero.size(); i++){
+            cuadruplos.get(h.exp1.listaVerdadero.get(i)).gt = h.exp2.listaVerdadero.get(0);
+        }
+        h.listaVerdadero = h.exp2.listaVerdadero;
+        h.listaFalso = fusionar(h.exp1.listaFalso, h.exp2.listaFalso);
+        
+        return "";
+//        String t1 = h.exp1.generate(this);
+//        String t2 = h.exp2.generate(this);
+//        String temp = t.nuevoTemporal();
+//        cuadruplos.add(new Cuadruplo("and", t1, t2, temp));
+//        return temp;
     }
 
     @Override
@@ -104,7 +112,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         String t1 = h.exp1.generate(this);
         String t2 = h.exp2.generate(this);
         cuadruplos.add(new Cuadruplo("if=", t1, t2, -1));
+        h.listaVerdadero.add(cuadruplos.size() - 1);
         cuadruplos.add(new Cuadruplo("goto", -1));
+        h.listaFalso.add(cuadruplos.size() - 1);
         return "";
     }
 
@@ -148,7 +158,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         String t1 = h.exp1.generate(this);
         String t2 = h.exp2.generate(this);
         cuadruplos.add(new Cuadruplo("if>", t1, t2, -1));
+        h.listaVerdadero.add(cuadruplos.size() - 1);
         cuadruplos.add(new Cuadruplo("goto", -1));
+        h.listaFalso.add(cuadruplos.size() - 1);
         return "";
     }
 
@@ -157,7 +169,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         String t1 = h.exp1.generate(this);
         String t2 = h.exp2.generate(this);
         cuadruplos.add(new Cuadruplo("if>=", t1, t2, -1));
+        h.listaVerdadero.add(cuadruplos.size() - 1);
         cuadruplos.add(new Cuadruplo("goto", -1));
+        h.listaFalso.add(cuadruplos.size() - 1);
         return "";
     }
 
@@ -168,13 +182,24 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(IfSimple h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         
+        h.exp.generate(this);
         
+        // llenar verdaderos con goto hacia la primera linea de los stamtements del if
+        for(int i = 0; i < h.exp.listaVerdadero.size(); i++){
+            cuadruplos.get(h.exp.listaVerdadero.get(i)).gt = cuadruplos.size();
+        }
         
+        for(int i = 0; i < h.statements.size(); i++){
+            h.statements.getAt(i).generate(this);
+        }
         
+        // llenar falsas con goto hacia la ultima linea de los stamtements del if
+        for(int i = 0; i < h.exp.listaFalso.size(); i++){
+            cuadruplos.get(h.exp.listaFalso.get(i)).gt = cuadruplos.size();
+        }
         
-        
+        return "";
     }
 
     @Override
@@ -197,7 +222,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         String t1 = h.exp1.generate(this);
         String t2 = h.exp2.generate(this);
         cuadruplos.add(new Cuadruplo("if<", t1, t2, -1));
+        h.listaVerdadero.add(cuadruplos.size() - 1);
         cuadruplos.add(new Cuadruplo("goto", -1));
+        h.listaFalso.add(cuadruplos.size() - 1);
         return "";
     }
 
@@ -206,7 +233,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         String t1 = h.exp1.generate(this);
         String t2 = h.exp2.generate(this);
         cuadruplos.add(new Cuadruplo("if<=", t1, t2, -1));
+        h.listaVerdadero.add(cuadruplos.size() - 1);
         cuadruplos.add(new Cuadruplo("goto", -1));
+        h.listaFalso.add(cuadruplos.size() - 1);
         return "";
     }
 
@@ -252,10 +281,16 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Not h) {
-        String t1 = h.exp.generate(this);
-        String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("not", t1, temp));
-        return temp;
+        
+        h.listaVerdadero = h.exp.listaFalso;
+        h.listaFalso = h.exp.listaVerdadero;
+        
+        return "";
+        
+//        String t1 = h.exp.generate(this);
+//        String temp = t.nuevoTemporal();
+//        cuadruplos.add(new Cuadruplo("not", t1, temp));
+//        return temp;
     }
 
     @Override
@@ -263,17 +298,28 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         String t1 = h.exp1.generate(this);
         String t2 = h.exp2.generate(this);
         cuadruplos.add(new Cuadruplo("if!=", t1, t2, -1));
+        h.listaVerdadero.add(cuadruplos.size() - 1);
         cuadruplos.add(new Cuadruplo("goto", -1));
+        h.listaFalso.add(cuadruplos.size() - 1);
         return "";
     }
 
     @Override
     public String visit(Or h) {
-        String t1 = h.exp1.generate(this);
-        String t2 = h.exp2.generate(this);
-        String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("or", t1, t2, temp));
-        return temp;
+        
+        for (int i = 0; i < h.exp1.listaFalso.size(); i++){
+            cuadruplos.get(h.exp1.listaFalso.get(i)).gt = h.exp2.listaVerdadero.get(0);
+        }
+        h.listaFalso = h.exp2.listaFalso;
+        h.listaVerdadero = fusionar(h.exp1.listaVerdadero, h.exp2.listaVerdadero);
+       
+        return "";
+        
+//        String t1 = h.exp1.generate(this);
+//        String t2 = h.exp2.generate(this);
+//        String temp = t.nuevoTemporal();
+//        cuadruplos.add(new Cuadruplo("or", t1, t2, temp));
+//        return temp;
     }
 
     @Override
