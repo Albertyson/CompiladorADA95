@@ -3,6 +3,7 @@ package abstractSyntaxTree;
 import AST_Path.ParentPath;
 import intermediateCode.Cuadruplo;
 import intermediateCode.IntermediateGenerable;
+import java.util.ArrayList;
 import visitor.TypeVisitor;
 
 /**
@@ -11,6 +12,9 @@ import visitor.TypeVisitor;
  */
 
 public abstract class Expression extends Statement {
+    
+    public ArrayList<Integer> listaVerdadero=new ArrayList();
+    public ArrayList<Integer> listaFalso=new ArrayList();
     
     @Override
     public abstract void accept(ParentPath PP);

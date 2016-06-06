@@ -16,7 +16,24 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         this.program = program;
         this.cuadruplos = cuadruplos;
     }
-
+    
+    public void completar(ArrayList<Cuadruplo> lista,int idx){
+        for (int i = 0; i < lista.size(); i++) {
+            lista.get(i).gt = idx;
+        }
+    }
+    
+    public ArrayList<Cuadruplo> fusionar(ArrayList<Cuadruplo> l1,ArrayList<Cuadruplo> l2){
+        ArrayList<Cuadruplo> retList = new ArrayList();
+        for (int i = 0; i < l1.size(); i++) {
+            retList.add(l1.get(i));
+        }
+        for (int i = 0; i < l2.size(); i++) {
+            retList.add(l2.get(i));
+        }
+        return retList;
+    }
+    
     public Program getProgram() {
         return program;
     }
@@ -151,7 +168,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(IfSimple h) {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         
         
         
