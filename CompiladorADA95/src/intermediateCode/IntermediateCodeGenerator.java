@@ -53,7 +53,8 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(And h) {
-        
+        h.exp1.generate(this);
+        h.exp2.generate(this);
         for (int i = 0; i < h.exp1.listaVerdadero.size(); i++){
             cuadruplos.get(h.exp1.listaVerdadero.get(i)).gt = h.exp2.listaVerdadero.get(0);
         }
@@ -127,6 +128,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public String visit(False h) {
         String temp = t.nuevoTemporal();
         cuadruplos.add(new Cuadruplo("=", "false", temp));
+        h.listaFalso.add(cuadruplos.size() - 1);
         return temp;
     }
 
@@ -281,7 +283,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Not h) {
-        
+        h.exp.generate(this);
         h.listaVerdadero = h.exp.listaFalso;
         h.listaFalso = h.exp.listaVerdadero;
         
@@ -306,7 +308,8 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Or h) {
-        
+        h.exp1.generate(this);
+        h.exp2.generate(this);
         for (int i = 0; i < h.exp1.listaFalso.size(); i++){
             cuadruplos.get(h.exp1.listaFalso.get(i)).gt = h.exp2.listaVerdadero.get(0);
         }
@@ -352,6 +355,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public String visit(True h) {
         String temp = t.nuevoTemporal();
         cuadruplos.add(new Cuadruplo("=", "true", temp));
+        h.listaVerdadero.add(cuadruplos.size() - 1);
         return temp;
     }
 
@@ -459,11 +463,14 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public String visit(Program h) {
         for(int i = 0; i < h.statements.size(); i++){
             if(h.statements.getAt(i) instanceof AssignVariableSimple){
-                ((AssignVariableSimple)h.statements.getAt(i)).generate(this);                
+                ((AssignVariableSimple)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfSimple){
+                ((IfSimple)h.statements.getAt(i)).generate(this);
             }
         }
         for (int i = 0; i < cuadruplos.size(); i++) {
-            System.out.println(cuadruplos.get(i).toString());
+            System.out.println(i+": "+cuadruplos.get(i).toString());
         }
         return"";
     }
