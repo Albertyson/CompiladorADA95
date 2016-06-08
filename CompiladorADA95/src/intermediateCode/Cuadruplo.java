@@ -10,10 +10,15 @@ public class Cuadruplo {
     private String oper2 = "";
     private String oper3 = "";
     public int gt = -1;
+    public boolean esEtiqueta=false;
+    public String etiqueta = "";
 
     public Cuadruplo() {
     }
-
+    
+    public Cuadruplo(String e) {
+        this.etiqueta = e;
+    }
     //para aritmeticas, booleanas, lógicas
     public Cuadruplo(String operacion, String oper1, String oper2, String oper3) {
         this.operacion = operacion;
@@ -84,10 +89,13 @@ public class Cuadruplo {
         if(gt > -1){
             if(oper2.length() > 0){
                 //if
-                return "if " + oper1 + " " + operacion.replace("if","") + " " + oper2 + " goto "+gt;
+                return "if " + oper1 + " " + operacion.replace("if","") + " " + oper2 + " goto _etiq"+gt;
             } else {
-                return "goto " + gt;
+                return "goto " + "_etiq" + gt;
             }
+        }
+        if(etiqueta.length()>0){
+            return etiqueta + ":";
         }
         return oper2 + " " + operacion + " " + oper1;
     }

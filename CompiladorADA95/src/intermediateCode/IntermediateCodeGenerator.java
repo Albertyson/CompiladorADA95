@@ -58,6 +58,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         for (int i = 0; i < h.exp1.listaVerdadero.size(); i++){
             cuadruplos.get(h.exp1.listaVerdadero.get(i)).gt = h.exp2.listaVerdadero.get(0);
         }
+        cuadruplos.get(h.exp2.listaVerdadero.get(0)).esEtiqueta = true;
         h.listaVerdadero = h.exp2.listaVerdadero;
         h.listaFalso = fusionar(h.exp1.listaFalso, h.exp2.listaFalso);
         
@@ -190,16 +191,25 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         // llenar verdaderos con goto hacia la primera linea de los stamtements del if
         for(int i = 0; i < h.exp.listaVerdadero.size(); i++){
             cuadruplos.get(h.exp.listaVerdadero.get(i)).gt = cuadruplos.size();
+            
         }
-        
+//        int x = cuadruplos.size();
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
         for(int i = 0; i < h.statements.size(); i++){
             h.statements.getAt(i).generate(this);
         }
         
+//        cuadruplos.get(x).esEtiqueta = true;        
+        
         // llenar falsas con goto hacia la ultima linea de los stamtements del if
         for(int i = 0; i < h.exp.listaFalso.size(); i++){
             cuadruplos.get(h.exp.listaFalso.get(i)).gt = cuadruplos.size();
+//            int idx = cuadruplos.get(h.exp.listaFalso.get(i)).gt;
+//            cuadruplos.get(idx).esEtiqueta = true;
+//            cuadruplos.get(h.exp.listaFalso.get(i)).esEtiqueta = true;
         }
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+//        cuadruplos.get( cuadruplos.get(h.exp.listaFalso.get(0)).gt).esEtiqueta = true;
         
         return "";
     }
@@ -313,6 +323,8 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         for (int i = 0; i < h.exp1.listaFalso.size(); i++){
             cuadruplos.get(h.exp1.listaFalso.get(i)).gt = h.exp2.listaVerdadero.get(0);
         }
+        cuadruplos.get(h.exp2.listaVerdadero.get(0)).esEtiqueta = true;
+        
         h.listaFalso = h.exp2.listaFalso;
         h.listaVerdadero = fusionar(h.exp1.listaVerdadero, h.exp2.listaVerdadero);
        
@@ -469,8 +481,8 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
                 ((IfSimple)h.statements.getAt(i)).generate(this);
             }
         }
-        for (int i = 0; i < cuadruplos.size(); i++) {
-            System.out.println(i+": "+cuadruplos.get(i).toString());
+        for (int i = 0; i < cuadruplos.size(); i++) {            
+            System.out.println((cuadruplos.get(i).esEtiqueta ? "_etiq"+i+":\n" : "")+cuadruplos.get(i).toString());
         }
         return"";
     }
