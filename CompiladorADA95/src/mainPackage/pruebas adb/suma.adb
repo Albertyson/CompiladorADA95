@@ -9,8 +9,10 @@ begin
    		c:= 8;
    	elsif(a<c) then
    		c:= 5;
-   	elsif(a=c) then
+   	elsif(a=2) then
    		c:=4;
+   	else
+   		c:=2;
    	end if;
    	-- a:= 3;
 end pruebaSuma;

@@ -283,7 +283,6 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         for(int i = 0; i < h.expression.listaFalso.size(); i++){
             cuadruplos.get(h.expression.listaFalso.get(i)).setGt(cuadruplos.size());
         }
-        cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
         
         for (int i = 0; i < h.elsIfList.size(); i++){
             cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
@@ -602,6 +601,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
             }
             if(h.statements.getAt(i) instanceof IfWithElsIF){
                 ((IfWithElsIF)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfWithElsIfAndElse){
+                ((IfWithElsIfAndElse)h.statements.getAt(i)).generate(this);
             }
         }
         for (int i = 0; i < cuadruplos.size(); i++) {            
