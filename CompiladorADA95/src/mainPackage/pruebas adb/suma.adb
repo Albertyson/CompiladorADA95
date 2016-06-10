@@ -5,8 +5,12 @@ begin
    	b:= 2 + 3;
    	a:= (b - 3 * 2) / 3 - 5;
    	c:= 4;
-   	if(a>c or b>c and a=0 or not(a<c)) then
-   		c:=8;
+   	if(a>c) then
+   		c:= 8;
+   	elsif(a<c) then
+   		c:= 5;
+   	elsif(a=c) then
+   		c:=4;
    	end if;
    	-- a:= 3;
 end pruebaSuma;

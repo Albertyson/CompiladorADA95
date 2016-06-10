@@ -223,7 +223,46 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(IfWithElsIF h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        h.expression.generate(this);
+        // llenar verdaderos con goto hacia la primera linea de los statements del if
+        for(int i = 0; i < h.expression.listaVerdadero.size(); i++){
+            cuadruplos.get(h.expression.listaVerdadero.get(i)).setGt(cuadruplos.size());            
+        }
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        for(int i = 0; i < h.statements.size(); i++){
+            h.statements.getAt(i).generate(this);
+        }
+        ArrayList<Integer> saltos = new ArrayList();
+        saltos.add(cuadruplos.size());
+        
+        cuadruplos.add(new Cuadruplo("goto",-1));
+        
+        // llenar falsas con goto hacia la ultima linea de los statements del if
+        for(int i = 0; i < h.expression.listaFalso.size(); i++){
+            cuadruplos.get(h.expression.listaFalso.get(i)).setGt(cuadruplos.size());
+        }
+        for(int i=0 ;i < h.elsIfList.size(); i++){
+            cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+            h.elsIfList.getAt(i).exp.generate(this);
+            for(int j = 0; j < h.elsIfList.getAt(i).exp.listaVerdadero.size();j++){
+                cuadruplos.get(h.elsIfList.getAt(i).exp.listaVerdadero.get(j)).setGt(cuadruplos.size());
+            }
+            cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+            for(int j = 0; j<h.elsIfList.getAt(i).stms.size(); j++){
+                h.elsIfList.getAt(i).stms.getAt(j).generate(this);
+            }
+            saltos.add(cuadruplos.size());
+            cuadruplos.add(new Cuadruplo("goto",-1));
+            for(int j = 0; j < h.elsIfList.getAt(i).exp.listaFalso.size();j++){
+                cuadruplos.get(h.elsIfList.getAt(i).exp.listaFalso.get(j)).setGt(cuadruplos.size());
+            }            
+        }
+        //recorrer la lista de saltos
+        for(int i = 0; i < saltos.size(); i++){
+            cuadruplos.get(saltos.get(i)).setGt(cuadruplos.size());
+        }
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        return "";
     }
 
     @Override
@@ -242,12 +281,21 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         for(int i = 0; i < h.s1.size(); i++){
             h.s1.getAt(i).generate(this);
         }
-        cuadruplos.add(new Cuadruplo("goto",-1));
         int gtTrue = cuadruplos.size();
+        cuadruplos.add(new Cuadruplo("goto",-1));        
+        
         // llenar falsas con goto hacia la ultima linea de los statements del if
         for(int i = 0; i < h.exp.listaFalso.size(); i++){
             cuadruplos.get(h.exp.listaFalso.get(i)).setGt(cuadruplos.size());
         }
+        
+        //generar statements del else
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        for(int i = 0; i < h.s2.size(); i++){
+            h.s2.getAt(i).generate(this);
+        }
+        
+        cuadruplos.get(gtTrue).setGt(cuadruplos.size());        
         cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
         return "";
     }
@@ -504,6 +552,12 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
             }
             if(h.statements.getAt(i) instanceof IfSimple){
                 ((IfSimple)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfWithElse){
+                ((IfWithElse)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfWithElsIF){
+                ((IfWithElsIF)h.statements.getAt(i)).generate(this);
             }
         }
         for (int i = 0; i < cuadruplos.size(); i++) {            
