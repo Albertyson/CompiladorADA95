@@ -9,8 +9,7 @@ public class Cuadruplo {
     private String oper1 = "";
     private String oper2 = "";
     private String oper3 = "";
-    public int gt = -1;
-    public boolean esEtiqueta=false;
+    private int gt = -1;
     public String etiqueta = "";
 
     public Cuadruplo() {
@@ -46,6 +45,15 @@ public class Cuadruplo {
     public Cuadruplo(String operacion, int gt) {
         this.operacion = operacion;
         this.gt = gt;
+    }
+
+    public int getGt() {
+        return gt;
+    }
+
+    public void setGt(int gt) {
+        this.gt = gt;
+        this.etiqueta = "_etiq"+gt;
     }
     
     public String getOperacion() {
@@ -89,9 +97,9 @@ public class Cuadruplo {
         if(gt > -1){
             if(oper2.length() > 0){
                 //if
-                return "if " + oper1 + " " + operacion.replace("if","") + " " + oper2 + " goto _etiq"+gt;
+                return "if " + oper1 + " " + operacion.replace("if","") + " " + oper2 + " goto " + etiqueta;
             } else {
-                return "goto " + "_etiq" + gt;
+                return "goto " + etiqueta;
             }
         }
         if(etiqueta.length()>0){
