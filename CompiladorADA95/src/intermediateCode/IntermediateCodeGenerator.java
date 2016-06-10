@@ -217,7 +217,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         for(int i = 0; i < h.exp.listaFalso.size(); i++){
             cuadruplos.get(h.exp.listaFalso.get(i)).setGt(cuadruplos.size());
         }
-        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
         return "";
     }
 
@@ -267,7 +267,51 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(IfWithElsIfAndElse h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        ArrayList<Integer> saltos = new ArrayList();
+        h.expression.generate(this);
+        // llenar verdaderos con goto hacia la primera linea de los statements del if
+        for(int i = 0; i < h.expression.listaVerdadero.size(); i++){
+            cuadruplos.get(h.expression.listaVerdadero.get(i)).setGt(cuadruplos.size());            
+        }
+        cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+        for(int i = 0; i < h.statements.size(); i++){
+            h.statements.getAt(i).generate(this);
+        }
+        saltos.add(cuadruplos.size());
+        cuadruplos.add(new Cuadruplo("goto", -1));
+        // llenar falsas con goto hacia la ultima linea de los statements del if
+        for(int i = 0; i < h.expression.listaFalso.size(); i++){
+            cuadruplos.get(h.expression.listaFalso.get(i)).setGt(cuadruplos.size());
+        }
+        cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+        
+        for (int i = 0; i < h.elsIfList.size(); i++){
+            cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+            h.elsIfList.getAt(i).exp.generate(this);
+            for(int j = 0; j < h.elsIfList.getAt(i).exp.listaVerdadero.size(); j++){
+                cuadruplos.get(h.elsIfList.getAt(i).exp.listaVerdadero.get(j)).setGt(cuadruplos.size());
+            }
+            cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+            
+            for(int j = 0; j<h.elsIfList.getAt(i).stms.size(); j++){
+                h.elsIfList.getAt(i).stms.getAt(j).generate(this);
+            }
+            saltos.add(cuadruplos.size());
+            cuadruplos.add(new Cuadruplo("goto",-1));
+            
+            for(int j = 0; j < h.elsIfList.getAt(i).exp.listaFalso.size();j++){
+                cuadruplos.get(h.elsIfList.getAt(i).exp.listaFalso.get(j)).setGt(cuadruplos.size());
+            }  
+        }
+        cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+        for(int i = 0; i < h.elseStatements.size(); i++){
+            h.elseStatements.getAt(i).generate(this);
+        }
+        for (int i = 0; i < saltos.size(); i++){
+            cuadruplos.get(saltos.get(i)).setGt(cuadruplos.size());
+        }
+        cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+        return "";
     }
 
     @Override
