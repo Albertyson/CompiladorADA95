@@ -141,7 +141,12 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Exit h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        h.exp.generate(this);
+        for(int i=0;i<h.exp.listaFalso.size();i++){
+            cuadruplos.get(h.exp.listaFalso.get(i)).setGt(cuadruplos.size());
+        }
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        return "";
     }
 
     @Override
@@ -161,7 +166,55 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(For h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        //asignación de la variable de for
+        cuadruplos.add(new Cuadruplo("=",((IntegerNumber)h.range.exp1).number+"",h.id.id));
+        
+        
+        //generar etiqueta para saltar a la expresión
+        int saltoExp = cuadruplos.size();
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        
+        //evaluación de la expresión
+        String t1 = h.id.id;
+        String t2 = ((IntegerNumber)h.range.exp2).number+"";
+        int gtTrue = cuadruplos.size();
+        cuadruplos.add(new Cuadruplo("if<=", t1, t2, -1));
+        int gtFalse = cuadruplos.size();
+        cuadruplos.add(new Cuadruplo("goto", -1));
+        
+        //setear goto de la exp verdader
+        cuadruplos.get(gtTrue).setGt(cuadruplos.size());
+        //crea etiqueta de statements del for
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        //generar statements
+        for(int i = 0; i < h.statements.size(); i++){
+            h.statements.getAt(i).generate(this);
+        }
+        //generar incremento i = i + 1
+        String temp = t.nuevoTemporal(); //t
+        cuadruplos.add(new Cuadruplo("+",h.id.id,"1",temp));//t=i+1
+        cuadruplos.add(new Cuadruplo("=",temp,h.id.id));//i=t
+        
+        //saltar a la expresión
+        cuadruplos.add(new Cuadruplo("goto",-1));
+        cuadruplos.get(cuadruplos.size()-1).setGt(saltoExp);
+        //setear el goto de la expresión falso
+        cuadruplos.get(gtFalse).setGt(cuadruplos.size());
+        
+        //caso especial para los exit when
+        for(int i = 0; i < h.statements.size(); i++){
+            if(h.statements.getAt(i) instanceof Exit){
+                Exit e = ((Exit)h.statements.getAt(i));
+                for(int j=0; j < e.exp.listaVerdadero.size(); j++){
+                    cuadruplos.get(e.exp.listaVerdadero.get(j)).setGt(cuadruplos.size());
+                }
+            }
+        }
+        
+        //crea etiqueta para el afuera del for
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        
+        return "";
     }
 
     @Override
@@ -367,7 +420,27 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Loop h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        int salto = cuadruplos.size();
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        for (int i = 0; i < h.s.size(); i++) {
+            h.s.getAt(i).generate(this);
+        }
+        //generar goto
+        cuadruplos.add(new Cuadruplo("goto",-1));
+        cuadruplos.get(cuadruplos.size()-1).setGt(salto);
+        //generar etiqueta de salida de loop
+        int saltoFuera = cuadruplos.size();
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        //caso especial para los exit when
+        for(int i = 0; i < h.s.size(); i++){
+            if(h.s.getAt(i) instanceof Exit){
+                Exit e = ((Exit)h.s.getAt(i));
+                for(int j=0; j < e.exp.listaVerdadero.size(); j++){
+                    cuadruplos.get(e.exp.listaVerdadero.get(j)).setGt(saltoFuera);
+                }
+            }
+        }
+        return "";
     }
 
     @Override
@@ -489,7 +562,37 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(While h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        //crea etiqueta para saltar a la expresión
+        int gotoExp = cuadruplos.size();
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        h.exp.generate(this);
+        for(int i = 0; i < h.exp.listaVerdadero.size(); i++){
+            cuadruplos.get(h.exp.listaVerdadero.get(i)).setGt(cuadruplos.size());
+        }
+        //crear etiqueta para statements
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        //generar statements
+        for (int i = 0; i < h.est.size(); i++) {
+            h.est.getAt(i).generate(this);
+        }
+        //generar goto hacia la expresión
+        cuadruplos.add(new Cuadruplo("goto",-1));
+        cuadruplos.get(cuadruplos.size()-1).setGt(gotoExp);
+        //completar la lista de falsos de h.exp
+        for(int i = 0; i < h.exp.listaFalso.size(); i++){
+            cuadruplos.get(h.exp.listaFalso.get(i)).setGt(cuadruplos.size());
+        }
+        //caso especial para los exit when
+        for(int i = 0; i < h.est.size(); i++){
+            if(h.est.getAt(i) instanceof Exit){
+                Exit e = ((Exit)h.est.getAt(i));
+                for(int j=0; j < e.exp.listaVerdadero.size(); j++){
+                    cuadruplos.get(e.exp.listaVerdadero.get(j)).setGt(cuadruplos.size());
+                }
+            }
+        }
+        cuadruplos.add(new Cuadruplo("_etiq"+cuadruplos.size()));
+        return "";
     }
 
     @Override
@@ -604,6 +707,15 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
             }
             if(h.statements.getAt(i) instanceof IfWithElsIfAndElse){
                 ((IfWithElsIfAndElse)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof For){
+                ((For)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof While){
+                ((While)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof Loop){
+                ((Loop)h.statements.getAt(i)).generate(this);
             }
         }
         for (int i = 0; i < cuadruplos.size(); i++) {            

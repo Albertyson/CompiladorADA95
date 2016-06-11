@@ -562,7 +562,7 @@ public class SemanticAnalysis implements TypeVisitor {
                 supIdentifier = true;
             }
         }else if(h.exp2 instanceof IntegerNumber){
-            inferior = ((IntegerNumber)h.exp2).number;
+            superior = ((IntegerNumber)h.exp2).number;
         }else{
             errorComplain("Se esperaba una expresion de tipo Integer para el limite superior del Range",h.line,h.column);
             return new TypeError();
