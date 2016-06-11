@@ -176,7 +176,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         
         //evaluación de la expresión
         String t1 = h.id.id;
-        String t2 = ((IntegerNumber)h.range.exp2).number+"";
+        String t2 = h.range.exp2.generate(this);
         int gtTrue = cuadruplos.size();
         cuadruplos.add(new Cuadruplo("if<=", t1, t2, -1));
         int gtFalse = cuadruplos.size();

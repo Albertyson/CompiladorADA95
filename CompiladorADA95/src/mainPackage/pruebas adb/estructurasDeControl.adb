@@ -26,8 +26,9 @@ begin
 		put("dentro de loop");
 		inicioWhile:= inicioWhile + 3;
 		loop
-			exit when true;
+			i:=i+2;
+			exit when i>35;
 		end loop;
-		exit when true;
+		exit when inicioWhile>4;
 	end loop;
 end EstructurasDeControl ;
