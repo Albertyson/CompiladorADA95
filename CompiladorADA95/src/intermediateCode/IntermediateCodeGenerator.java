@@ -642,7 +642,6 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(FunctionDeclaration h) {
-        
         cuadruplos.add(new Cuadruplo("_" + h.id1.id));
         
         for (int i = 0; i < h.statements.size(); i++){
@@ -656,14 +655,26 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         
         cuadruplos.add(new Cuadruplo("_fin" + h.id1.id));
         cuadruplos.add(new Cuadruplo("jr"));
-        
         return "";
     }
 
     
     @Override
     public String visit(ProcedureDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        cuadruplos.add(new Cuadruplo("_" + h.id1.id));
+        
+        for (int i = 0; i < h.statements.size(); i++){
+            if (h.statements.getAt(i) instanceof Return){
+                cuadruplos.add(new Cuadruplo("=", ((Return)h.statements.getAt(i)).exp.generate(this), "ret"));      // OJO
+                cuadruplos.add(new Cuadruplo("goto _fin" + h.id1.id));
+            } else {
+                h.statements.getAt(i).generate(this);
+            }
+        }
+        
+        cuadruplos.add(new Cuadruplo("_fin" + h.id1.id));
+        cuadruplos.add(new Cuadruplo("jr"));
+        return "";
     }
 
     
@@ -759,7 +770,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Parameter h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< OJO
     }
     
 
@@ -772,11 +783,15 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     @Override
     public String visit(Program h) {
         
-        
-//        for (int i = 0; i < h.declarations.size(); i++){
-//            h.declarations.getAt(i).generate(this);
-//        }
-        
+        for (int i = 0; i < h.declarations.size(); i++){
+            if (h.declarations.getAt(i) instanceof VariableDeclaration){
+                for (int j = 0; i < ((VariableDeclaration)h.declarations.getAt(i)).variables.size(); j++){
+                    cuadruplos.add(new Cuadruplo("var " + ((VariableDeclaration)h.declarations.getAt(i)).variables.getAt(j).id));
+                }        
+            } else {
+                h.declarations.getAt(i).generate(this);
+            }
+        }
         
         for(int i = 0; i < h.statements.size(); i++){
             if(h.statements.getAt(i) instanceof AssignVariableSimple){
