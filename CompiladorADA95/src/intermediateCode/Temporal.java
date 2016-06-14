@@ -13,7 +13,7 @@ public class Temporal {
     private static int cont = 0;
 
     public String nuevoTemporal(){
-        return String.format("t%d", cont++);
+        return String.format("_t%d", cont++);
     }
     
     public int getCurrentCont(){

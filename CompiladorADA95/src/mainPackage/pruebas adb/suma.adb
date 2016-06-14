@@ -1,8 +1,23 @@
 procedure pruebaSuma is
    	a,b,c: Integer;
+      function sumar( n1,n2: Integer) return Integer is
+      begin
+         if (n1>n2) then         
+            return n1 + n2 + 1;
+         elsif(n2=n1) then
+            return n2 + n1 + 2;
+         end if;
+         return n1+n2 + 4;
+      end sumar;
+      procedure imprimirHola() is
+      begin
+         put("Hola");
+         put("Adios");
+         put("Hola");
+      end imprimirHola;
 begin
    	--test := 0;
-   	b:= 2 + 3;
+   	b:= sumar(2, 5);
    	a:= (b - 3 * 2) / 3 - 5;
    	c:= 4;
    	if(a>c) then
@@ -14,5 +29,6 @@ begin
    	else
    		c:=2;
    	end if;
+      imprimirHola();
    	-- a:= 3;
 end pruebaSuma;

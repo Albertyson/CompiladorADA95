@@ -6,6 +6,7 @@
 package mainPackage;
 
 import abstractSyntaxTree.Program;
+import finalCodePackage.FinalCodeGenerator;
 import intermediateCode.Cuadruplo;
 import intermediateCode.IntermediateCodeGenerator;
 import java.awt.Desktop;
@@ -226,6 +227,10 @@ public class formPrincipal extends javax.swing.JFrame {
                     ArrayList<Cuadruplo> cuadruplos = new ArrayList();
                     IntermediateCodeGenerator icg = new IntermediateCodeGenerator(programa,cuadruplos);
                     programa.generate(icg);
+                    //CÓDIGO FINAL
+                    FinalCodeGenerator fcg = new FinalCodeGenerator(icg.cuadruplos,tablaSimbolos);
+                    fcg.inicio();
+                    fcg.print();
                 }                
             }
 //            btnShowTree.setEnabled(true);

@@ -2,6 +2,7 @@ package intermediateCode;
 
 import abstractSyntaxTree.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  *
@@ -9,8 +10,9 @@ import java.util.ArrayList;
  */
 public class IntermediateCodeGenerator implements IntermediateGenerable{
     private Program program;
-    private ArrayList<Cuadruplo> cuadruplos;
+    public ArrayList<Cuadruplo> cuadruplos;
     private Temporal t = new Temporal();
+    private Stack<Integer> gotoFunction = new Stack();
 
     
     public IntermediateCodeGenerator(Program program, ArrayList<Cuadruplo> cuadruplos) {
@@ -236,10 +238,16 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(FunctionCall h) {
-        for (int i = 0; i < h.fp.size(); i++){
-            cuadruplos.add(new Cuadruplo("param " + h.fp.getAt(i).generate(this)));
+        if(h.fp!=null){
+            for (int i = 0; i < h.fp.size(); i++){
+                cuadruplos.add(new Cuadruplo("param " + h.fp.getAt(i).generate(this),"",""));
+            }
+            cuadruplos.add(new Cuadruplo("call _" + h.id.id + "," + h.fp.size(),"",""));
+        }else{
+            cuadruplos.add(new Cuadruplo("call _" + h.id.id + ",0","",""));
         }
-        cuadruplos.add(new Cuadruplo("call _" + h.id.id + "," + h.fp.size()));
+        
+        
         String temp = t.nuevoTemporal();
         cuadruplos.add(new Cuadruplo("=", "_ret_", temp));
         return temp;
@@ -279,7 +287,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(Identifier h) {
-        return h.id;
+        return "_"+h.id;
     }
 
     
@@ -585,13 +593,17 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(Return h) {
+        String retorno = h.exp.generate(this);
+        cuadruplos.add(new Cuadruplo("=", retorno, "ret"));
+        gotoFunction.push(cuadruplos.size());
+        cuadruplos.add(new Cuadruplo("goto ",-1));
         return "";  // NUNCA SE LLAMA   
     }
 
     
     @Override
     public String visit(StringLiteral h) {
-        return ""; //NO APLICA
+        return "\"" + h.string + "\"";
     }
 
     
@@ -644,18 +656,61 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public String visit(FunctionDeclaration h) {
         
         cuadruplos.add(new Cuadruplo("_" + h.id1.id));
-        
+        if(h.declarations!=null){
+            for (int i = 0; i < h.declarations.size(); i++){
+                if(h.declarations.getAt(i) instanceof FunctionDeclaration){
+                    h.declarations.getAt(i).generate(this);
+                }   
+                if(h.declarations.getAt(i) instanceof ProcedureDeclaration){
+                    h.declarations.getAt(i).generate(this);
+                }
+            }
+        }
         for (int i = 0; i < h.statements.size(); i++){
-            if (h.statements.getAt(i) instanceof Return){
-                cuadruplos.add(new Cuadruplo("=", ((Return)h.statements.getAt(i)).exp.generate(this), "ret"));
-                cuadruplos.add(new Cuadruplo("goto _fin" + h.id1.id));
-            } else {
-                h.statements.getAt(i).generate(this);
+            if(h.statements.getAt(i) instanceof AssignVariableSimple){
+                ((AssignVariableSimple)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfSimple){
+                ((IfSimple)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfWithElse){
+                ((IfWithElse)h.statements.getAt(i)).generate(this) ;
+            }
+            if(h.statements.getAt(i) instanceof IfWithElsIF){
+                ((IfWithElsIF)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfWithElsIfAndElse){
+                ((IfWithElsIfAndElse)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof For){
+                ((For)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof While){
+                ((While)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof Loop){
+                ((Loop)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof FunctionCall){
+                ((FunctionCall)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof PutValue){
+                ((PutValue)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof GetValue){
+                ((GetValue)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof Return){
+                ((Return)h.statements.getAt(i)).generate(this);
             }
         }
         
-        cuadruplos.add(new Cuadruplo("_fin" + h.id1.id));
-        cuadruplos.add(new Cuadruplo("jr"));
+        while(!gotoFunction.empty()){
+            cuadruplos.get(gotoFunction.pop()).setGt(cuadruplos.size());
+        }
+        
+        cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));     
+        cuadruplos.add(new Cuadruplo("jr","",""));
         
         return "";
     }
@@ -663,7 +718,56 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(ProcedureDeclaration h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        cuadruplos.add(new Cuadruplo("_"+h.id1.id));
+        if(h.declarations!=null){
+            for (int i = 0; i < h.declarations.size(); i++){
+                if(h.declarations.getAt(i) instanceof FunctionDeclaration){
+                    h.declarations.getAt(i).generate(this);
+                }   
+                if(h.declarations.getAt(i) instanceof ProcedureDeclaration){
+                    h.declarations.getAt(i).generate(this);
+                }
+            }
+        }               
+        
+        for(int i = 0; i < h.statements.size(); i++){
+//            h.statements.getAt(i).generate(this);
+            if(h.statements.getAt(i) instanceof AssignVariableSimple){
+                ((AssignVariableSimple)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfSimple){
+                ((IfSimple)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfWithElse){
+                ((IfWithElse)h.statements.getAt(i)).generate(this) ;
+            }
+            if(h.statements.getAt(i) instanceof IfWithElsIF){
+                ((IfWithElsIF)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof IfWithElsIfAndElse){
+                ((IfWithElsIfAndElse)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof For){
+                ((For)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof While){
+                ((While)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof Loop){
+                ((Loop)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof FunctionCall){
+                ((FunctionCall)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof PutValue){
+                ((PutValue)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof GetValue){
+                ((GetValue)h.statements.getAt(i)).generate(this);
+            }
+        }
+        cuadruplos.add(new Cuadruplo("jr","",""));
+        return "";
     }
 
     
@@ -773,11 +877,17 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public String visit(Program h) {
         
         
-//        for (int i = 0; i < h.declarations.size(); i++){
-//            h.declarations.getAt(i).generate(this);
-//        }
+        for (int i = 0; i < h.declarations.size(); i++){
+            if(h.declarations.getAt(i) instanceof FunctionDeclaration){
+                h.declarations.getAt(i).generate(this);
+            }
+            if(h.declarations.getAt(i) instanceof ProcedureDeclaration){
+                h.declarations.getAt(i).generate(this);
+            }            
+        }
         
-        
+        // generar etiqueta main
+        cuadruplos.add(new Cuadruplo("main"));
         for(int i = 0; i < h.statements.size(); i++){
             if(h.statements.getAt(i) instanceof AssignVariableSimple){
                 ((AssignVariableSimple)h.statements.getAt(i)).generate(this);
@@ -802,6 +912,15 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
             }
             if(h.statements.getAt(i) instanceof Loop){
                 ((Loop)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof FunctionCall){
+                ((FunctionCall)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof PutValue){
+                ((PutValue)h.statements.getAt(i)).generate(this);
+            }
+            if(h.statements.getAt(i) instanceof GetValue){
+                ((GetValue)h.statements.getAt(i)).generate(this);
             }
         }
         for (int i = 0; i < cuadruplos.size(); i++) {            
