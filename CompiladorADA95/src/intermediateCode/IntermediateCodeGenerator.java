@@ -654,7 +654,6 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(FunctionDeclaration h) {
-        
         cuadruplos.add(new Cuadruplo("_" + h.id1.id));
         if(h.declarations!=null){
             for (int i = 0; i < h.declarations.size(); i++){
@@ -711,7 +710,6 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         
         cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));     
         cuadruplos.add(new Cuadruplo("jr","",""));
-        
         return "";
     }
 
@@ -863,7 +861,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
 
     @Override
     public String visit(Parameter h) {
-        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        throw new UnsupportedOperationException("Not supported yet."); //   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< OJO
     }
     
 
@@ -874,17 +872,24 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
 
     @Override
-    public String visit(Program h) {
-        
-        
+    public String visit(Program h) {       
         for (int i = 0; i < h.declarations.size(); i++){
             if(h.declarations.getAt(i) instanceof FunctionDeclaration){
                 h.declarations.getAt(i).generate(this);
             }
             if(h.declarations.getAt(i) instanceof ProcedureDeclaration){
                 h.declarations.getAt(i).generate(this);
-            }            
+            }
         }
+//        for (int i = 0; i < h.declarations.size(); i++){
+//            if (h.declarations.getAt(i) instanceof VariableDeclaration){
+//                for (int j = 0; i < ((VariableDeclaration)h.declarations.getAt(i)).variables.size(); j++){
+//                    cuadruplos.add(new Cuadruplo("var " + ((VariableDeclaration)h.declarations.getAt(i)).variables.getAt(j).id));
+//                }        
+//            } else {
+//                h.declarations.getAt(i).generate(this);
+//            }
+//        }
         
         // generar etiqueta main
         cuadruplos.add(new Cuadruplo("main"));
