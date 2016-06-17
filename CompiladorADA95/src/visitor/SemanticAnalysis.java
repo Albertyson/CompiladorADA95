@@ -967,7 +967,7 @@ public class SemanticAnalysis implements TypeVisitor {
             return new TypeError();
         }
         VariableType expType = h.exp.accept(this);
-        if(expType.getClass().equals(idType.getClass())){
+        if(expType.getClass().getName().equals(idType.getClass().getName())){
             return expType;
         }else{
             errorComplain("El tipo del identificador " + h.id.id + " no es compatible con el tipo de la expresion",h.line,h.column);

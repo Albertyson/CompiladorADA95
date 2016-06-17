@@ -230,6 +230,7 @@ public class formPrincipal extends javax.swing.JFrame {
                     //CÓDIGO FINAL
                     FinalCodeGenerator fcg = new FinalCodeGenerator(icg.cuadruplos,tablaSimbolos);
                     fcg.inicio();
+                    fcg.cuerpo();
                     fcg.print();
                 }                
             }

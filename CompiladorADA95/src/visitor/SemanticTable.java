@@ -66,7 +66,7 @@ public class SemanticTable {
         for (int i = 0; i < symbols.size(); i++) {
             SemanticTableNode currentSymbolInfo = symbols.get(i);
             if (currentSymbolInfo instanceof SemanticVariableTableNode) {
-                if (((SemanticVariableTableNode) currentSymbolInfo).getScope().startsWith(scope)) {
+                if (scope.startsWith(((SemanticVariableTableNode) currentSymbolInfo).getScope())) {
                     ret.add((SemanticVariableTableNode) currentSymbolInfo);
                 }
             }

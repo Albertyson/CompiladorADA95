@@ -168,10 +168,11 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(False h) {
-        String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("=", "false", temp));
-        h.listaFalso.add(cuadruplos.size() - 1);
-        return temp;
+//        String temp = t.nuevoTemporal();
+//        cuadruplos.add(new Cuadruplo("=", "false", temp));
+//        h.listaFalso.add(cuadruplos.size() - 1);
+//        return temp;
+        return "false";
     }
 
     
@@ -247,10 +248,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
             cuadruplos.add(new Cuadruplo("call _" + h.id.id + ",0","",""));
         }
         
-        
-        String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("=", "_ret_", temp));
-        return temp;
+//        String temp = t.nuevoTemporal();
+//        cuadruplos.add(new Cuadruplo("=", "_ret_", temp));
+        return "$RETVAL";
     }
 
     
@@ -594,7 +594,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     @Override
     public String visit(Return h) {
         String retorno = h.exp.generate(this);
-        cuadruplos.add(new Cuadruplo("=", retorno, "ret"));
+        cuadruplos.add(new Cuadruplo("ret", retorno,""));
         gotoFunction.push(cuadruplos.size());
         cuadruplos.add(new Cuadruplo("goto ",-1));
         return "";  // NUNCA SE LLAMA   
@@ -609,10 +609,11 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(True h) {
-        String temp = t.nuevoTemporal();
-        cuadruplos.add(new Cuadruplo("=", "true", temp));
-        h.listaVerdadero.add(cuadruplos.size() - 1);
-        return temp;
+//        String temp = t.nuevoTemporal();
+//        cuadruplos.add(new Cuadruplo("=", "true", temp));
+//        h.listaVerdadero.add(cuadruplos.size() - 1);
+//        return temp;
+        return "true";
     }
 
     

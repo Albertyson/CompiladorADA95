@@ -24,7 +24,7 @@ public class SemanticFunctionTableNode extends SemanticTableNode {
     }
     
     public void addParam(SemanticVariableTableNode node) {
-        this.params.add(node);
+        this.params.add(0,node);
     }
     
 }
