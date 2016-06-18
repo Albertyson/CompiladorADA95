@@ -92,20 +92,23 @@ public class Cuadruplo {
     public String toString() {
         if(this.oper3.length() > 0){
             //aritmeticas, logicas, booleanas
-            return oper3 + " = " + oper1 + " " + operacion + " " + oper2;
+            return "\t"+ oper3 + " = " + oper1 + " " + operacion + " " + oper2;
         }
         if(gt > -1){
             if(oper2.length() > 0){
                 //if
-                return "if " + oper1 + " " + operacion.replace("if","") + " " + oper2 + " goto " + etiqueta;
+                return "\tif " + oper1 + " " + operacion.replace("if","") + " " + oper2 + " goto " + etiqueta;
             } else {
-                return "goto " + etiqueta;
+                return "\tgoto " + etiqueta;
             }
         }
         if(etiqueta.length()>0){
             return etiqueta + ":";
         }
-        return oper2 + " " + operacion + " " + oper1;
+        return "\t" + oper2 + " " + operacion + " " + oper1;
     }
     
+    public String toStringOriginal(){
+        return this.operacion + "\t\t| " + this.oper1 + "\t| " + this.oper2 + "\t| " + this.oper3 + " \t| " + this.gt + "\t| " + this.etiqueta;
+    }
 }

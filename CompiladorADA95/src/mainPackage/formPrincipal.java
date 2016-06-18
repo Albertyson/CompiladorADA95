@@ -22,16 +22,16 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import jdk.nashorn.internal.parser.Scanner;
-import visitor.SemanticAnalysis;
-import visitor.SemanticTable;
+import visitor.*;
 
 /**
  *
  * @author Albertyson
  */
 public class formPrincipal extends javax.swing.JFrame {
-
+    SemanticTable tablaSimbolos = new SemanticTable();
     /**
      * Creates new form fomrPrincipal
      */
@@ -49,18 +49,55 @@ public class formPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dlgTabla = new javax.swing.JDialog();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtSimbolos = new javax.swing.JTable();
         txtFileName = new javax.swing.JTextField();
         btnParse = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtOutput = new javax.swing.JTextArea();
         btnClean = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtFile = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtOutput = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        taIntermedio = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        taFinal = new javax.swing.JTextArea();
+        btnTablaSimbolo = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         mnuReadFile = new javax.swing.JMenuItem();
         mnuLexer = new javax.swing.JMenuItem();
         mnuExit = new javax.swing.JMenuItem();
+
+        jtSimbolos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Ámbito", "Tipo", "Dirección", "Es función", "Tipo Retorno", "Parámetros"
+            }
+        ));
+        jScrollPane5.setViewportView(jtSimbolos);
+
+        javax.swing.GroupLayout dlgTablaLayout = new javax.swing.GroupLayout(dlgTabla.getContentPane());
+        dlgTabla.getContentPane().setLayout(dlgTablaLayout);
+        dlgTablaLayout.setHorizontalGroup(
+            dlgTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgTablaLayout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        dlgTablaLayout.setVerticalGroup(
+            dlgTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgTablaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,10 +110,11 @@ public class formPrincipal extends javax.swing.JFrame {
                 btnParseMouseClicked(evt);
             }
         });
-
-        txtOutput.setColumns(20);
-        txtOutput.setRows(5);
-        jScrollPane2.setViewportView(txtOutput);
+        btnParse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnParseActionPerformed(evt);
+            }
+        });
 
         btnClean.setText("Limpiar");
         btnClean.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -90,6 +128,66 @@ public class formPrincipal extends javax.swing.JFrame {
         txtFile.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtFile.setEnabled(false);
         jScrollPane1.setViewportView(txtFile);
+
+        txtOutput.setColumns(20);
+        txtOutput.setRows(5);
+        jScrollPane2.setViewportView(txtOutput);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
+        );
+
+        jTabbedPane1.addTab("Fuente y errores", jPanel1);
+
+        taIntermedio.setColumns(20);
+        taIntermedio.setRows(5);
+        jScrollPane3.setViewportView(taIntermedio);
+
+        taFinal.setColumns(20);
+        taFinal.setRows(5);
+        jScrollPane4.setViewportView(taFinal);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Intermedio y Final", jPanel2);
+
+        btnTablaSimbolo.setText("Ver tabla de símbolos");
+        btnTablaSimbolo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTablaSimboloMouseClicked(evt);
+            }
+        });
 
         jMenu2.setText("Opciones");
 
@@ -120,19 +218,18 @@ public class formPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtFileName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnParse)
-                        .addGap(117, 117, 117)
-                        .addComponent(btnClean)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnClean)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnTablaSimbolo)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -141,12 +238,11 @@ public class formPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnParse)
-                    .addComponent(btnClean))
+                    .addComponent(btnClean)
+                    .addComponent(btnTablaSimbolo)
+                    .addComponent(btnParse))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
 
@@ -217,7 +313,7 @@ public class formPrincipal extends javax.swing.JFrame {
             Object result = p.parse().value;
             if(result instanceof Program){
                 Program programa = (Program)result;
-                SemanticTable tablaSimbolos = new SemanticTable();
+                tablaSimbolos = new SemanticTable();
                 SemanticAnalysis analysis =new SemanticAnalysis(tablaSimbolos);
                 programa.accept(analysis);
                 if(analysis.hasErrors()){
@@ -225,10 +321,10 @@ public class formPrincipal extends javax.swing.JFrame {
                 }else{
                     System.out.println("Listo para generar codigo intermedio");
                     ArrayList<Cuadruplo> cuadruplos = new ArrayList();
-                    IntermediateCodeGenerator icg = new IntermediateCodeGenerator(programa,cuadruplos);
+                    IntermediateCodeGenerator icg = new IntermediateCodeGenerator(programa,cuadruplos,taIntermedio);
                     programa.generate(icg);
                     //CÓDIGO FINAL
-                    FinalCodeGenerator fcg = new FinalCodeGenerator(icg.cuadruplos,tablaSimbolos);
+                    FinalCodeGenerator fcg = new FinalCodeGenerator(icg.cuadruplos,tablaSimbolos,taFinal);
                     fcg.inicio();
                     fcg.cuerpo();
                     fcg.print();
@@ -245,6 +341,45 @@ public class formPrincipal extends javax.swing.JFrame {
         txtOutput.setText("");
     }//GEN-LAST:event_btnCleanMouseClicked
 
+    private void btnParseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnParseActionPerformed
+
+    private void btnTablaSimboloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTablaSimboloMouseClicked
+        // TODO add your handling code here:
+        actualizarTabla();
+        dlgTabla.setModal(true);
+        dlgTabla.pack();
+        dlgTabla.setVisible(true);
+    }//GEN-LAST:event_btnTablaSimboloMouseClicked
+
+    private void actualizarTabla(){
+//        DefaultTableModel tModel = new DefaultTableModel();
+        DefaultTableModel tModel = (DefaultTableModel) jtSimbolos.getModel();
+        
+        while(tModel.getRowCount()>0){
+            tModel.removeRow(tModel.getRowCount()-1);
+        }
+        for (int i = 0; i < tablaSimbolos.getSymbols().size(); i++) {
+            SemanticTableNode nodoActual = tablaSimbolos.getSymbols().get(i);
+            if(nodoActual instanceof SemanticVariableTableNode){
+                SemanticVariableTableNode var = (SemanticVariableTableNode) nodoActual;
+                String tipo = var.getType().getClass().getSimpleName();
+                tModel.addRow(new Object[]{var.getName(),var.getScope(),var.getType().getClass().getName().replace("abstractSyntaxTree.",""),var.getDirection()+"","No","",""});
+            }
+            if(nodoActual instanceof SemanticFunctionTableNode){
+                SemanticFunctionTableNode fun = (SemanticFunctionTableNode) nodoActual;
+                String tipoRetorno = fun.getReturnType().getClass().getSimpleName();
+                String parametrosBuffer = "";
+                for(int j=0; j< fun.getParams().size(); j++){
+                    SemanticVariableTableNode param = fun.getParams().get(j);
+                    parametrosBuffer += param.getName() + ":" + param.getType().getClass().getSimpleName() + (j==fun.getParams().size()-1?"":", ");
+                }
+                tModel.addRow(new Object[]{fun.getName(),fun.getScope(),"","","Si",tipoRetorno,parametrosBuffer});
+            }
+        }
+        jtSimbolos.setModel(tModel);
+    }
     /**
      * @param args the command line arguments
      */
@@ -289,13 +424,24 @@ public class formPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;
     private javax.swing.JButton btnParse;
+    private javax.swing.JButton btnTablaSimbolo;
+    private javax.swing.JDialog dlgTabla;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jtSimbolos;
     private javax.swing.JMenuItem mnuExit;
     private javax.swing.JMenuItem mnuLexer;
     private javax.swing.JMenuItem mnuReadFile;
+    private javax.swing.JTextArea taFinal;
+    private javax.swing.JTextArea taIntermedio;
     private javax.swing.JTextArea txtFile;
     private javax.swing.JTextField txtFileName;
     private javax.swing.JTextArea txtOutput;

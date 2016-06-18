@@ -39,6 +39,10 @@ public class SemanticTable {
     public SemanticTable() {
         this.symbols = new ArrayList();
     }
+    
+    public List<SemanticTableNode> getSymbols(){
+        return this.symbols;
+    }
 
     
     public SemanticTableNode findID(String id, String currentScope) {

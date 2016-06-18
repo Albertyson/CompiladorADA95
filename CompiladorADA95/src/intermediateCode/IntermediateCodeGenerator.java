@@ -3,6 +3,7 @@ package intermediateCode;
 import abstractSyntaxTree.*;
 import java.util.ArrayList;
 import java.util.Stack;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -13,11 +14,13 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public ArrayList<Cuadruplo> cuadruplos;
     private Temporal t = new Temporal();
     private Stack<Integer> gotoFunction = new Stack();
+    JTextArea taIntermedio = new JTextArea();
 
     
-    public IntermediateCodeGenerator(Program program, ArrayList<Cuadruplo> cuadruplos) {
+    public IntermediateCodeGenerator(Program program, ArrayList<Cuadruplo> cuadruplos,JTextArea taIntermedio) {
         this.program = program;
         this.cuadruplos = cuadruplos;
+        this.taIntermedio = taIntermedio;
     }
     
 //    public void completar(ArrayList<Cuadruplo> lista,int idx){
@@ -931,7 +934,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         }
         for (int i = 0; i < cuadruplos.size(); i++) {            
 //            System.out.println((cuadruplos.get(i).esEtiqueta ? "_etiq"+i+":\n" : "")+cuadruplos.get(i).toString());
-            System.out.println(cuadruplos.get(i).toString());
+            System.out.println(cuadruplos.get(i).toStringOriginal());
+            taIntermedio.append(cuadruplos.get(i).toString());
+            taIntermedio.append("\n");
         }
         return "";
     }

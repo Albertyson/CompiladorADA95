@@ -10,6 +10,7 @@ import intermediateCode.Cuadruplo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import javax.swing.JTextArea;
 import visitor.SemanticTable;
 import visitor.SemanticVariableTableNode;
 
@@ -23,10 +24,12 @@ public class FinalCodeGenerator {
     private String codigo = "";
     private Mensaje msg = new Mensaje();
     private ArrayList<Descriptor> descriptorLista = new ArrayList();
+    JTextArea taFinal = new JTextArea();
     
-    public FinalCodeGenerator(ArrayList<Cuadruplo> cuadruplos, SemanticTable semanticTable) {
+    public FinalCodeGenerator(ArrayList<Cuadruplo> cuadruplos, SemanticTable semanticTable,JTextArea taFinal) {
         this.cuadruplos = cuadruplos;
         this.semanticTable = semanticTable;
+        this.taFinal = taFinal;
     }
     public void inicio(){
         codigo+=".data\n";
@@ -111,30 +114,39 @@ public class FinalCodeGenerator {
         llenarDescriptor();
         for (int i = 0; i < cuadruplos.size(); i++) {
             Cuadruplo cuadruploActual = cuadruplos.get(i);
-            if(cuadruploActual.getOperacion().equals("=")){
-                //buscar si oper1 es literal o es un id
-                String temp = temporalDisponible();
-                if(temp!=null){
-                    if(Pattern.matches("[0-9]+", cuadruploActual.getOper1())){
-                        codigo+="li " + temp + ", " + cuadruploActual.getOper1() + "\n";
-                        setValor(temp,cuadruploActual.getOper1());
-                    }else{
-                        //es variable
-                        if(cuadruploActual.getOper1().equals("$RETVAL")){
-                            codigo+="move " + temp + ", $v0\n";
+            switch(cuadruploActual.getOperacion()){
+                case "=":{
+                    //buscar si oper1 es literal o es un id
+                    String temp = temporalDisponible();
+                    if(temp!=null){
+                        if(Pattern.matches("[0-9]+", cuadruploActual.getOper1())){
+                            codigo+="\t" + "li " + temp + ", " + cuadruploActual.getOper1() + "\n";
+                            setValor(temp,cuadruploActual.getOper1());
                         }else{
-                            codigo+="lw " + temp + ", " + cuadruploActual.getOper1() + "\n";
-                        }                        
-                    }
-                }else{
-                    //usar pila
-                }                
-            }            
+                            //es variable
+                            if(cuadruploActual.getOper1().equals("$RETVAL")){
+                                codigo+="\t" + "move " + temp + ", $v0\n";
+                            }else{
+                                codigo+="\t" + "lw " + temp + ", " + cuadruploActual.getOper1() + "\n";
+                            }                        
+                        }
+                    }else{
+                        //usar pila
+                    }   
+                    break;
+                }
+                case "":{//etiqueta
+                    codigo+=cuadruploActual.etiqueta + ":\n";
+                    break;
+                }
+            }          
         }
     }
     public void print(){
-        System.out.println("FINAL:");
-        System.out.println(codigo);
+//        System.out.println("FINAL:");
+//        System.out.println(codigo);
+        this.taFinal.append(codigo);
+        this.taFinal.append("\n");
     }
     
     public String temporalDisponible(){
