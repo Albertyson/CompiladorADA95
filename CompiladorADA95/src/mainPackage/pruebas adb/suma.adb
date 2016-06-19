@@ -1,5 +1,6 @@
 procedure pruebaSuma is
    	a,b,c: Integer;
+      d:Float;
       function sumar( n1,n2: Integer; z:Boolean) return Integer is
       begin
          if (n1>n2) then         
