@@ -9,6 +9,7 @@ public class SemanticVariableTableNode extends SemanticTableNode{
     public static final int OUT = 2;
     public static final int INOUT = 3;
     public static final int NO_PARAM = 4;
+    public static final int LOCAL = 5;
     
     private VariableType type;
     private int direction = 0;
@@ -23,6 +24,10 @@ public class SemanticVariableTableNode extends SemanticTableNode{
 
     public boolean isParameter() {
         return this.varType != NO_PARAM;
+    }
+    
+    public boolean isLocal() {
+        return this.varType == LOCAL;
     }
 
     public int getVarType() {

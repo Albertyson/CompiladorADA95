@@ -9,7 +9,7 @@ import visitor.TypeVisitor;
 public class TypeBoolean extends VariableType {
 
     public TypeBoolean() {}
-    
+    public final int SIZE=4;
     @Override
     public void accept(ParentPath PP) {
         PP.path(this);

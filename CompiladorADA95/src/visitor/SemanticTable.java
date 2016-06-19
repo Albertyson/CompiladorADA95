@@ -55,6 +55,16 @@ public class SemanticTable {
         return null;
     }
     
+    public SemanticTableNode findID(String id) {
+        for (int i = 0; i < symbols.size(); i++) {
+            SemanticTableNode currentSymbolInfo = symbols.get(i);
+            if (currentSymbolInfo.getName().equals(id)) {
+                return currentSymbolInfo;
+            }
+        }        
+        return null;
+    }
+    
 
     public boolean addID(SemanticTableNode value) {
         if (findID(value.getName(), value.getScope()) != null) {
@@ -71,6 +81,19 @@ public class SemanticTable {
             SemanticTableNode currentSymbolInfo = symbols.get(i);
             if (currentSymbolInfo instanceof SemanticVariableTableNode) {
                 if (scope.startsWith(((SemanticVariableTableNode) currentSymbolInfo).getScope())) {
+                    ret.add((SemanticVariableTableNode) currentSymbolInfo);
+                }
+            }
+        }
+        return ret;
+    }
+    
+    public List<SemanticVariableTableNode> getAllLocalVariables(String scope) {
+        List<SemanticVariableTableNode> ret = new ArrayList();
+        for (int i = 0; i < symbols.size(); i++) {
+            SemanticTableNode currentSymbolInfo = symbols.get(i);
+            if (currentSymbolInfo instanceof SemanticVariableTableNode) {
+                if (scope.equals(((SemanticVariableTableNode) currentSymbolInfo).getScope()) && ((SemanticVariableTableNode) currentSymbolInfo).isLocal()) {
                     ret.add((SemanticVariableTableNode) currentSymbolInfo);
                 }
             }

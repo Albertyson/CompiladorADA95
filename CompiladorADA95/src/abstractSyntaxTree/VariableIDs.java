@@ -15,8 +15,12 @@ public class VariableIDs {
         ids = new ArrayList();
     }
     
+    public VariableIDs(ArrayList<Identifier> ids){
+        this.ids = ids;
+    }
+    
     public void add(Identifier e) {
-        ids.add(e);
+        ids.add(0,e);
     }
     
     public int size() {

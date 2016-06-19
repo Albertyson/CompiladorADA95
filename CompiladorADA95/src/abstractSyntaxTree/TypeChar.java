@@ -9,7 +9,7 @@ import visitor.TypeVisitor;
 public class TypeChar extends VariableType{
     
     public TypeChar() {}
-
+    public final int SIZE=1;
     @Override
     public void accept(ParentPath PP) {
         PP.path(this);

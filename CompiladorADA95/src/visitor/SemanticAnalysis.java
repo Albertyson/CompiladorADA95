@@ -67,6 +67,7 @@ public class SemanticAnalysis implements TypeVisitor {
     @Override
     public VariableType path(Identifier h) {
         SemanticTableNode s = semanticTable.findID(h.id, this.scope);
+        h.scope = this.scope;
         if(s == null){
             errorComplain("El identificador " + h.id + " no esta definido en este ambito",h.line,h.column);
             return new TypeError();
@@ -730,21 +731,28 @@ public class SemanticAnalysis implements TypeVisitor {
     @Override
     public VariableType path(VariableDeclaration h) {
         VariableType type;
+        int size=4;
         if (h.type instanceof TypeBoolean){
             type = new TypeBoolean();
+            size=((TypeBoolean)type).SIZE;
         } else if (h.type instanceof TypeChar) {
             type = new TypeChar();
+            size=((TypeChar)type).SIZE;
         } else if (h.type instanceof TypeFloat) {
             type = new TypeFloat();
+            size=((TypeFloat)type).SIZE;
         } else if (h.type instanceof TypeInteger) {
             type = new TypeInteger();
+            size=((TypeInteger)type).SIZE;
         } else if (h.type instanceof TypeString) {
             type = new TypeString();
         } else {
             return new TypeError();
         }
+        
         for(int i = 0; i < h.variables.size(); i++){
-            if (!semanticTable.addID(new SemanticVariableTableNode(type, h.variables.getAt(i).id, this.scope, 4, 0))){
+            int dir = semanticTable.getAllLocalVariables(this.scope).size()*size;
+            if (!semanticTable.addID(new SemanticVariableTableNode(type, h.variables.getAt(i).id, this.scope, 5, dir))){
                 errorComplain("El identificador: " + h.variables.getAt(i).id + " ya esta siendo utilizado.", h.line,h.column);
             }
         }

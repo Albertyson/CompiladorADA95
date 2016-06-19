@@ -25,11 +25,13 @@ public class FinalCodeGenerator {
     private Mensaje msg = new Mensaje();
     private ArrayList<Descriptor> descriptorLista = new ArrayList();
     JTextArea taFinal = new JTextArea();
+    private ArrayList<Double> listaFloats;
     
-    public FinalCodeGenerator(ArrayList<Cuadruplo> cuadruplos, SemanticTable semanticTable,JTextArea taFinal) {
+    public FinalCodeGenerator(ArrayList<Cuadruplo> cuadruplos, SemanticTable semanticTable,JTextArea taFinal,ArrayList<Double> listaFloats) {
         this.cuadruplos = cuadruplos;
         this.semanticTable = semanticTable;
         this.taFinal = taFinal;
+        this.listaFloats = listaFloats;
     }
     public void inicio(){
         codigo+=".data\n";
@@ -41,6 +43,13 @@ public class FinalCodeGenerator {
                 codigo+="_"+varName+":\t .word 0\n";
             }            
         }
+        //variables especiales para impresiones literales
+        codigo+= "enteroLiteral:\t .word 0\n";
+        //floats literales
+        for (int i = 0; i < listaFloats.size(); i++) {
+            codigo+="floatLiteral"+i + ":\t .double " + listaFloats.get(i) + "\n";
+        }
+        //strings literales
         ArrayList<String> mensajes = new ArrayList();
         int idx=0;
         for(int i=0;i<cuadruplos.size();i++){
@@ -58,7 +67,7 @@ public class FinalCodeGenerator {
                     mensajes.add(putValue);
                     idx = mensajes.size()-1;
                 }
-                if (putValue.contains("\"")){
+                if (putValue.matches("\".*\"")){
                     cuadruplos.get(i).setOper1("_msg"+idx);
                 }
             }
@@ -139,6 +148,45 @@ public class FinalCodeGenerator {
                     codigo+=cuadruploActual.etiqueta + ":\n";
                     break;
                 }
+                case "put":{
+                    if(cuadruploActual.getOper1().matches("_msg[0-9]+")){//cadena put ("hola")
+                        codigo+="li $v0,4\n";
+                        codigo+="la $a0,"+cuadruploActual.getOper1()+"\n";
+                    }else if(cuadruploActual.getOper1().matches("[0-9]+\\.[0-9]+")){//float put (9.12)                        
+                        //montar en un registro $f el float literal                      
+                        codigo+="li $v0,2\n";
+                        codigo+="l.d $f12, floatLiteral"+listaFloats.indexOf(Double.parseDouble(cuadruploActual.getOper1()))+"\n";
+
+                    }else if(cuadruploActual.getOper1().matches("[0-9]+")){//int put (89)
+                        String temp = temporalDisponible();
+                        codigo+="li " + temp + ", " + cuadruploActual.getOper1()+"\n";
+                        codigo+="sw " + temp + ", enteroLiteral\n";
+                        codigo+="li $v0,1\n";
+                        codigo+="lw $a0, enteroLiteral\n";
+                    }else{ //id put (_x)
+                        //buscar en tabla de símbolos
+                        if(cuadruploActual.getOper1().startsWith("$")){//temporal
+                            //to do
+                            
+                        }else{//id
+                            String nombre = cuadruploActual.getOper1().substring(1).split(":")[0];
+                            String scp = cuadruploActual.getOper1().substring(1).split(":")[1];
+                            if(semanticTable.findID(nombre,scp)!=null){
+                                SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre,scp);
+                                //hacer la operación de acuerdo al tipo de la variable
+                                if(variable.getType() instanceof TypeInteger){
+                                    codigo+="lw $a0, " + "_" + nombre + "\n";
+                                    codigo+="li $v0,1\n";
+                                }
+                            }else{
+                                System.out.println("no encontro " + cuadruploActual.getOper1().substring(1));
+                            }
+                        }
+                        
+                    }
+                    codigo+="syscall\n";
+                    break;
+                }
             }          
         }
     }
@@ -152,6 +200,7 @@ public class FinalCodeGenerator {
     public String temporalDisponible(){
         for (int i = 0; i < descriptorLista.size(); i++) {
             if(descriptorLista.get(i).valor.equals("") && descriptorLista.get(i).registro.startsWith("$t")){
+                descriptorLista.get(i).valor="ocupado";
                 return descriptorLista.get(i).registro;
             }
         }

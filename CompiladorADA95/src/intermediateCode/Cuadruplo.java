@@ -90,14 +90,16 @@ public class Cuadruplo {
 
     @Override
     public String toString() {
+        String tmpOper1 = (oper1.indexOf(":")>0 ? oper1.substring(0,oper1.indexOf(":")) : oper1);
+        String tmpOper2 = (oper2.indexOf(":")>0 ? oper2.substring(0,oper2.indexOf(":")) : oper2);
         if(this.oper3.length() > 0){
             //aritmeticas, logicas, booleanas
-            return "\t"+ oper3 + " = " + oper1 + " " + operacion + " " + oper2;
+            return "\t"+ oper3 + " = " + tmpOper1 + " " + operacion + " " + tmpOper2;
         }
         if(gt > -1){
-            if(oper2.length() > 0){
+            if(oper2.length() > 0){                
                 //if
-                return "\tif " + oper1 + " " + operacion.replace("if","") + " " + oper2 + " goto " + etiqueta;
+                return "\tif " + tmpOper1 + " " + operacion.replace("if","") + " " + tmpOper2 + " goto " + etiqueta;
             } else {
                 return "\tgoto " + etiqueta;
             }
@@ -105,7 +107,7 @@ public class Cuadruplo {
         if(etiqueta.length()>0){
             return etiqueta + ":";
         }
-        return "\t" + oper2 + " " + operacion + " " + oper1;
+        return "\t" + tmpOper2 + " " + operacion + " " + tmpOper1;
     }
     
     public String toStringOriginal(){

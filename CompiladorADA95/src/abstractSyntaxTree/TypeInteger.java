@@ -12,6 +12,7 @@ import visitor.TypeVisitor;
 public class TypeInteger extends VariableType {
 
     public TypeInteger() {}
+    public final int SIZE=4;
 
     @Override
     public void accept(ParentPath PP) {

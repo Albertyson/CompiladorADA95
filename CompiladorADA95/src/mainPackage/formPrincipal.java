@@ -80,15 +80,32 @@ public class formPrincipal extends javax.swing.JFrame {
             new String [] {
                 "Id", "Ámbito", "Tipo", "Dirección", "Es función", "Tipo Retorno", "Parámetros"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane5.setViewportView(jtSimbolos);
+        if (jtSimbolos.getColumnModel().getColumnCount() > 0) {
+            jtSimbolos.getColumnModel().getColumn(0).setPreferredWidth(80);
+            jtSimbolos.getColumnModel().getColumn(1).setPreferredWidth(50);
+            jtSimbolos.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jtSimbolos.getColumnModel().getColumn(3).setPreferredWidth(80);
+            jtSimbolos.getColumnModel().getColumn(4).setPreferredWidth(80);
+            jtSimbolos.getColumnModel().getColumn(5).setPreferredWidth(100);
+            jtSimbolos.getColumnModel().getColumn(6).setPreferredWidth(400);
+        }
 
         javax.swing.GroupLayout dlgTablaLayout = new javax.swing.GroupLayout(dlgTabla.getContentPane());
         dlgTabla.getContentPane().setLayout(dlgTablaLayout);
         dlgTablaLayout.setHorizontalGroup(
             dlgTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dlgTablaLayout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
                 .addContainerGap())
         );
         dlgTablaLayout.setVerticalGroup(
@@ -321,10 +338,10 @@ public class formPrincipal extends javax.swing.JFrame {
                 }else{
                     System.out.println("Listo para generar codigo intermedio");
                     ArrayList<Cuadruplo> cuadruplos = new ArrayList();
-                    IntermediateCodeGenerator icg = new IntermediateCodeGenerator(programa,cuadruplos,taIntermedio);
+                    IntermediateCodeGenerator icg = new IntermediateCodeGenerator(programa,cuadruplos,taIntermedio,tablaSimbolos);
                     programa.generate(icg);
                     //CÓDIGO FINAL
-                    FinalCodeGenerator fcg = new FinalCodeGenerator(icg.cuadruplos,tablaSimbolos,taFinal);
+                    FinalCodeGenerator fcg = new FinalCodeGenerator(icg.cuadruplos,tablaSimbolos,taFinal,icg.getListaFloats());
                     fcg.inicio();
                     fcg.cuerpo();
                     fcg.print();

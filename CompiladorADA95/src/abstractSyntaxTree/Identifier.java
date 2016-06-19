@@ -13,6 +13,7 @@ import visitor.TypeVisitor;
 public class Identifier extends Expression {
     
     public String id;
+    public String scope;
     public int line, column;
     
     public Identifier(String id, int l, int c) {

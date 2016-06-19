@@ -2,8 +2,10 @@ package intermediateCode;
 
 import abstractSyntaxTree.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import javax.swing.JTextArea;
+import visitor.SemanticTable;
 
 /**
  *
@@ -11,16 +13,22 @@ import javax.swing.JTextArea;
  */
 public class IntermediateCodeGenerator implements IntermediateGenerable{
     private Program program;
+    private ArrayList<Double> listaFloats=new ArrayList();
     public ArrayList<Cuadruplo> cuadruplos;
     private Temporal t = new Temporal();
     private Stack<Integer> gotoFunction = new Stack();
     JTextArea taIntermedio = new JTextArea();
+    private SemanticTable tablaSimbolos;
 
+    public ArrayList<Double> getListaFloats() {
+        return listaFloats;
+    }
     
-    public IntermediateCodeGenerator(Program program, ArrayList<Cuadruplo> cuadruplos,JTextArea taIntermedio) {
+    public IntermediateCodeGenerator(Program program, ArrayList<Cuadruplo> cuadruplos,JTextArea taIntermedio,SemanticTable tabla) {
         this.program = program;
         this.cuadruplos = cuadruplos;
         this.taIntermedio = taIntermedio;
+        this.tablaSimbolos = tabla;
     }
     
 //    public void completar(ArrayList<Cuadruplo> lista,int idx){
@@ -183,6 +191,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public String visit(FloatNumber h) {
 //        String temp = t.nuevoTemporal();
 //        cuadruplos.add(new Cuadruplo("=", h.number + "", temp));
+        listaFloats.add(h.number);
         return h.number + "";
     }
 
@@ -246,9 +255,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
             for (int i = 0; i < h.fp.size(); i++){
                 cuadruplos.add(new Cuadruplo("param " + h.fp.getAt(i).generate(this),"",""));
             }
-            cuadruplos.add(new Cuadruplo("call _" + h.id.id + "," + h.fp.size(),"",""));
+            cuadruplos.add(new Cuadruplo("call _"+h.id.id,","+h.fp.size(),""));
         }else{
-            cuadruplos.add(new Cuadruplo("call _" + h.id.id + ",0","",""));
+            cuadruplos.add(new Cuadruplo("call _"+h.id.id,",0",""));
         }
         
 //        String temp = t.nuevoTemporal();
@@ -290,7 +299,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(Identifier h) {
-        return "_"+h.id;
+        return "_"+h.id+":"+h.scope;
     }
 
     

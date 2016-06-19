@@ -12,6 +12,7 @@ import visitor.TypeVisitor;
 public class TypeFloat extends VariableType {
 
     public TypeFloat() {}
+    public final int SIZE=4;
     
     @Override
     public void accept(ParentPath PP) {
