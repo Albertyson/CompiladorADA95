@@ -161,7 +161,7 @@ public class FinalCodeGenerator {
                             liberarTemporal(temp);
                             //buscar un temporal float
                             temp = temporalDisponible(true);
-                            codigo+="\t" + "l.s " + temp + ", " + cuadruploActual.getOper1() + "\n";
+                            codigo+="\t" + "l.d " + temp + ", " + cuadruploActual.getOper1() + "\n";
                             setValor(temp,cuadruploActual.getOper1());
                         }else{//id
                             //es variable
@@ -189,7 +189,7 @@ public class FinalCodeGenerator {
                     }else if(cuadruploActual.getOper1().matches("[0-9]+\\.[0-9]+")){//float put (9.12)                        
                         //montar en un registro $f el float literal                      
                         codigo+="\tli $v0,2\n";
-                        codigo+="\tl.s $f12, floatLiteral"+listaFloats.indexOf(Double.parseDouble(cuadruploActual.getOper1()))+"\n";
+                        codigo+="\tl.d $f12, floatLiteral"+listaFloats.indexOf(Double.parseDouble(cuadruploActual.getOper1()))+"\n";
 
                     }else if(cuadruploActual.getOper1().matches("[0-9]+")){//int put (89)
                         String temp = temporalDisponible(false);
