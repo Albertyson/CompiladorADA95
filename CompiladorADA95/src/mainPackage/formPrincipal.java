@@ -341,7 +341,7 @@ public class formPrincipal extends javax.swing.JFrame {
                     IntermediateCodeGenerator icg = new IntermediateCodeGenerator(programa,cuadruplos,taIntermedio,tablaSimbolos);
                     programa.generate(icg);
                     //CÓDIGO FINAL
-                    FinalCodeGenerator fcg = new FinalCodeGenerator(icg.cuadruplos,tablaSimbolos,taFinal,icg.getListaFloats());
+                    FinalCodeGenerator fcg = new FinalCodeGenerator(icg.cuadruplos,tablaSimbolos,taFinal);
                     fcg.inicio();
                     fcg.cuerpo();
                     fcg.print();

@@ -25,26 +25,12 @@ public class FinalCodeGenerator {
     private String codigo = "";
     private Mensaje msg = new Mensaje();
     private ArrayList<Descriptor> descriptorLista = new ArrayList();
-    JTextArea taFinal = new JTextArea();
-    private ArrayList<Double> listaFloats;
+    JTextArea taFinal = new JTextArea();    
     
-    private class RegistroTemporal {
-
-        public String registro;
-        public Type tipo;
-
-        public RegistroTemporal(String registro, Type tipo) {
-            this.registro = registro;
-            this.tipo = tipo;
-        }
-    }
-    private HashMap<String,RegistroTemporal> temporalesUsados = new HashMap();
-    
-    public FinalCodeGenerator(ArrayList<Cuadruplo> cuadruplos, SemanticTable semanticTable,JTextArea taFinal,ArrayList<Double> listaFloats) {
+    public FinalCodeGenerator(ArrayList<Cuadruplo> cuadruplos, SemanticTable semanticTable,JTextArea taFinal) {
         this.cuadruplos = cuadruplos;
         this.semanticTable = semanticTable;
         this.taFinal = taFinal;
-        this.listaFloats = listaFloats;
     }
     public void inicio(){
         codigo+=".data\n";
@@ -60,10 +46,6 @@ public class FinalCodeGenerator {
         }
         //variables especiales para impresiones literales
         codigo+= "enteroLiteral:\t .word 0\n";
-        //floats literales
-        for (int i = 0; i < listaFloats.size(); i++) {
-            codigo+="floatLiteral"+i + ":\t .double " + listaFloats.get(i) + "\n";
-        }
         //strings literales
         ArrayList<String> mensajes = new ArrayList();
         int idx=0;
@@ -94,56 +76,53 @@ public class FinalCodeGenerator {
         
     }
     public void llenarDescriptor(){
-        descriptorLista.add(new Descriptor("$t0",""));
-        descriptorLista.add(new Descriptor("$t1",""));
-        descriptorLista.add(new Descriptor("$t2",""));
-        descriptorLista.add(new Descriptor("$t3",""));
-        descriptorLista.add(new Descriptor("$t4",""));
-        descriptorLista.add(new Descriptor("$t5",""));
-        descriptorLista.add(new Descriptor("$t6",""));
-        descriptorLista.add(new Descriptor("$t7",""));
-        descriptorLista.add(new Descriptor("$f0",""));
-        descriptorLista.add(new Descriptor("$f1",""));
-        descriptorLista.add(new Descriptor("$f2",""));
-        descriptorLista.add(new Descriptor("$f3",""));
-        descriptorLista.add(new Descriptor("$f4",""));
-        descriptorLista.add(new Descriptor("$f5",""));
-        descriptorLista.add(new Descriptor("$f6",""));
-        descriptorLista.add(new Descriptor("$f7",""));
-        descriptorLista.add(new Descriptor("$f8",""));
-        descriptorLista.add(new Descriptor("$f9",""));
-        descriptorLista.add(new Descriptor("$f10",""));
-        descriptorLista.add(new Descriptor("$f11",""));
-        descriptorLista.add(new Descriptor("$s0",""));
-        descriptorLista.add(new Descriptor("$s1",""));
-        descriptorLista.add(new Descriptor("$s2",""));
-        descriptorLista.add(new Descriptor("$s3",""));
-        descriptorLista.add(new Descriptor("$a0",""));
-        descriptorLista.add(new Descriptor("$a1",""));
-        descriptorLista.add(new Descriptor("$a2",""));
-        descriptorLista.add(new Descriptor("$a3",""));
-        descriptorLista.add(new Descriptor("$v0",""));
-        descriptorLista.add(new Descriptor("$v1",""));
-        descriptorLista.add(new Descriptor("$sp",""));
-        descriptorLista.add(new Descriptor("$fp",""));
-        descriptorLista.add(new Descriptor("$ra",""));
-        descriptorLista.add(new Descriptor("$zero",""));
+        descriptorLista.add(new Descriptor("$t0","",""));
+        descriptorLista.add(new Descriptor("$t1","",""));
+        descriptorLista.add(new Descriptor("$t2","",""));
+        descriptorLista.add(new Descriptor("$t3","",""));
+        descriptorLista.add(new Descriptor("$t4","",""));
+        descriptorLista.add(new Descriptor("$t5","",""));
+        descriptorLista.add(new Descriptor("$t6","",""));
+        descriptorLista.add(new Descriptor("$t7","",""));
+        descriptorLista.add(new Descriptor("$s0","",""));
+        descriptorLista.add(new Descriptor("$s1","",""));
+        descriptorLista.add(new Descriptor("$s2","",""));
+        descriptorLista.add(new Descriptor("$s3","",""));
+        descriptorLista.add(new Descriptor("$a0","",""));
+        descriptorLista.add(new Descriptor("$a1","",""));
+        descriptorLista.add(new Descriptor("$a2","",""));
+        descriptorLista.add(new Descriptor("$a3","",""));
+        descriptorLista.add(new Descriptor("$v0","",""));
+        descriptorLista.add(new Descriptor("$v1","",""));
+        descriptorLista.add(new Descriptor("$sp","",""));
+        descriptorLista.add(new Descriptor("$fp","",""));
+        descriptorLista.add(new Descriptor("$ra","",""));
+        descriptorLista.add(new Descriptor("$zero","",""));
     }
-    public String buscarRegistro(String reg){
+    public String buscarRegistroPorNombreIntermedio(String nombreIntermedio){
         for (int i = 0; i < descriptorLista.size(); i++) {
-            if(reg.equals(descriptorLista.get(i).registro)){
-                return descriptorLista.get(i).valor;
+            if(nombreIntermedio.equals(descriptorLista.get(i).nombreIntermedio)){
+                return descriptorLista.get(i).registro;
             }
         }
         return null;
     }
-    public void setValor(String registro,String valor){
+    public String buscarRegistroPorValor(String valor){
+        for (int i = 0; i < descriptorLista.size(); i++) {
+            if(valor.equals(descriptorLista.get(i).valor)){
+                return descriptorLista.get(i).registro;
+            }
+        }
+        return null;
+    }
+    public void setValor(String registro,String valor,String nombreIntermedio){
         for (int i = 0; i < descriptorLista.size(); i++) {
             if(registro.equals(descriptorLista.get(i).registro)){
                 descriptorLista.get(i).valor = valor;
+                descriptorLista.get(i).nombreIntermedio = nombreIntermedio;
             }
         }
-    }
+    }   
     public void cuerpo(){       
         llenarDescriptor();
         for (int i = 0; i < cuadruplos.size(); i++) {
@@ -151,31 +130,191 @@ public class FinalCodeGenerator {
             switch(cuadruploActual.getOperacion()){
                 case "=":{
                     //buscar si oper1 es literal o es un id
-                    String temp = temporalDisponible(false);
-                    if(temp!=null){
                         if(Pattern.matches("[0-9]+", cuadruploActual.getOper1())){//entero
+                            String temp = temporalDisponible();
                             codigo+="\t" + "li " + temp + ", " + cuadruploActual.getOper1() + "\n";
-                            setValor(temp,cuadruploActual.getOper1());
-                        }else if(Pattern.matches("[0-9]+\\.[0-9]+", cuadruploActual.getOper1())){//float
-                            //liberar el temporal buscado anteriormente $tn
-                            liberarTemporal(temp);
-                            //buscar un temporal float
-                            temp = temporalDisponible(true);
-                            codigo+="\t" + "l.d " + temp + ", " + cuadruploActual.getOper1() + "\n";
-                            setValor(temp,cuadruploActual.getOper1());
+                            setValor(temp,cuadruploActual.getOper1(),cuadruploActual.getOper2());
                         }else{//id
-                            //es variable
+                            //es variable o retval
                             if(cuadruploActual.getOper1().equals("$RETVAL")){
-                                codigo+="\t" + "move " + temp + ", $v0\n";
-                                setValor(temp,"$v0");
+                                String nombre = cuadruploActual.getOper2().substring(1).split(":")[0];
+                                String scp = cuadruploActual.getOper2().substring(1).split(":")[1];
+                                if(semanticTable.findID(nombre,scp)!=null){//id
+                                    codigo+="\tsw $v0, "+"_"+nombre+"\n";
+                                }else{//registro
+                                    //buscar registro en el arreglo de descriptor
+                                    //se supone que no va a entrar aca
+                                    System.out.println("ENTRÓ------");
+                                }
                             }else{
-                                codigo+="\t" + "lw " + temp + ", " + cuadruploActual.getOper1() + "\n";
-                                setValor(temp,cuadruploActual.getOper1());
+                                if(cuadruploActual.getOper1().startsWith("$")){//temporal
+                                    //to do
+                                    String src="";
+                                    String dest="";
+                                    if(buscarRegistroPorNombreIntermedio(cuadruploActual.getOper1())!=null){
+                                        src = buscarRegistroPorNombreIntermedio(cuadruploActual.getOper1());
+                                    }else{
+                                        src = temporalDisponible();
+                                        setValor(src,cuadruploActual.getOper1(),cuadruploActual.getOper1());
+                                    }
+                                    if(cuadruploActual.getOper2().startsWith("$")){//destino es temporal
+                                        if(buscarRegistroPorNombreIntermedio(cuadruploActual.getOper2())!=null){
+                                            dest = buscarRegistroPorNombreIntermedio(cuadruploActual.getOper2());
+                                        }else{
+                                            dest = temporalDisponible();
+                                            setValor(dest,cuadruploActual.getOper2(),cuadruploActual.getOper2());
+                                        }
+                                        //temporal a temporal es move
+                                        codigo+="\tmove "+dest+", "+src+"\n";
+                                    }else{//destino es un id
+                                        String nombre = cuadruploActual.getOper2().substring(1).split(":")[0];
+                                        String scp = cuadruploActual.getOper2().substring(1).split(":")[1];
+                                        if(semanticTable.findID(nombre,scp)!=null){
+                                            String temp = temporalDisponible();
+                                            SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre,scp);
+                                            dest = "_" + nombre;
+                                            codigo+="\tsw "+src+", "+ dest +"\n";
+                                            //liberar temporal
+                                            liberarTemporal(src);
+                                        }                                        
+                                    }
+                                    //liberar el temporal
+                                }else{//id
+                                    String nombre = cuadruploActual.getOper1().substring(1).split(":")[0];
+                                    String scp = cuadruploActual.getOper1().substring(1).split(":")[1];
+                                    if(semanticTable.findID(nombre,scp)!=null){
+                                        String temp = temporalDisponible();
+                                        SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre,scp);
+                                        codigo+="\tlw "+ temp + ", _"+ nombre +"\n";
+                                        setValor(temp,nombre,"");
+                                        if(cuadruploActual.getOper2().startsWith("$")){//destino temporal
+                                            //buscar temporal u obtener temporal disponible
+                                            String dest = "";
+                                            if(buscarRegistroPorNombreIntermedio(cuadruploActual.getOper2())!=null){
+                                                dest = buscarRegistroPorNombreIntermedio(cuadruploActual.getOper2());
+                                            }else{
+                                                dest = temporalDisponible();
+                                                setValor(dest,cuadruploActual.getOper2(),cuadruploActual.getOper2());
+                                            }
+                                            codigo+="\tlw "+dest+", _"+nombre+"\n";
+                                            System.out.println("De "+nombre+" hacia "+dest);
+                                        }else{//destino es id
+                                            String nombreDestino = cuadruploActual.getOper2().substring(1).split(":")[0];
+                                            String scpDestino = cuadruploActual.getOper2().substring(1).split(":")[1];
+                                            if(semanticTable.findID(nombreDestino,scpDestino)!=null){
+                                                codigo += "\tsw "+ temp + ", _" + nombreDestino + "\n";
+                                                liberarTemporal(temp);
+                                            }
+                                            System.out.println("De "+temp+" hacia "+nombreDestino);
+                                        }
+                                    }else{
+                                        System.out.println("no encontro " + cuadruploActual.getOper1().substring(1));
+                                    }
+                                }
                             }                        
                         }
-                    }else{
-                        //usar pila
-                    }   
+                    break;
+                }
+                case "+":{
+                    //oper3 = oper1 + oper2
+                    //add oper3,oper1,oper2
+                    String destino="",oper1="",oper2 = "";
+                    //pasar oper3 a registro
+                    if(cuadruploActual.getOper3().startsWith("$") && !cuadruploActual.getOper3().equals("$RETVAL")){//temporal
+                        if(buscarRegistroPorNombreIntermedio(cuadruploActual.getOper3())!=null){
+                            destino=buscarRegistroPorNombreIntermedio(cuadruploActual.getOper3());
+                        }else{
+                            destino = temporalDisponible();
+                            setValor(destino,cuadruploActual.getOper3(),cuadruploActual.getOper3());
+                        }
+                    }else{//id o retval
+                        System.out.println("NUNCA ENTRA AQUI");
+                        if(cuadruploActual.getOper3().equals("$RETVAL")){//retval                            
+                        }else{//id
+                            //buscar id                            
+                        }
+                    }
+                    
+                    
+                    
+                    //pasar oper1 a registro
+                    if(cuadruploActual.getOper1().matches("[0-9]+")){//entero
+                        oper1 = temporalDisponible();
+                        codigo+="\tli "+oper1+", "+cuadruploActual.getOper1()+"\n";
+                        setValor(oper1,cuadruploActual.getOper1(),cuadruploActual.getOper1());                        
+                    }else{//id o temporal
+                        if(cuadruploActual.getOper1().startsWith("$") && !cuadruploActual.getOper1().equals("$RETVAL")){//temporal
+                            if(buscarRegistroPorNombreIntermedio(cuadruploActual.getOper1())!=null){
+                                oper1 = buscarRegistroPorNombreIntermedio(cuadruploActual.getOper1());
+                            }else{//nuevo temporal
+                                oper1 =temporalDisponible();
+                                codigo+="\tmove"+cuadruploActual.getOper1()+"\n";
+                                setValor(oper1,cuadruploActual.getOper1(),cuadruploActual.getOper1());
+                            }
+                            
+                        }else{//id o $RETVAL
+                            if(cuadruploActual.getOper1().equals("$RETVAL")){//retval
+                                oper1 = temporalDisponible();
+                                codigo+="\tmove "+oper1+",$v0\n";
+                                setValor(oper1,"$v0","$v0");
+                            }else{//id
+                                String nombre = cuadruploActual.getOper1().substring(1).split(":")[0];
+                                String scp = cuadruploActual.getOper1().substring(1).split(":")[1];
+                                if(semanticTable.findID(nombre,scp) != null){
+                                    SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre,scp);
+                                    if(buscarRegistroPorValor(nombre)!=null){
+                                        oper1 = buscarRegistroPorValor(nombre);
+                                        codigo+="\tlw "+oper1+", _"+nombre+"\n";
+                                    }else{
+                                        oper1 = temporalDisponible();
+                                        setValor(oper1,nombre,"");
+                                        codigo+="\tlw "+oper1+", _"+nombre+"\n";
+                                    }
+                                }
+                            }
+                        }                        
+                    }
+                    
+                    //pasar oper2 a registro
+                    if(cuadruploActual.getOper2().matches("[0-9]+")){//entero
+                        oper2 = temporalDisponible();
+                        codigo+="\tli "+oper2+", "+cuadruploActual.getOper2()+"\n";
+                        setValor(oper2,cuadruploActual.getOper2(),cuadruploActual.getOper2());                        
+                    }else{//id o temporal
+                        if(cuadruploActual.getOper2().startsWith("$") && !cuadruploActual.getOper2().equals("$RETVAL")){//temporal
+                            if(buscarRegistroPorNombreIntermedio(cuadruploActual.getOper2())!=null){
+                                oper2 = buscarRegistroPorNombreIntermedio(cuadruploActual.getOper2());
+                            }else{
+                                oper2 =temporalDisponible();
+                                setValor(oper2,cuadruploActual.getOper2(),cuadruploActual.getOper2());
+                            }
+                            
+                        }else{//id o $RETVAL
+                            if(cuadruploActual.getOper2().equals("$RETVAL")){//retval
+                                oper2 = temporalDisponible();
+                                codigo+="\tmove "+oper2+",$v0\n";
+                                setValor(oper2,"$v0","$v0");
+                            }else{//id
+                                String nombre = cuadruploActual.getOper2().substring(1).split(":")[0];
+                                String scp = cuadruploActual.getOper2().substring(1).split(":")[1];
+                                if(semanticTable.findID(nombre,scp) != null){
+                                    SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre,scp);
+                                    if(buscarRegistroPorValor(nombre)!=null){
+                                        oper2 = buscarRegistroPorValor(nombre);
+                                        codigo+="\tlw "+oper2+", _"+nombre+"\n";
+                                    }else{
+                                        oper2 = temporalDisponible();
+                                        setValor(oper2,nombre,"");
+                                        codigo+="\tlw "+oper2+", _"+nombre+"\n";
+                                    }
+                                }
+                            }
+                        }                        
+                    }
+                    
+                    liberarTemporal(oper1);
+                    liberarTemporal(oper2);
+                    codigo+="\tadd "+destino+", "+oper1+", "+oper2+"\n";
                     break;
                 }
                 case "":{//etiqueta
@@ -186,13 +325,8 @@ public class FinalCodeGenerator {
                     if(cuadruploActual.getOper1().matches("_msg[0-9]+")){//cadena put ("hola")
                         codigo+="\tli $v0,4\n";
                         codigo+="\tla $a0,"+cuadruploActual.getOper1()+"\n";
-                    }else if(cuadruploActual.getOper1().matches("[0-9]+\\.[0-9]+")){//float put (9.12)                        
-                        //montar en un registro $f el float literal                      
-                        codigo+="\tli $v0,2\n";
-                        codigo+="\tl.d $f12, floatLiteral"+listaFloats.indexOf(Double.parseDouble(cuadruploActual.getOper1()))+"\n";
-
                     }else if(cuadruploActual.getOper1().matches("[0-9]+")){//int put (89)
-                        String temp = temporalDisponible(false);
+                        String temp = temporalDisponible();
                         codigo+="\tli " + temp + ", " + cuadruploActual.getOper1()+"\n";
                         codigo+="\tsw " + temp + ", enteroLiteral\n";
                         codigo+="\tli $v0,1\n";
@@ -231,26 +365,20 @@ public class FinalCodeGenerator {
         this.taFinal.append("\n");
     }
     
-    public String temporalDisponible(Boolean esFloat){
+    public String temporalDisponible(){
         for (int i = 0; i < descriptorLista.size(); i++) {
-            if(!esFloat ){
-                if(descriptorLista.get(i).valor.equals("") && descriptorLista.get(i).registro.startsWith("$t")){
-                    descriptorLista.get(i).valor="";
-                    return descriptorLista.get(i).registro;
-                }
-            }else{
-                if(descriptorLista.get(i).valor.equals("") && descriptorLista.get(i).registro.matches("\\$f[0-9]+")){
-                    descriptorLista.get(i).valor="";
-                    return descriptorLista.get(i).registro;
-                }
+            if(descriptorLista.get(i).valor.equals("") && descriptorLista.get(i).registro.startsWith("$t")){
+                descriptorLista.get(i).valor="ocupado";
+                return descriptorLista.get(i).registro;
             }            
         }
-        return null;
+        return "NULL";
     }
     public void liberarTemporal(String nombreTemp){
         for (int i = 0; i < descriptorLista.size(); i++) {
             if(descriptorLista.get(i).registro.equals(nombreTemp)){
                 descriptorLista.get(i).valor="";
+                descriptorLista.get(i).nombreIntermedio="";
             }
         }
     }

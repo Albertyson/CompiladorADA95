@@ -13,16 +13,12 @@ import visitor.SemanticTable;
  */
 public class IntermediateCodeGenerator implements IntermediateGenerable{
     private Program program;
-    private ArrayList<Double> listaFloats=new ArrayList();
     public ArrayList<Cuadruplo> cuadruplos;
     private Temporal t = new Temporal();
     private Stack<Integer> gotoFunction = new Stack();
     JTextArea taIntermedio = new JTextArea();
     private SemanticTable tablaSimbolos;
 
-    public ArrayList<Double> getListaFloats() {
-        return listaFloats;
-    }
     
     public IntermediateCodeGenerator(Program program, ArrayList<Cuadruplo> cuadruplos,JTextArea taIntermedio,SemanticTable tabla) {
         this.program = program;
@@ -191,7 +187,6 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public String visit(FloatNumber h) {
 //        String temp = t.nuevoTemporal();
 //        cuadruplos.add(new Cuadruplo("=", h.number + "", temp));
-        listaFloats.add(h.number);
         return h.number + "";
     }
 

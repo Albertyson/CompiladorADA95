@@ -20,13 +20,15 @@ public class Descriptor {
 //    }
     String registro;
     String valor;
+    String nombreIntermedio;
 
     public Descriptor() {
     }
     
-    public Descriptor(String registro, String valor) {
+    public Descriptor(String registro, String valor,String nombreIntermedio) {
         this.registro = registro;
         this.valor = valor;
+        this.nombreIntermedio = nombreIntermedio;
     }
     
 }
