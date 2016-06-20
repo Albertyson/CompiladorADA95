@@ -356,6 +356,8 @@ public class formPrincipal extends javax.swing.JFrame {
     private void btnCleanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCleanMouseClicked
         // TODO add your handling code here:
         txtOutput.setText("");
+        taIntermedio.setText("");
+        taFinal.setText("");
     }//GEN-LAST:event_btnCleanMouseClicked
 
     private void btnParseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParseActionPerformed
