@@ -248,11 +248,11 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     public String visit(FunctionCall h) {
         if(h.fp!=null){
             for (int i = 0; i < h.fp.size(); i++){
-                cuadruplos.add(new Cuadruplo("param " + h.fp.getAt(i).generate(this),"",""));
+                cuadruplos.add(new Cuadruplo("param" , h.fp.getAt(i).generate(this),"",""));
             }
-            cuadruplos.add(new Cuadruplo("call _"+h.id.id,","+h.fp.size(),""));
+            cuadruplos.add(new Cuadruplo("call", "_"+h.id.id + ","+h.fp.size()));
         }else{
-            cuadruplos.add(new Cuadruplo("call _"+h.id.id,",0",""));
+            cuadruplos.add(new Cuadruplo("call", "_"+h.id.id + ",0"));
         }
         
 //        String temp = t.nuevoTemporal();
@@ -263,8 +263,8 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(GetValue h) {
-        cuadruplos.add(new Cuadruplo("get", h.id.id, ""));
-        return h.id.id;
+        cuadruplos.add(new Cuadruplo("get", h.id.generate(this), ""));
+        return h.id.generate(this);
     }
 
     

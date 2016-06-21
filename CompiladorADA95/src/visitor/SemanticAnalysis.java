@@ -477,7 +477,11 @@ public class SemanticAnalysis implements TypeVisitor {
             errorComplain("Se esperaba un identificador",h.line,h.column);
             return new TypeError();
         }
-        
+        VariableType vType = h.id.accept(this);
+        if(vType instanceof TypeError){
+            errorComplain("Tipo Erroneo para el identificador: "+h.id.id,h.line,h.column);
+            return new TypeError();
+        }
         return new TypeNull();
     }
 
@@ -947,7 +951,9 @@ public class SemanticAnalysis implements TypeVisitor {
         }
         if(h.declarations!=null){
             for (int i = 0; i < h.declarations.size(); i++){
-                h.declarations.getAt(i).accept(this);
+                if(h.declarations.getAt(i)!=null){
+                    h.declarations.getAt(i).accept(this);
+                }                
             }
             this.scope = currentScope;
         }

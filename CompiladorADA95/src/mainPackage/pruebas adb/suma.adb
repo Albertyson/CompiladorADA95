@@ -18,6 +18,11 @@ procedure pruebaSuma is
          put(b);
          put(5 + 8);
       end imprimirHola;
+      procedure leer() is
+      begin
+         read(c);
+         put(c);
+      end leer;
 begin
       --test := 0;
       --b:= sumar(2, 5,true)+1;
@@ -28,7 +33,7 @@ begin
          c:= 8;
       elsif(a<c) then
          c:= 5;
-      elsif(a=2) then
+      elsif(a/=2) then
          c:=4;
       else
          c:=2;

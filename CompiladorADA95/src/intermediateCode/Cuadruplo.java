@@ -46,6 +46,11 @@ public class Cuadruplo {
         this.operacion = operacion;
         this.gt = gt;
     }
+    //para el call
+    public Cuadruplo(String operacion, String oper1) {
+        this.operacion = operacion;
+        this.oper1 = oper1;
+    }
 
     public int getGt() {
         return gt;
@@ -90,6 +95,9 @@ public class Cuadruplo {
 
     @Override
     public String toString() {
+        if(this.operacion.equals("call")){
+            return "\t"+this.operacion + " " + this.oper1;
+        }
         String tmpOper1 = (oper1.indexOf(":")>0 ? oper1.substring(0,oper1.indexOf(":")) : oper1);
         String tmpOper2 = (oper2.indexOf(":")>0 ? oper2.substring(0,oper2.indexOf(":")) : oper2);
         if(this.oper3.length() > 0){
@@ -106,7 +114,7 @@ public class Cuadruplo {
         }
         if(etiqueta.length()>0){
             return etiqueta + ":";
-        }
+        }        
         return "\t" + tmpOper2 + " " + operacion + " " + tmpOper1;
     }
     
