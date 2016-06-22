@@ -1268,10 +1268,10 @@ public class FinalCodeGenerator {
                         if(cuadruploActual.getOper1().startsWith("$") && !cuadruploActual.getOper1().equals("$RETVAL")){ //temporal
                             if(buscarRegistroPorNombreIntermedio(cuadruploActual.getOper1()) != null){
                                 String reg1 = buscarRegistroPorNombreIntermedio(cuadruploActual.getOper1());
-                                codigo += "\nmove " + param + ", " + reg1+"\n";
+                                codigo += "\tmove " + param + ", " + reg1+"\n";
                             } else { //nuevo temporal
                                 String reg1 = temporalDisponible();
-                                codigo += "\nmove " + param + ", " + reg1 + "\n";
+                                codigo += "\tmove " + param + ", " + reg1 + "\n";
                                 setValor(reg1, cuadruploActual.getOper1(), cuadruploActual.getOper1());
                             }
                         } else { //id

@@ -195,14 +195,14 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     @Override
     public String visit(For h) {
         //asignación de la variable de for
-        cuadruplos.add(new Cuadruplo("=", ((IntegerNumber)h.range.exp1).number + "", h.id.id));
+        cuadruplos.add(new Cuadruplo("=", ((IntegerNumber)h.range.exp1).number + "", h.id.generate(this)));
         
         //generar etiqueta para saltar a la expresión
         int saltoExp = cuadruplos.size();
         cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
         
         //evaluación de la expresión
-        String t1 = h.id.id;
+        String t1 = h.id.generate(this);
         String t2 = h.range.exp2.generate(this);
         int gtTrue = cuadruplos.size();
         cuadruplos.add(new Cuadruplo("if<=", t1, t2, -1));
@@ -219,8 +219,8 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         }
         //generar incremento i = i + 1
         String temp = t.nuevoTemporal(); //t
-        cuadruplos.add(new Cuadruplo("+", h.id.id, "1", temp));//t=i+1
-        cuadruplos.add(new Cuadruplo("=", temp,h.id.id));//i=t
+        cuadruplos.add(new Cuadruplo("+", h.id.generate(this), "1", temp));//t=i+1
+        cuadruplos.add(new Cuadruplo("=", temp,h.id.generate(this)));//i=t
         
         //saltar a la expresión
         cuadruplos.add(new Cuadruplo("goto", -1));

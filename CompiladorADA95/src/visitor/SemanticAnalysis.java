@@ -586,10 +586,10 @@ public class SemanticAnalysis implements TypeVisitor {
     @Override
     public VariableType path(For h) {
         //validar el iterador
-//        VariableType iteratorType = h.id.accept(this);
-//        if(iteratorType instanceof TypeError){            
-//            return new TypeError();
-//        }
+        VariableType iteratorType = h.id.accept(this);
+        if(iteratorType instanceof TypeError){            
+            return new TypeError();
+        }
         VariableType rangeType = h.range.accept(this);
         if(rangeType instanceof TypeError){
             errorComplain("Error en el rango",h.line,h.column);

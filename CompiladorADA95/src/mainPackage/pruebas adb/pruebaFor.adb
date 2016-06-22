@@ -11,6 +11,12 @@ begin
       else
          b:=b-2;
       end if;
+      put("a= ");
+      put(a);
+      put("b= ");
+      put(b);
+      put("c= ");
+      put(c);
       exit when a>b;
          
    end loop;
