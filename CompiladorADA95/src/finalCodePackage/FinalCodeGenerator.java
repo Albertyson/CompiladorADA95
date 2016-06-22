@@ -176,12 +176,21 @@ public class FinalCodeGenerator {
                                         String nombre = cuadruploActual.getOper2().substring(1).split(":")[0];
                                         String scp = cuadruploActual.getOper2().substring(1).split(":")[1];
                                         if(semanticTable.findID(nombre,scp) != null){
-                                            //String temp = temporalDisponible();
-                                            //SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre, scp);
-                                            dest = "_" + nombre;
-                                            codigo += "\tsw " + src + ", " + dest + "\n";
-                                            //liberar temporal
-                                            liberarTemporal(src);
+                                            if(buscarRegistroPorValor(nombre)!=null){
+                                                String reg = buscarRegistroPorValor(nombre);
+                                                if (reg.startsWith("-")){
+                                                    reg = buscarRegistroPorValor(reg);
+                                                    codigo += "\tmove " + reg + ", " + src+ "\n";
+                                                } else {
+                                                    codigo += "\tmove " + reg  + ", " + src + "\n";
+                                                }
+                                                setValor(src, reg, "");
+                                            }else{
+                                                dest = "_" + nombre;
+                                                codigo += "\tsw " + src + ", " + dest + "\n";
+                                                //liberar temporal
+                                                liberarTemporal(src);
+                                            }                                            
                                         }                                        
                                     }
                                     //liberar el temporal
@@ -288,6 +297,9 @@ public class FinalCodeGenerator {
                                     SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre, scp);
                                     if(buscarRegistroPorValor(nombre)!=null){
                                         oper1 = buscarRegistroPorValor(nombre);
+                                        if(oper1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            oper1 = buscarRegistroPorValor(oper1);
+                                        }
 //                                        codigo += "\tlw " + oper1 + ", _" + nombre + "\n";
                                     } else {
                                         oper1 = temporalDisponible();
@@ -325,6 +337,9 @@ public class FinalCodeGenerator {
                                     SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre,scp);
                                     if(buscarRegistroPorValor(nombre) != null){
                                         oper2 = buscarRegistroPorValor(nombre);
+                                        if(oper2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            oper2 = buscarRegistroPorValor(oper2);
+                                        }
 //                                        codigo += "\tlw " + oper2 + ", _" + nombre + "\n";
                                     } else {
                                         oper2 = temporalDisponible();
@@ -387,6 +402,9 @@ public class FinalCodeGenerator {
                                     SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre, scp);
                                     if(buscarRegistroPorValor(nombre)!=null){
                                         oper1 = buscarRegistroPorValor(nombre);
+                                        if(oper1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            oper1 = buscarRegistroPorValor(oper1);
+                                        }
 //                                        codigo += "\tlw " + oper1 + ", _" + nombre + "\n";
                                     } else {
                                         oper1 = temporalDisponible();
@@ -424,6 +442,9 @@ public class FinalCodeGenerator {
                                     SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre,scp);
                                     if(buscarRegistroPorValor(nombre) != null){
                                         oper2 = buscarRegistroPorValor(nombre);
+                                        if(oper2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            oper2 = buscarRegistroPorValor(oper2);
+                                        }
 //                                        codigo += "\tlw " + oper2 + ", _" + nombre + "\n";
                                     } else {
                                         oper2 = temporalDisponible();
@@ -486,6 +507,9 @@ public class FinalCodeGenerator {
                                     SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre, scp);
                                     if(buscarRegistroPorValor(nombre)!=null){
                                         oper1 = buscarRegistroPorValor(nombre);
+                                        if(oper1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            oper1 = buscarRegistroPorValor(oper1);
+                                        }
 //                                        codigo += "\tlw " + oper1 + ", _" + nombre + "\n";
                                     } else {
                                         oper1 = temporalDisponible();
@@ -523,6 +547,9 @@ public class FinalCodeGenerator {
                                     SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre,scp);
                                     if(buscarRegistroPorValor(nombre) != null){
                                         oper2 = buscarRegistroPorValor(nombre);
+                                        if(oper2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            oper2 = buscarRegistroPorValor(oper2);
+                                        }
 //                                        codigo += "\tlw " + oper2 + ", _" + nombre + "\n";
                                     } else {
                                         oper2 = temporalDisponible();
@@ -585,6 +612,9 @@ public class FinalCodeGenerator {
                                     SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre, scp);
                                     if(buscarRegistroPorValor(nombre)!=null){
                                         oper1 = buscarRegistroPorValor(nombre);
+                                        if(oper1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            oper1 = buscarRegistroPorValor(oper1);
+                                        }
 //                                        codigo += "\tlw " + oper1 + ", _" + nombre + "\n";
                                     } else {
                                         oper1 = temporalDisponible();
@@ -622,6 +652,9 @@ public class FinalCodeGenerator {
                                     SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre,scp);
                                     if(buscarRegistroPorValor(nombre) != null){
                                         oper2 = buscarRegistroPorValor(nombre);
+                                        if(oper2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            oper2 = buscarRegistroPorValor(oper2);
+                                        }
 //                                        codigo += "\tlw " + oper2 + ", _" + nombre + "\n";
                                     } else {
                                         oper2 = temporalDisponible();
@@ -674,6 +707,7 @@ public class FinalCodeGenerator {
                             for (int j = 0; j < params.size(); j++) {
                                 if(j<4){
                                     codigo+="\tmove $s"+j+", $a"+j+"\n";
+                                    liberarTemporal("$a"+j);
                                 }                                
                             }
                         }
@@ -760,8 +794,17 @@ public class FinalCodeGenerator {
                                 SemanticVariableTableNode variable = (SemanticVariableTableNode) semanticTable.findID(nombre, scp);
                                 //hacer la operación de acuerdo al tipo de la variable
                                 if(variable.getType() instanceof TypeInteger){
-                                    codigo += "\tlw $a0, " + "_" + nombre + "\n";
-                                    codigo += "\tli $v0,1\n";
+                                    if(buscarRegistroPorValor(nombre)!=null){
+                                        String oper1 = buscarRegistroPorValor(nombre);
+                                        if(oper1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            oper1 = buscarRegistroPorValor(oper1);
+                                        }
+                                        codigo+="\tmove $a0, "+oper1+"\n";
+                                        codigo += "\tli $v0,1\n";
+                                    }else{
+                                        codigo += "\tlw $a0, " + "_" + nombre + "\n";
+                                        codigo += "\tli $v0,1\n";
+                                    }                                    
                                 }
                             } else {
                                 System.out.println("no encontro " + cuadruploActual.getOper1().substring(1));
@@ -776,9 +819,19 @@ public class FinalCodeGenerator {
                     String nombre = cuadruploActual.getOper1().substring(1).split(":")[0];
                     String scp = cuadruploActual.getOper1().substring(1).split(":")[1];
                     if(semanticTable.findID(nombre, scp) != null){
-                        codigo+="\tli $v0, 5\n";
-                        codigo+="\tsyscall\n";
-                        codigo+="\tsw $v0, _" + nombre + "\n";
+                        if(buscarRegistroPorValor(nombre)!=null){
+                            String oper1 = buscarRegistroPorValor(nombre);
+                            if(oper1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                oper1 = buscarRegistroPorValor(oper1);
+                            }
+                            codigo+="\tli $v0, 5\n";
+                            codigo+="\tsyscall\n";
+                            codigo+="\tsw $v0, _" + oper1 + "\n";
+                        }else{
+                            codigo+="\tli $v0, 5\n";
+                            codigo+="\tsyscall\n";
+                            codigo+="\tsw $v0, _" + nombre + "\n";
+                        }                        
                     }
                     break;
                 }
@@ -803,6 +856,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg1 = buscarRegistroPorValor(nombre);
+                                    if(reg1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg1 = buscarRegistroPorValor(reg1);
+                                    }
 //                                    codigo += "\tlw " + reg1 + ", _" + nombre + "\n";
                                 } else {
                                     reg1 = temporalDisponible();
@@ -831,6 +887,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg2 = buscarRegistroPorValor(nombre);
+                                    if(reg2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg2 = buscarRegistroPorValor(reg2);
+                                    }
 //                                    codigo += "\tlw " + reg2 + ", _" + nombre + "\n";
                                 } else {
                                     reg2 = temporalDisponible();
@@ -867,6 +926,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg1 = buscarRegistroPorValor(nombre);
+                                    if(reg1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg1 = buscarRegistroPorValor(reg1);
+                                    }
 //                                    codigo += "\tlw " + reg1 + ", _" + nombre + "\n";
                                 } else {
                                     reg1 = temporalDisponible();
@@ -895,6 +957,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg2 = buscarRegistroPorValor(nombre);
+                                    if(reg2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg2 = buscarRegistroPorValor(reg2);
+                                    }
 //                                    codigo += "\tlw " + reg2 + ", _" + nombre + "\n";
                                 } else {
                                     reg2 = temporalDisponible();
@@ -931,6 +996,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg1 = buscarRegistroPorValor(nombre);
+                                    if(reg1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg1 = buscarRegistroPorValor(reg1);
+                                    }
 //                                    codigo += "\tlw " + reg1 + ", _" + nombre + "\n";
                                 } else {
                                     reg1 = temporalDisponible();
@@ -959,6 +1027,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg2 = buscarRegistroPorValor(nombre);
+                                    if(reg2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg2 = buscarRegistroPorValor(reg2);
+                                    }
 //                                    codigo += "\tlw " + reg2 + ", _" + nombre + "\n";
                                 } else {
                                     reg2 = temporalDisponible();
@@ -995,6 +1066,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg1 = buscarRegistroPorValor(nombre);
+                                    if(reg1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg1 = buscarRegistroPorValor(reg1);
+                                    }
 //                                    codigo += "\tlw " + reg1 + ", _" + nombre + "\n";
                                 } else {
                                     reg1 = temporalDisponible();
@@ -1023,6 +1097,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg2 = buscarRegistroPorValor(nombre);
+                                    if(reg2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg2 = buscarRegistroPorValor(reg2);
+                                    }
 //                                    codigo += "\tlw " + reg2 + ", _" + nombre + "\n";
                                 } else {
                                     reg2 = temporalDisponible();
@@ -1059,6 +1136,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg1 = buscarRegistroPorValor(nombre);
+                                    if(reg1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg1 = buscarRegistroPorValor(reg1);
+                                    }
 //                                    codigo += "\tlw " + reg1 + ", _" + nombre + "\n";
                                 } else {
                                     reg1 = temporalDisponible();
@@ -1087,6 +1167,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg2 = buscarRegistroPorValor(nombre);
+                                    if(reg2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg2 = buscarRegistroPorValor(reg2);
+                                    }
 //                                    codigo += "\tlw " + reg2 + ", _" + nombre + "\n";
                                 } else {
                                     reg2 = temporalDisponible();
@@ -1123,6 +1206,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg1 = buscarRegistroPorValor(nombre);
+                                    if(reg1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg1 = buscarRegistroPorValor(reg1);
+                                    }
 //                                    codigo += "\tlw " + reg1 + ", _" + nombre + "\n";
                                 } else {
                                     reg1 = temporalDisponible();
@@ -1151,6 +1237,9 @@ public class FinalCodeGenerator {
                             if(semanticTable.findID(nombre,scp) != null){
                                 if(buscarRegistroPorValor(nombre)!=null){
                                     reg2 = buscarRegistroPorValor(nombre);
+                                    if(reg2.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                        reg2 = buscarRegistroPorValor(reg2);
+                                    }
 //                                    codigo += "\tlw " + reg2 + ", _" + nombre + "\n";
                                 } else {
                                     reg2 = temporalDisponible();
@@ -1196,6 +1285,10 @@ public class FinalCodeGenerator {
                                 if(semanticTable.findID(nombre,scp) != null){
                                     if(buscarRegistroPorValor(nombre)!=null){
                                         String reg1 = buscarRegistroPorValor(nombre);
+                                        if(reg1.matches("\\-[0-9]+\\(\\$[a-z]+\\)")){//-20($fp)
+                                            reg1 = buscarRegistroPorValor(reg1);
+                                        }
+                                        codigo+= "\tlw "+reg1 +", _"+ nombre +"\n";
                                         codigo += "\tmove " + param + ", "+ reg1 +"\n";
                                     } else {
                                         String reg1 = temporalDisponible();
@@ -1211,6 +1304,10 @@ public class FinalCodeGenerator {
                 }
                 case "call":{
                     codigo+="\tjal "+cuadruploActual.getOper1().split(",")[0]+"\n";
+                    liberarTemporal("$a0");
+                    liberarTemporal("$a1");
+                    liberarTemporal("$a2");
+                    liberarTemporal("$a3");
                     break;
                 }
 

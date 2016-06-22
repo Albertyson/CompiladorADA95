@@ -751,43 +751,44 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
                 }
             }
         }               
-        
-        for(int i = 0; i < h.statements.size(); i++){
-//            h.statements.getAt(i).generate(this);
-            if(h.statements.getAt(i) instanceof AssignVariableSimple){
-                ((AssignVariableSimple)h.statements.getAt(i)).generate(this);
+        if(h.statements!=null){
+            for(int i = 0; i < h.statements.size(); i++){
+    //            h.statements.getAt(i).generate(this);
+                if(h.statements.getAt(i) instanceof AssignVariableSimple){
+                    ((AssignVariableSimple)h.statements.getAt(i)).generate(this);
+                }
+                if(h.statements.getAt(i) instanceof IfSimple){
+                    ((IfSimple)h.statements.getAt(i)).generate(this);
+                }
+                if(h.statements.getAt(i) instanceof IfWithElse){
+                    ((IfWithElse)h.statements.getAt(i)).generate(this) ;
+                }
+                if(h.statements.getAt(i) instanceof IfWithElsIF){
+                    ((IfWithElsIF)h.statements.getAt(i)).generate(this);
+                }
+                if(h.statements.getAt(i) instanceof IfWithElsIfAndElse){
+                    ((IfWithElsIfAndElse)h.statements.getAt(i)).generate(this);
+                }
+                if(h.statements.getAt(i) instanceof For){
+                    ((For)h.statements.getAt(i)).generate(this);
+                }
+                if(h.statements.getAt(i) instanceof While){
+                    ((While)h.statements.getAt(i)).generate(this);
+                }
+                if(h.statements.getAt(i) instanceof Loop){
+                    ((Loop)h.statements.getAt(i)).generate(this);
+                }
+                if(h.statements.getAt(i) instanceof FunctionCall){
+                    ((FunctionCall)h.statements.getAt(i)).generate(this);
+                }
+                if(h.statements.getAt(i) instanceof PutValue){
+                    ((PutValue)h.statements.getAt(i)).generate(this);
+                }
+                if(h.statements.getAt(i) instanceof GetValue){
+                    ((GetValue)h.statements.getAt(i)).generate(this);
+                }
             }
-            if(h.statements.getAt(i) instanceof IfSimple){
-                ((IfSimple)h.statements.getAt(i)).generate(this);
-            }
-            if(h.statements.getAt(i) instanceof IfWithElse){
-                ((IfWithElse)h.statements.getAt(i)).generate(this) ;
-            }
-            if(h.statements.getAt(i) instanceof IfWithElsIF){
-                ((IfWithElsIF)h.statements.getAt(i)).generate(this);
-            }
-            if(h.statements.getAt(i) instanceof IfWithElsIfAndElse){
-                ((IfWithElsIfAndElse)h.statements.getAt(i)).generate(this);
-            }
-            if(h.statements.getAt(i) instanceof For){
-                ((For)h.statements.getAt(i)).generate(this);
-            }
-            if(h.statements.getAt(i) instanceof While){
-                ((While)h.statements.getAt(i)).generate(this);
-            }
-            if(h.statements.getAt(i) instanceof Loop){
-                ((Loop)h.statements.getAt(i)).generate(this);
-            }
-            if(h.statements.getAt(i) instanceof FunctionCall){
-                ((FunctionCall)h.statements.getAt(i)).generate(this);
-            }
-            if(h.statements.getAt(i) instanceof PutValue){
-                ((PutValue)h.statements.getAt(i)).generate(this);
-            }
-            if(h.statements.getAt(i) instanceof GetValue){
-                ((GetValue)h.statements.getAt(i)).generate(this);
-            }
-        }
+        }        
         cuadruplos.add(new Cuadruplo("jr","",""));
         return "";
     }
