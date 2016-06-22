@@ -863,6 +863,7 @@ public class SemanticAnalysis implements TypeVisitor {
         this.scope = new String(currentScope);
         
         SemanticFunctionTableNode f = new SemanticFunctionTableNode(h.returnType, h.id1.id, "" + tmpScope);
+        f.myScope = new String(currentScope);
         for (int i = 0; i < h.parameterDeclarations.size(); i++){
             Parameter param = h.parameterDeclarations.getAt(i);
             int varType;

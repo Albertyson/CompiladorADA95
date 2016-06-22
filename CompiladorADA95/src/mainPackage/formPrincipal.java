@@ -78,11 +78,11 @@ public class formPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Ámbito", "Tipo", "Dirección", "Es función", "Tipo Retorno", "Parámetros"
+                "Id", "Ámbito", "Tipo", "Dirección", "Es función", "Tipo Retorno", "Parámetros", "my scope"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -394,7 +394,7 @@ public class formPrincipal extends javax.swing.JFrame {
                     SemanticVariableTableNode param = fun.getParams().get(j);
                     parametrosBuffer += param.getName() + ":" + param.getType().getClass().getSimpleName() + (j==fun.getParams().size()-1?"":", ");
                 }
-                tModel.addRow(new Object[]{fun.getName(),fun.getScope(),"","","Si",tipoRetorno,parametrosBuffer});
+                tModel.addRow(new Object[]{fun.getName(),fun.getScope(),"","","Si",tipoRetorno,parametrosBuffer,fun.myScope});
             }
         }
         jtSimbolos.setModel(tModel);

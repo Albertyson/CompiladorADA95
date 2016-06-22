@@ -1,7 +1,6 @@
 package abstractSyntaxTree;
 
 import AST_Path.ParentPath;
-import intermediateCode.Cuadruplo;
 import intermediateCode.IntermediateGenerable;
 import visitor.TypeVisitor;
 

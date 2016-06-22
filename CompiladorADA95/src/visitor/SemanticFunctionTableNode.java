@@ -8,6 +8,7 @@ public class SemanticFunctionTableNode extends SemanticTableNode {
     
     private VariableType returnType;
     private ArrayList<SemanticVariableTableNode> params;
+    public String myScope;
 
     public SemanticFunctionTableNode(VariableType returnType, String name, String scope) {
         super(name, scope);

@@ -65,6 +65,16 @@ public class SemanticTable {
         return null;
     }
     
+    public String getScopeById(String id) {
+        for (int i = 0; i < symbols.size(); i++) {
+            SemanticTableNode currentSymbolInfo = symbols.get(i);
+            if (currentSymbolInfo.getName().equals(id)) {
+                return currentSymbolInfo.scope;
+            }
+        }        
+        return null;
+    }
+    
 
     public boolean addID(SemanticTableNode value) {
         if (findID(value.getName(), value.getScope()) != null) {

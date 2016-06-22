@@ -2,7 +2,6 @@ package intermediateCode;
 
 import abstractSyntaxTree.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 import javax.swing.JTextArea;
 import visitor.SemanticTable;
@@ -18,6 +17,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     private Stack<Integer> gotoFunction = new Stack();
     JTextArea taIntermedio = new JTextArea();
     private SemanticTable tablaSimbolos;
+    private boolean logicalExpressionInsideIf = false;
 
     
     public IntermediateCodeGenerator(Program program, ArrayList<Cuadruplo> cuadruplos,JTextArea taIntermedio,SemanticTable tabla) {
@@ -68,24 +68,25 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(And h) {
-        h.exp1.generate(this);
-        cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
-        int gtTrue = cuadruplos.size()-1;
-        h.exp2.generate(this);
-        for (int i = 0; i < h.exp1.listaVerdadero.size(); i++){
-            cuadruplos.get(h.exp1.listaVerdadero.get(i)).setGt(gtTrue);
+        if (logicalExpressionInsideIf){
+            h.exp1.generate(this);
+            cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+            int gtTrue = cuadruplos.size() - 1;
+            h.exp2.generate(this);
+            for (int i = 0; i < h.exp1.listaVerdadero.size(); i++) {
+                cuadruplos.get(h.exp1.listaVerdadero.get(i)).setGt(gtTrue);
+            }
+            // cuadruplos.get(h.exp2.listaVerdadero.get(0)).esEtiqueta = true;
+            h.listaVerdadero = h.exp2.listaVerdadero;
+            h.listaFalso = fusionar(h.exp1.listaFalso, h.exp2.listaFalso);
+            return "";
+        } else {
+            String t1 = h.exp1.generate(this);
+            String t2 = h.exp2.generate(this);
+            String temp = t.nuevoTemporal();
+            cuadruplos.add(new Cuadruplo("and", t1, t2, temp));
+            return temp;
         }
-        
-//        cuadruplos.get(h.exp2.listaVerdadero.get(0)).esEtiqueta = true;
-        h.listaVerdadero = h.exp2.listaVerdadero;
-        h.listaFalso = fusionar(h.exp1.listaFalso, h.exp2.listaFalso);
-        
-        return "";
-//        String t1 = h.exp1.generate(this);
-//        String t2 = h.exp2.generate(this);
-//        String temp = t.nuevoTemporal();
-//        cuadruplos.add(new Cuadruplo("and", t1, t2, temp));
-//        return temp;
     }
 
     
@@ -251,10 +252,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
                 cuadruplos.add(new Cuadruplo("param" , h.fp.getAt(i).generate(this),"",""));
             }
             cuadruplos.add(new Cuadruplo("call", "_"+h.id.id + ","+h.fp.size()));
-        }else{
+        } else {
             cuadruplos.add(new Cuadruplo("call", "_"+h.id.id + ",0"));
         }
-        
 //        String temp = t.nuevoTemporal();
 //        cuadruplos.add(new Cuadruplo("=", "_ret_", temp));
         return "$RETVAL";
@@ -294,13 +294,15 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(Identifier h) {
-        return "_"+h.id+":"+h.scope;
+        return "_" + h.id + ":" + h.scope;
     }
 
     
     @Override
     public String visit(IfSimple h) {
+        logicalExpressionInsideIf = true;
         h.exp.generate(this);
+        logicalExpressionInsideIf = false;
         // llenar verdaderos con goto hacia la primera linea de los statements del if
         for(int i = 0; i < h.exp.listaVerdadero.size(); i++){
             cuadruplos.get(h.exp.listaVerdadero.get(i)).setGt(cuadruplos.size());            
@@ -320,7 +322,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(IfWithElsIF h) {
+        logicalExpressionInsideIf = true;
         h.expression.generate(this);
+        logicalExpressionInsideIf = false;
         // llenar verdaderos con goto hacia la primera linea de los statements del if
         for(int i = 0; i < h.expression.listaVerdadero.size(); i++){
             cuadruplos.get(h.expression.listaVerdadero.get(i)).setGt(cuadruplos.size());            
@@ -340,7 +344,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         }
         for(int i=0 ;i < h.elsIfList.size(); i++){
             cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+            logicalExpressionInsideIf = true;
             h.elsIfList.getAt(i).exp.generate(this);
+            logicalExpressionInsideIf = false;
             for(int j = 0; j < h.elsIfList.getAt(i).exp.listaVerdadero.size();j++){
                 cuadruplos.get(h.elsIfList.getAt(i).exp.listaVerdadero.get(j)).setGt(cuadruplos.size());
             }
@@ -366,7 +372,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     @Override
     public String visit(IfWithElsIfAndElse h) {
         ArrayList<Integer> saltos = new ArrayList();
+        logicalExpressionInsideIf = true;
         h.expression.generate(this);
+        logicalExpressionInsideIf = false;
         // llenar verdaderos con goto hacia la primera linea de los statements del if
         for(int i = 0; i < h.expression.listaVerdadero.size(); i++){
             cuadruplos.get(h.expression.listaVerdadero.get(i)).setGt(cuadruplos.size());            
@@ -384,7 +392,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         
         for (int i = 0; i < h.elsIfList.size(); i++){
             cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+            logicalExpressionInsideIf = true;
             h.elsIfList.getAt(i).exp.generate(this);
+            logicalExpressionInsideIf = false;
             for(int j = 0; j < h.elsIfList.getAt(i).exp.listaVerdadero.size(); j++){
                 cuadruplos.get(h.elsIfList.getAt(i).exp.listaVerdadero.get(j)).setGt(cuadruplos.size());
             }
@@ -414,7 +424,9 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(IfWithElse h) {
+        logicalExpressionInsideIf = true;
         h.exp.generate(this);
+        logicalExpressionInsideIf = false;
         // llenar verdaderos con goto hacia la primera linea de los statements del if
         for(int i = 0; i < h.exp.listaVerdadero.size(); i++){
             cuadruplos.get(h.exp.listaVerdadero.get(i)).setGt(cuadruplos.size());            
@@ -534,14 +546,17 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(Not h) {
-        h.exp.generate(this);
-        h.listaVerdadero = h.exp.listaFalso;
-        h.listaFalso = h.exp.listaVerdadero;
-        return "";
-//        String t1 = h.exp.generate(this);
-//        String temp = t.nuevoTemporal();
-//        cuadruplos.add(new Cuadruplo("not", t1, temp));
-//        return temp;
+        if (logicalExpressionInsideIf){
+            h.exp.generate(this);
+            h.listaVerdadero = h.exp.listaFalso;
+            h.listaFalso = h.exp.listaVerdadero;
+            return "";  
+        } else {
+            String t1 = h.exp.generate(this);
+            String temp = t.nuevoTemporal();
+            cuadruplos.add(new Cuadruplo("not", t1, temp));
+            return temp;
+        }
     }
 
     
@@ -559,24 +574,25 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
     
     @Override
     public String visit(Or h) {
-        h.exp1.generate(this);
-        cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
-        int gtFalse = cuadruplos.size()-1;
-        h.exp2.generate(this);
-        for (int i = 0; i < h.exp1.listaFalso.size(); i++){
-            cuadruplos.get(h.exp1.listaFalso.get(i)).setGt(gtFalse);
-        }
-//        cuadruplos.get(h.exp2.listaVerdadero.get(0)).esEtiqueta = true;
-        
-        h.listaFalso = h.exp2.listaFalso;
-        h.listaVerdadero = fusionar(h.exp1.listaVerdadero, h.exp2.listaVerdadero);
-       
-        return "";
-//        String t1 = h.exp1.generate(this);
-//        String t2 = h.exp2.generate(this);
-//        String temp = t.nuevoTemporal();
-//        cuadruplos.add(new Cuadruplo("or", t1, t2, temp));
-//        return temp;
+        if (logicalExpressionInsideIf){
+            h.exp1.generate(this);
+            cuadruplos.add(new Cuadruplo("_etiq" + cuadruplos.size()));
+            int gtFalse = cuadruplos.size() - 1;
+            h.exp2.generate(this);
+            for (int i = 0; i < h.exp1.listaFalso.size(); i++) {
+                cuadruplos.get(h.exp1.listaFalso.get(i)).setGt(gtFalse);
+            }
+            // cuadruplos.get(h.exp2.listaVerdadero.get(0)).esEtiqueta = true;
+            h.listaFalso = h.exp2.listaFalso;
+            h.listaVerdadero = fusionar(h.exp1.listaVerdadero, h.exp2.listaVerdadero);
+            return "";
+        } else {
+            String t1 = h.exp1.generate(this);
+            String t2 = h.exp2.generate(this);
+            String temp = t.nuevoTemporal();
+            cuadruplos.add(new Cuadruplo("or", t1, t2, temp));
+            return temp;
+        }   
     }
 
     
@@ -603,7 +619,7 @@ public class IntermediateCodeGenerator implements IntermediateGenerable{
         String retorno = h.exp.generate(this);
         cuadruplos.add(new Cuadruplo("ret", retorno,""));
         gotoFunction.push(cuadruplos.size());
-        cuadruplos.add(new Cuadruplo("goto ",-1));
+        cuadruplos.add(new Cuadruplo("goto",-1));
         return "";  // NUNCA SE LLAMA   
     }
 

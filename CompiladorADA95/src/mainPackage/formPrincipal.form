@@ -34,7 +34,7 @@
             <Component class="javax.swing.JTable" name="jtSimbolos">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="0">
+                  <Table columnCount="8" rowCount="0">
                     <Column editable="false" title="Id" type="java.lang.Object"/>
                     <Column editable="false" title="&#xc1;mbito" type="java.lang.Object"/>
                     <Column editable="false" title="Tipo" type="java.lang.Object"/>
@@ -42,6 +42,7 @@
                     <Column editable="false" title="Es funci&#xf3;n" type="java.lang.Object"/>
                     <Column editable="false" title="Tipo Retorno" type="java.lang.Object"/>
                     <Column editable="false" title="Par&#xe1;metros" type="java.lang.Object"/>
+                    <Column editable="false" title="my scope" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -77,6 +78,11 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="400" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
